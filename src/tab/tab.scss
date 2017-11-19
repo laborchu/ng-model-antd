@@ -1,0 +1,30 @@
+@import '../variable';
+.ngds-tab {
+    border-bottom: 1px solid #eee;
+    .ngds-tab-body{
+        position: relative;
+        margin: 0 30px;
+        .ngds-tab-bar{
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background-color: $primaryColor;
+        }
+        .tab-select{
+            color: $primaryColor;
+        }
+
+        .ngds-tab-item{
+            display: inline-block;
+            height: 100%;
+            margin-right: 32px;
+            box-sizing: border-box;
+            position: relative;
+            padding: 12px 16px;
+            ransition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1); 
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
+}

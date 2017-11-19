@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": ["es2015", "dom"],
+    "module": "es2015",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noEmitOnError": true,
+    "outDir": "../dist/tmp/temp",
+    "sourceMap": true,
+    "baseUrl": "../node_modules",
+    "typeRoots": [
+      "../../node_modules/@types",
+      "../../node_modules"
+    ],
+    "types": [
+      "node",
+      "jasmine",
+      "systemjs"
+    ]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "compileOnSave": false
+}

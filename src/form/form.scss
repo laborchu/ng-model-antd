@@ -1,0 +1,68 @@
+.ngds-form {
+    .uploader {
+        border: 1px dashed #ddd;
+        width: 80%;
+        padding: 10px;
+        .upload-item {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+            position: relative;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+            .upload-item-video{
+                background-color: #444;
+                text-align: center;
+                height: 100%;
+                padding-top: 20px;
+                .iconfont{
+                    color: white;
+                    font-size: 30px;
+                }
+            }
+            .upload-item-other{
+                width: 80px;
+                height: 80px;
+                .iconfont{
+                    font-size: 77px;
+                    position: relative;
+                    top: -17px;
+                    color: #666;
+                }
+                .file-type{
+                    color: #666;
+                    display: inline-block;
+                    width: 80px;
+                    text-align: center;
+                    position: absolute;
+                    top: 28px;
+                }
+            }
+            .icon{
+                width: 14px;
+                height: 14px;
+                position: absolute;
+                top:0;
+                right: 0;
+                cursor: pointer;
+            }
+        }
+        .webuploader-container {
+            width: 80px;
+            height: 80px;
+            .webuploader-pick {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+                background-color: white;
+                border: 1px dashed #444;
+                color: #999;
+            }
+        }
+    }
+    .error-msg {
+        color: #f04134;;
+    }
+}

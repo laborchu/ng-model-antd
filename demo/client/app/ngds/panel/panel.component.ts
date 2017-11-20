@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 
 import {NgdsPanelOption} from '../../../../../src/index';
-import {NgdsDataGridOption, NgdsDataSource, NgdsDsModel, NgdsDsDataGridModel} from '../../../../../src/index';
+import {NgdsDataGridOption, NgdsDataSource, NgdsModel, NgdsDataGridModel} from '../../../../../src/index';
 import {DatagridPropertyPipe, DatagridPropertyBadgePipe} from '../../shared/pipe/index';
 
 class DemoDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsDataGridModel> {
-        return new Promise<NgdsDsDataGridModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsDataGridModel> {
+        return new Promise<NgdsDataGridModel>((resolve, reject) => {
             let date = new Date();
             resolve({
                 page: {
@@ -35,8 +35,8 @@ class DemoDataSource implements NgdsDataSource {
     }
 }
 class AuthStatusDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsModel> {
-        return new Promise<NgdsDsModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
                 {label: "全部", value: 0},
                 {label: "已认证", value: 1},

@@ -38,14 +38,15 @@ export class NgdsForm implements AfterContentChecked {
     ngOnInit() {
         this.myForm = this.fb.group({});
         let maxCol:number = 0;
+        this.option.labelSpan = this.option.labelSpan || 6;
+        this.option.compSpan = this.option.compSpan || 18;
         for (let rowCompOption of this.option.components) {
             maxCol = rowCompOption.length>maxCol?rowCompOption.length:maxCol;
         }
         for (let rowCompOption of this.option.components) {
-            
             let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
             let rowComp: ComponentRef<any> = this.formRef.createComponent(rowFactory);
-            rowComp.instance.gutter = maxCol*8+16;
+            // rowComp.instance.gutter = maxCol*8+16;
             
             for (let compOption of rowCompOption) {
                 let compFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(compOption.comp);
@@ -53,6 +54,8 @@ export class NgdsForm implements AfterContentChecked {
                 if(!compOption.span){
                     compOption.span = ~~24/maxCol;
                 }
+                compOption.labelSpan = this.option.labelSpan;
+                compOption.compSpan = this.option.compSpan;
                 compOption.formGroup = this.myForm;
                 comp.instance.option = compOption;
                 this.compMap[compOption.property] = comp;

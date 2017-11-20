@@ -18,10 +18,10 @@ import { NgdsFormComp } from './form.component';
     template: `
         <div nz-col [nzSpan]="option.span">
             <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]="4">
+                <div nz-form-label nz-col [nzSpan]="option.labelSpan">
                     <label for="{{option.property}}">{{option.label}}</label>
                 </div>
-                <div nz-form-control nz-col [nzSpan]="20" [nzValidateStatus]="getFormControl(option.property)">
+                <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
                     <umeditor #editor [(ngModel)]="option.value"
                         [config]="setting"
                         [path]="option.path"

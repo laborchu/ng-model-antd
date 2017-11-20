@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 import { ValidatorFn,FormGroup} from '@angular/forms';
-import { NgdsDataSource, NgdsDsModel } from '../core/datasource';
+import { NgdsDataSource, NgdsModel } from '../core/datasource';
 
 
 export type wrapperUploadDataFunc = (data: any) => void;
@@ -26,6 +26,8 @@ export class NgdsFormUploaderConfig {
 }
 
 export class NgdsFormOption {
+	labelSpan?:number;
+	compSpan?:number;
 	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption|NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption>>;
 	value?: any;
 }
@@ -38,7 +40,9 @@ export class NgdsFormCompOption {
 	label: string;
 	property: string;
 	value?: any;
-	span?: number;
+	span?: number;//组件span
+	labelSpan?:number;//组件标签span
+	compSpan?:number;//组件输入组件span
     validations?:Array<NgdsFormValidationOption>;
     formGroup?: FormGroup;
     onChange?: onChangeFunc;

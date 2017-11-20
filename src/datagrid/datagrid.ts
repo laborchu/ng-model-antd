@@ -3,7 +3,7 @@ import {
   AfterContentChecked,
   Input
 } from '@angular/core';
-import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDataGridColumnOption, NgdsDsDataGridModel, NgdsDsDataGridPageModel } from './datagrid.config';
+import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel } from './datagrid.config';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -72,7 +72,7 @@ export class NgdsDataGrid implements AfterContentChecked {
   }
 
   @Input() option: NgdsDataGridOption;
-  page: NgdsDsDataGridPageModel;
+  page: NgdsDataGridPageModel;
   data: Array<any> = [];
   searchParams: any = {};
   _loading: boolean = false;
@@ -154,12 +154,14 @@ export class NgdsDataGrid implements AfterContentChecked {
     }
   }
 
-  search() {
+  search(params?:any) {
+    if(params){
+      Object.assign(this.searchParams, params);      
+    }
     this._loading = true;
-    this.option.dataSource.getData(this.searchParams).then((model: NgdsDsDataGridModel) => {
+    this.option.dataSource.getData(this.searchParams).then((model: NgdsDataGridModel) => {
       this._loading = false;
       this.data = model.data;
-      // this.data = this.data.slice();
       this.page = model.page;
       this.searchParams.pageIndex = model.page.pageIndex;
     });

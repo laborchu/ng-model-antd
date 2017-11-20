@@ -7,14 +7,14 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NgdsDataGrid} from './datagrid';
 import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridTableOption,
  NgdsDataGridColumnOption, NgdsDataGridOpOption, NgdsDataGridOpBtnOption,
- NgdsDsDataGridModel, NgdsDsDataGridPageModel
+ NgdsDataGridModel, NgdsDataGridPageModel
 } from './datagrid.config';
 
 export { NgdsDataGrid} from './datagrid';
 export {
 	NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridTableOption,
 	NgdsDataGridColumnOption, NgdsDataGridOpOption, NgdsDataGridOpBtnOption,
-	NgdsDsDataGridModel, NgdsDsDataGridPageModel
+	NgdsDataGridModel, NgdsDataGridPageModel
 } from './datagrid.config';
 
 const NGB_TABSET_DIRECTIVES = [NgdsDataGrid];

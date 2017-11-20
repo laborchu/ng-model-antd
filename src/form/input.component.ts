@@ -17,11 +17,13 @@ import { NgdsFormComp } from './form.component';
   template: `
   <div nz-col [nzSpan]="option.span">
     <div nz-form-item nz-row>
-      <div nz-form-label nz-col [nzSpan]="4" >
+      <div nz-form-label nz-col [nzSpan]="option.labelSpan" >
         <label for="{{option.property}}">{{option.label}}</label>
       </div>
-      <div nz-form-control nz-col [nzSpan]="20" [nzValidateStatus]="getFormControl(option.property)">
+      <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
         <nz-input [nzSize]="'large'" nzType="{{option.type}}" 
+        [ngModel]="option.value"
+        (ngModelChange)="onChange($event)"
         [formControl]="getFormControl(option.property)"></nz-input>
 
         <div nz-form-explain *ngFor="let val of option.validations">
@@ -41,7 +43,8 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
 
   option: NgdsFormInputCompOption;
 
-  onChange(){
+  onChange(value:any){
+    this.option.value = value;
     this.option.onChange && this.option.onChange(this.option);
   }
 

@@ -20,10 +20,10 @@ import { NgdsFormComp } from './form.component';
     template: `
     <div nz-col [nzSpan]="option.span">
         <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="4">
+            <div nz-form-label nz-col [nzSpan]="option.labelSpan">
                 <label for="{{option.property}}">{{option.label}}</label>
             </div>
-            <div nz-form-control class="uploader" nz-col [nzSpan]="20" [nzValidateStatus]="getFormControl(option.property)">
+            <div nz-form-control class="uploader" nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
                 <div class="upload-item" *ngFor="let item of option.value" (click)="tapItem(item)">
                     <img *ngIf="isImg(item)" src="{{item.filePath}}"/>
                     <div class="upload-item-video" *ngIf="isVideo(item)">

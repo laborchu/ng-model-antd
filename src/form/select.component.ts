@@ -7,7 +7,7 @@ import {
   Input
 } from '@angular/core';
 import { NgdsFormConfig, NgdsFormSelectCompOption } from './form.config';
-import { NgdsDsModel } from '../core/datasource';
+import { NgdsModel } from '../core/datasource';
 import { NgdsFormComp } from './form.component';
 
 /**
@@ -18,11 +18,15 @@ import { NgdsFormComp } from './form.component';
   template: `
   <div nz-col [nzSpan]="option.span">
     <div nz-form-item nz-row>
-        <div nz-form-label nz-col [nzSpan]="4">
+        <div nz-form-label nz-col [nzSpan]="option.labelSpan">
             <label for="{{option.property}}">{{option.label}}</label>
         </div>
-        <div nz-form-control nz-col [nzSpan]="20" [nzValidateStatus]="getFormControl(option.property)">
-            <nz-select [formControl]="getFormControl(option.property)" [nzSize]="'large'" [nzMode]="'multiple'">
+        <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
+            <nz-select [formControl]="getFormControl(option.property)" 
+            [(ngModel)]="option.value"
+            (ngModelChange)="onChange($event)"
+            [nzSize]="'large'" 
+            [nzMode]="option.model">
               <nz-option *ngFor="let item of data" [nzLabel]="item[option.dsLabel]" [nzValue]="item[option.dsValue]"></nz-option>
             </nz-select>
 
@@ -57,7 +61,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
     })
   }
 
-  onChange(){
+  onChange(event:any){
     this.option.onChange && this.option.onChange(this.option);
   }
 

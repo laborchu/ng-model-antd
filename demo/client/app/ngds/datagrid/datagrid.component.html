@@ -1,5 +1,12 @@
- <div class="datagrid-demo">
+<div>
     <ngds-panel [option]="panelOption">
-        <ngds-datagrid [option]="option"></ngds-datagrid>
+        <ngds-form [option]="formOption" #myForm></ngds-form>
+        <div nz-row class="pr20">
+            <div nz-col [nzSpan]="24" style="text-align: right;">
+                <button nz-button [nzType]="'primary'" (click)="search()">查询</button>
+            </div>
+        </div>
+        <ngds-tab [option]="tabOption"></ngds-tab>
+        <ngds-datagrid #myTable [option]="option" class="panel-dg"></ngds-datagrid>
     </ngds-panel>
 </div>

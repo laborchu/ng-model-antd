@@ -4,10 +4,9 @@ import { NgdsDataGridModule } from './datagrid/datagrid.module';
 export {
 	NgdsDataGridModule,
 	NgdsDataGrid,
-	
 	NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridTableOption,
 	NgdsDataGridColumnOption, NgdsDataGridOpOption, NgdsDataGridOpBtnOption,
-	NgdsDsDataGridModel, NgdsDsDataGridPageModel
+	NgdsDataGridModel, NgdsDataGridPageModel
 } from './datagrid/datagrid.module';
 
 import { NgdsPanelModule } from './panel/panel.module';
@@ -47,7 +46,7 @@ export {
 
 
 export {
-	NgdsDataSource, NgdsDsModel
+	NgdsDataSource, NgdsModel
 } from './core/datasource';
 
 

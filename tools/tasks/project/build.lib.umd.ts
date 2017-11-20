@@ -36,7 +36,7 @@ export = (cb:any) => {
   webpack(
       {
         entry: './dist/tmp/temp/index.js',
-        output: {filename: 'dist/lib/bundles/angular-ngv.umd.js', library: 'ngb', libraryTarget: 'umd'},
+        output: { filename: 'dist/lib/bundles/ng-model-antd.umd.js', library: 'ngb', libraryTarget: 'umd' },
         devtool: 'source-map',
         externals: [
           {

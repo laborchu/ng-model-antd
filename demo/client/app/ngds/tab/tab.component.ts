@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 
 import {NgdsTabOption} from '../../../../../src/index';
-import {NgdsDataGridOption, NgdsDataSource, NgdsDsModel, NgdsDsDataGridModel} from '../../../../../src/index';
+import {NgdsDataGridOption, NgdsDataSource, NgdsModel, NgdsDataGridModel} from '../../../../../src/index';
 
 class AuthStatusDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsModel> {
-        return new Promise<NgdsDsModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
                 {label: "全部", value: 0},
                 {label: "已认证", value: 1},

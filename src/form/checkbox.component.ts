@@ -7,7 +7,7 @@ import {
     Input
 } from '@angular/core';
 import { NgdsFormConfig, NgdsFormCheckboxCompOption } from './form.config';
-import { NgdsDsModel } from '../core/datasource';
+import { NgdsModel } from '../core/datasource';
 import { NgdsFormComp } from './form.component';
 
 
@@ -19,19 +19,16 @@ import { NgdsFormComp } from './form.component';
     template: `
     <div nz-col [nzSpan]="option.span">
         <div nz-form-item nz-row>
-        <div nz-form-label nz-col [nzSpan]="4">
-            <label for="{{option.property}}">{{option.label}}</label>
-        </div>
-        <div nz-form-control nz-col [nzSpan]="20" [nzValidateStatus]="getFormControl(option.property)">
-            <label nz-checkbox *ngFor="let item of data" [formControl]="getFormControl(option.property)">
-                <span>{{item.label}}</span>
-            </label>
-            <div nz-form-explain *ngFor="let val of option.validations">
-                <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
-                getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
+            <div nz-form-label nz-col [nzSpan]="option.labelSpan">
+                <label for="{{option.property}}">{{option.label}}</label>
             </div>
-
-        </div>
+            <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
+                <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="change()"></nz-checkbox-group>
+                <div nz-form-explain *ngFor="let val of option.validations">
+                    <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
+                    getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
+                </div>
+            </div>
         </div>
     </div>
     `
@@ -52,22 +49,26 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
             this.option.dsValue = "value";
         }
         this.option.dataSource.getData({}).then((data: Array<any>) => {
+            if (this.option.value != undefined) {
+                for (let item of data) {
+                    if (this.option.value.indexOf(item.value) != -1) {
+                        item.checked = true;
+                    }
+                }
+            }
             this.data = data;
         })
     }
 
     change(event: any) {
-        if (!this.option.value) {
-            this.option.value = [];
-        }
-        if (event) {
-            let data = this.option.value;
-            if (event.currentTarget.checked) {
-                data.push(event.currentTarget.value);
-            } else {
-                data.splice(data.indexOf(event.currentTarget.value), 1);
+        this.option.value = [];
+
+        for (let item of this.data) {
+            if (item.checked) {
+                this.option.value.push(item.value);
             }
         }
+       
         if (this.option.validations) {
             for (let val of this.option.validations) {
                 if (val.type == "required") {
@@ -81,17 +82,10 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         this.option.onChange && this.option.onChange(this.option);
     }
 
-    checked(value: any): boolean {
-        if (!this.option.value) {
-            return false;
-        }
-        return this.option.value.indexOf(value) != -1;
-    }
-
     ngAfterContentChecked() {
     }
 
-    getFormControl(name: string):any {
+    getFormControl(name: string): any {
         return this.option.formGroup.controls[name];
     }
 }

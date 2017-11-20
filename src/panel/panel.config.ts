@@ -10,9 +10,10 @@ export class NgdsPanelConfig {
 
 }
 
-export type crumbsFunc = () => void;
+export type crumbsFunc = (data:any) => void;
 
 export class NgdsPanelOption {
+    
 	crumbs: Array<NgdsPanelCrumbsOption>
     buttons?: Array<NgdsPanelBtnOption>;
 

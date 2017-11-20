@@ -1,4 +1,25 @@
 /* Reset */
 @import "../../../src/ngds.scss";
 
+.ngds-panel{
+    .ant-card-body{
+        padding:0 !important;
+    }
+    .ngds-form{
+        padding-right: 20px;
+        padding-top: 20px;
+    }
+    .panel-dg{
+        .ant-table-wrapper{
+            padding: 20px;
+            background-color: #F0F2F5;
+            .ant-table{
+                background-color: white;
+            }
+        }
+    }
+}
 
+.pr20{
+    padding-right: 20px;
+}

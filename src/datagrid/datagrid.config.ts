@@ -1,5 +1,5 @@
 import { Injectable, PipeTransform } from '@angular/core';
-import { NgdsDataSource,NgdsDsModel } from '../core/datasource';
+import { NgdsDataSource,NgdsModel } from '../core/datasource';
 
 /**
  * Configuration service for the NgbTabset component.
@@ -10,12 +10,12 @@ import { NgdsDataSource,NgdsDsModel } from '../core/datasource';
 export class NgdsDataGridConfig {
 }
 
-export interface NgdsDsDataGridModel extends NgdsDsModel{
-	page: NgdsDsDataGridPageModel;
+export interface NgdsDataGridModel extends NgdsModel {
+	page: NgdsDataGridPageModel;
 	data: Array<any>;
 }
 
-export interface NgdsDsDataGridPageModel extends NgdsDsModel {
+export interface NgdsDataGridPageModel extends NgdsModel {
 	pageSize?: number; //每页个数
 	pageCount: number; //页面总数
 	pageIndex: number;//当前页数

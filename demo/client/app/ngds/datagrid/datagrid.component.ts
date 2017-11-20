@@ -1,23 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 
 import {
-    NgdsDataGridOption,NgdsPanelOption,
+    NgdsDataGridOption, NgdsPanelOption,
     NgdsDataSource,
-    NgdsDsModel,
-    NgdsDsDataGridModel,
-    DatagridDeepPropertyPipe
+    NgdsModel,
+    NgdsDataGridModel,
+    NgdsTabOption,
+    DatagridDeepPropertyPipe,
+    NgdsFormConfig,
+    NgdsFormOption, NgdsFormInput, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect, NgdsFormDatePicker,
+    NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
+    NgdsForm, NgdsFormComp,NgdsDataGrid
 } from '../../../../../src/index';
-import {DatagridPropertyPipe, DatagridPropertyBadgePipe} from '../../shared/pipe/index';
+import { DatagridPropertyPipe, DatagridPropertyBadgePipe } from '../../shared/pipe/index';
 
 // pageSize: number; //每页个数
 // pageCount: number; //页面总数
 // pageIndex: number;//当前页数
 
 class DemoDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsDataGridModel> {
-        return new Promise<NgdsDsDataGridModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsDataGridModel> {
+        return new Promise<NgdsDataGridModel>((resolve, reject) => {
             let date = new Date();
-            setTimeout(()=>{
+            setTimeout(() => {
                 resolve({
                     page: {
                         pageSize: 10,
@@ -25,28 +30,64 @@ class DemoDataSource implements NgdsDataSource {
                         pageIndex: 10,
                     },
                     data: [
-                        {username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, org: {name: 1}},
-                        {username: "13999", name: "胡立波", mobile: "13333333331", authStatus: 0},
-                        {username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1},
-                        {username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1},
-                        {username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 0},
-                        {username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1},
-                        {username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1},
-                        {username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1},
+                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, org: { name: 1 } },
+                        { username: "13999", name: "胡立波", mobile: "13333333331", authStatus: 0 },
+                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
+                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
+                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 0 },
+                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
+                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
+                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
                     ]
                 });
-            },1000)
-            
+            }, 1000)
+
         });
     }
 }
 class AuthStatusDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsModel> {
-        return new Promise<NgdsDsModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
-                {label: "全部", value: 0},
-                {label: "已认证", value: 1},
-                {label: "未认证", value: 2}
+                { label: "全部", value: 0 },
+                { label: "已认证", value: 1 },
+                { label: "未认证", value: 2 }
+            ]);
+        });
+    }
+}
+
+class SexDataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve([
+                {label: "男", value: 1},
+                {label: "女", value: 2}
+            ]);
+        });
+    }
+}
+class LikeDataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve([
+                {label: "游泳", value: 1},
+                {label: "下棋", value: 2},
+                {label: "编程", value: 3},
+                {label: "跑步", value: 4}
+            ]);
+        });
+    }
+}
+class SelectDataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve([
+                {label: "全部", value: ""},
+                {label: "杭州", value: 1},
+                {label: "宁波", value: 2},
+                {label: "温州", value: 3},
+                {label: "上海", value: 4}
             ]);
         });
     }
@@ -63,10 +104,12 @@ class AuthStatusDataSource implements NgdsDataSource {
 export class DataGridComponent implements OnInit {
 
     constructor(private datagridPropertyPipe: DatagridPropertyPipe,
-                private datagridPropertyBadgePipe: DatagridPropertyBadgePipe,
-                private datagridDeepPropertyPipe: DatagridDeepPropertyPipe) {
+        private datagridPropertyBadgePipe: DatagridPropertyBadgePipe,
+        private datagridDeepPropertyPipe: DatagridDeepPropertyPipe) {
     }
-
+    @ViewChild('myForm') myForm:NgdsForm;
+    @ViewChild('myTable') myTable:NgdsDataGrid;
+    
     panelOption: NgdsPanelOption = {
         crumbs: [
             {
@@ -92,14 +135,70 @@ export class DataGridComponent implements OnInit {
         ]
     }
 
+    tabOption: NgdsTabOption = {
+        tabSource: new AuthStatusDataSource(),
+        tabSelect: (data: any) => {
+
+        }
+    }
+
+    formOption: NgdsFormOption = {
+        components: [
+            [
+                {
+                    label: '店铺名称', property: "shopName", comp: NgdsFormInput, type: "text"
+                },
+                { label: '商品名称', property: "goodName", comp: NgdsFormInput, type: "password" },
+                { label: '邮件', property: "email", comp: NgdsFormInput, type: "email" }
+            ],
+            [
+                {
+                    label: '性别', property: "sex", comp: NgdsFormRadio, dataSource: new SexDataSource(), value: 1,
+                    onChange: (option: NgdsFormCompOption) => {
+                    }
+                },
+                {
+                    label: '爱好',
+                    property: "like",
+                    comp: NgdsFormCheckbox,
+                    dataSource: new LikeDataSource(),
+                    value: [1],
+                    onChange: (option: any) => {
+                    }
+                },
+                {
+                    label: '出生日期', property: "date", comp: NgdsFormDatePicker
+                },
+            ],
+            [
+                {
+                    label: '单选地区',
+                    property: "location",
+                    comp: NgdsFormSelect,
+                    value:1,
+                    dataSource: new SelectDataSource()
+                },
+                {
+                    label: '多选地区',
+                    property: "location2",
+                    comp: NgdsFormSelect,
+                    value:[1,2],
+                    dataSource: new SelectDataSource(),
+                    model: "multiple"
+                },
+            ]
+        ]
+
+    }
+
     option: NgdsDataGridOption = {
         dataSource: new DemoDataSource(),
         table: {
-            showCheck:false,
+            showCheck: false,
             columns: [
-                {text: '用户名', property: "username", width: "60px"},
-                {text: '姓名', property: "name", width: "80px"},
-                {text: '手机号', property: "mobile", width: "80px"},
+                { text: '用户名', property: "username", width: "60px" },
+                { text: '姓名', property: "name", width: "80px" },
+                { text: '手机号', property: "mobile", width: "80px" },
                 {
                     text: '认证状态',
                     property: "authStatus",
@@ -126,8 +225,8 @@ export class DataGridComponent implements OnInit {
                     },
                     {
                         text: '删除',
-                        hidden:(data)=>{
-                            if(data.mobile=="13333333331"){
+                        hidden: (data) => {
+                            if (data.mobile == "13333333331") {
                                 return true;
                             }
                             return false;
@@ -140,8 +239,8 @@ export class DataGridComponent implements OnInit {
                 groupButtons: [
                     {
                         text: '用户管理',
-                        hidden:(data)=>{
-                            if(data.mobile=="13333333331"){
+                        hidden: (data) => {
+                            if (data.mobile == "13333333331") {
                                 return true;
                             }
                             return false;
@@ -154,8 +253,8 @@ export class DataGridComponent implements OnInit {
                             },
                             {
                                 text: "学生管理",
-                                hidden:(data)=>{
-                                    if(data.mobile=="13333333331"){
+                                hidden: (data) => {
+                                    if (data.mobile == "13333333331") {
                                         return true;
                                     }
                                     return false;
@@ -185,6 +284,11 @@ export class DataGridComponent implements OnInit {
      * Get the names OnInit
      */
     ngOnInit() {
+    }
+
+    search(){
+        let value:any = this.myForm.getValue();
+        this.myTable.search(value);
     }
 
 

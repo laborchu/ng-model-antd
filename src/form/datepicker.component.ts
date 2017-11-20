@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {NgdsFormConfig,NgdsFormDatePickerCompOption} from './form.config';
 import {NgdsFormComp} from './form.component';
-import {NgdsDsModel} from '../core/datasource';
+import {NgdsModel} from '../core/datasource';
 
 
 /**
@@ -20,11 +20,14 @@ import {NgdsDsModel} from '../core/datasource';
     template: `
     <div nz-col [nzSpan]="option.span">
         <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="4">
+            <div nz-form-label nz-col [nzSpan]="option.labelSpan">
                 <label for="{{option.property}}">{{option.label}}</label>
             </div>
-            <div nz-form-control nz-col [nzSpan]="20" [nzValidateStatus]="getFormControl(option.property)">
-                <nz-datepicker [formControl]="getFormControl(option.property)" [nzSize]="'large'">
+            <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
+                <nz-datepicker [formControl]="getFormControl(option.property)" 
+                [(ngModel)]="option.value"
+                (ngModelChange)="change($event)"
+                [nzSize]="'large'">
                 </nz-datepicker>
 
                 <div nz-form-explain *ngFor="let val of option.validations">
@@ -53,8 +56,12 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
     ngAfterContentChecked() {
     }
 
+    change($event:any){
+        this.option.onChange && this.option.onChange(this.option);
+    }
+
     getFormControl(name:string):any {
         return this.option.formGroup.controls[ name ];
-      }
+    }
     
 }

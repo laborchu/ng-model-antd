@@ -12,7 +12,7 @@ import {NgdsPanelConfig, NgdsPanelOption, NgdsPanelBtnOption} from './panel.conf
     selector: 'ngds-panel',
     exportAs: 'ngdsPanel',
     template: `
-        <nz-card style="width:100%;">
+        <nz-card style="width:100%;" class="ngds-panel">
             <ng-template #title>
                 <nz-breadcrumb>
                     <nz-breadcrumb-item *ngFor="let crumb of option.crumbs;">

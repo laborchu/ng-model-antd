@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NgdsDataSource,NgdsDsModel } from '../core/datasource';
+import { NgdsDataSource,NgdsModel } from '../core/datasource';
 
 export type tabSelect = (data:any) => void;
 /**

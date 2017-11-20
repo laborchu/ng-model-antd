@@ -5,21 +5,21 @@ import {
     NgdsFormConfig,
     NgdsFormOption, NgdsFormInput, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect,NgdsFormDatePicker,
      NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
-    NgdsPanelOption, NgdsDataSource, NgdsDsModel, NgdsForm, NgdsFormComp
+    NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp
 } from '../../../../../src/index';
 import {CustomValidators} from 'ng2-validation';
 
 
 class Md5DataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsModel> {
-        return new Promise<NgdsDsModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
             resolve({ filePath: "http://www.dianshang.com/img/ztzx/1.jpg?imageView2/1/w/310/h/207", fileType:"mp4" });
         });
     }
 }
 class SexDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsModel> {
-        return new Promise<NgdsDsModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
                 {label: "男", value: 1},
                 {label: "女", value: 2}
@@ -28,8 +28,8 @@ class SexDataSource implements NgdsDataSource {
     }
 }
 class LikeDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsModel> {
-        return new Promise<NgdsDsModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
                 {label: "游泳", value: 1},
                 {label: "下棋", value: 2},
@@ -40,8 +40,8 @@ class LikeDataSource implements NgdsDataSource {
     }
 }
 class SelectDataSource implements NgdsDataSource {
-    getData(params: any): Promise<NgdsDsModel> {
-        return new Promise<NgdsDsModel>((resolve, reject) => {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
                 {label: "全部", value: ""},
                 {label: "杭州", value: 1},

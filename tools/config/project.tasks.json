@@ -12,6 +12,7 @@
     "build.lib.umd",
     "build.lib.scss",
     "build.lib.npm"
+
   ]
 }
 

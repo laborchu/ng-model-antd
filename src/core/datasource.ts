@@ -1,6 +1,6 @@
 export interface NgdsDataSource {
-	getData: (params: any) => Promise<NgdsDsModel>;
+	getData: (params: any) => Promise<NgdsModel>;
 }
 
-export interface NgdsDsModel {
+export interface NgdsModel {
 }

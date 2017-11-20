@@ -7,8 +7,9 @@ import {
   Input
 } from '@angular/core';
 import { NgdsFormConfig, NgdsFormRadioCompOption } from './form.config';
-import { NgdsDsModel } from '../core/datasource';
+import { NgdsModel } from '../core/datasource';
 import { NgdsFormComp } from './form.component';
+import { NzRadioGroupComponent } from 'ng-zorro-antd';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -18,11 +19,14 @@ import { NgdsFormComp } from './form.component';
   template: `
   <div nz-col [nzSpan]="option.span">
     <div nz-form-item nz-row>
-      <div nz-form-label nz-col [nzSpan]="4">
+      <div nz-form-label nz-col [nzSpan]="option.labelSpan">
         <label for="{{option.property}}">{{option.label}}</label>
       </div>
-      <div nz-form-control nz-col [nzSpan]="20" [nzValidateStatus]="getFormControl(option.property)">
-        <nz-radio-group [formControl]="getFormControl(option.property)">
+      <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
+        <nz-radio-group #group
+        [formControl]="getFormControl(option.property)"
+        [ngModel]="option.value"
+        (ngModelChange)="onChange($event)">
           <label nz-radio [nzValue]="item.value" *ngFor="let item of data">
             <span>{{item.label}}</span>
           </label>
@@ -41,10 +45,10 @@ export class NgdsFormRadio extends NgdsFormComp implements AfterContentChecked {
   constructor() {
     super();
   }
-
+  @ViewChild('group') group:NzRadioGroupComponent;
+  
   option: NgdsFormRadioCompOption;
   data: Array<any>;
-
   ngOnInit() {
     if(!this.option.dsLabel){
         this.option.dsLabel = "label";
@@ -54,11 +58,18 @@ export class NgdsFormRadio extends NgdsFormComp implements AfterContentChecked {
     }
     this.option.dataSource.getData({}).then((data: Array<any>) => {
       this.data = data;
+      if(this.option.value!=undefined){
+        setTimeout(()=>{
+          this.group._value = null;
+          this.group.updateValue(this.option.value);        
+        },10)
+      }
     });
-    this.onChange();
+    this.option.onChange&&this.option.onChange(this.option);
   }
 
-  onChange(){
+  onChange(value:any){
+    this.option.value = value;
     this.option.onChange&&this.option.onChange(this.option);
   }
 

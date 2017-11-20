@@ -6,7 +6,7 @@
                 <button nz-button [nzType]="'primary'" (click)="search()">查询</button>
             </div>
         </div>
-        <ngds-tab [option]="tabOption"></ngds-tab>
+        <ngds-tab [option]="tabOption" (ngdsTabSelect)="tabSelect($event)"></ngds-tab>
         <ngds-datagrid #myTable [option]="option" class="panel-dg"></ngds-datagrid>
     </ngds-panel>
 </div>

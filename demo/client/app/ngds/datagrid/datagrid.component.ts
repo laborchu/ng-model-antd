@@ -291,5 +291,9 @@ export class DataGridComponent implements OnInit {
         this.myTable.search(value);
     }
 
+    tabSelect(data:any){
+        let value:any = this.myForm.getValue();
+        this.myTable.search({auth:data.value});
+    }
 
 }

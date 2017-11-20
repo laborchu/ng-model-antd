@@ -5,8 +5,8 @@ import {
     ViewChild,
     QueryList,
     ElementRef,
-
-
+    Output,
+    EventEmitter,
     Input
 } from '@angular/core';
 
@@ -26,7 +26,10 @@ import { debug } from 'util';
         <div class="ngds-tab">
             <div class="ngds-tab-body">
                 <div #tabBar [style.width.px]="selectElemWidth" class="ngds-tab-bar"></div>
-                <div class="ngds-tab-item" [ngClass]="{'tab-select':selectIndex==i}" #tabComp *ngFor="let tab of tabArray; let i = index" (click)="tabSelect($event,i)">{{tab.label}}</div>
+                <div class="ngds-tab-item" [ngClass]="{'tab-select':selectIndex==i}" 
+                #tabComp *ngFor="let tab of tabArray; let i = index" (click)="tabSelect($event,i)">
+                {{tab.label}}
+                </div>
             </div>
         </div>
     `
@@ -40,6 +43,7 @@ export class NgdsTab {
     tabArray: Array<any>;
     @ViewChildren('tabComp') tabCompArray: QueryList<ElementRef>;
     @ViewChild('tabBar') tabBar: ElementRef;
+    @Output() ngdsTabSelect: EventEmitter<any> = new EventEmitter();
 
     selectElemWidth: number = 0;
     selectIndex: number = 0;
@@ -69,6 +73,7 @@ export class NgdsTab {
         ]);
         let animationPlayer = progressAnimation.create(this.tabBar.nativeElement);
         animationPlayer.play();
+        this.ngdsTabSelect.emit(this.tabArray[index]);
     }
 
 }

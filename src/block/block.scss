@@ -1,0 +1,36 @@
+@import "../variable";
+.ngds-block{
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 20px;    
+    padding-bottom: 10px;
+    &:hover{
+        box-shadow:none !important;
+    }
+    .ant-card-head{
+        border: 0;
+        padding: 0;
+    }
+    .ant-card-body{
+        padding: 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+}
+
+.ngds-block-info {
+    .info-item{
+        margin-bottom: 10px;
+        .info-label {
+            text-align: right;
+    
+            &::after {
+                content: ":";
+                margin: 0 8px 0 2px;
+                position: relative;
+                top: -0.5px;
+            }
+        }
+    }
+    
+}

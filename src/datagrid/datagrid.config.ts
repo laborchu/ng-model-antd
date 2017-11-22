@@ -11,7 +11,7 @@ export class NgdsDataGridConfig {
 }
 
 export interface NgdsDataGridModel extends NgdsModel {
-	page: NgdsDataGridPageModel;
+	page?: NgdsDataGridPageModel;
 	data: Array<any>;
 }
 

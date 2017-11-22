@@ -28,6 +28,7 @@ import { NgdsFormComp } from './form.component';
 
         <div nz-form-explain *ngFor="let val of option.validations">
             <span class="error-msg" *ngIf="getFormControl(option.property).dirty&&
+            getFormControl(option.property).errors&&
             getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
         </div>
 

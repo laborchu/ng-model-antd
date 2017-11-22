@@ -46,7 +46,7 @@ export class NgdsForm implements AfterContentChecked {
         for (let rowCompOption of this.option.components) {
             let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
             let rowComp: ComponentRef<any> = this.formRef.createComponent(rowFactory);
-            // rowComp.instance.gutter = maxCol*8+16;
+            rowComp.instance.gutter = this.option.gutter;
             
             for (let compOption of rowCompOption) {
                 let compFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(compOption.comp);

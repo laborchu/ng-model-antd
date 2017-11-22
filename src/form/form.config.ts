@@ -28,6 +28,7 @@ export class NgdsFormUploaderConfig {
 export class NgdsFormOption {
 	labelSpan?:number;
 	compSpan?:number;
+	gutter?:number;
 	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption|NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption>>;
 	value?: any;
 }

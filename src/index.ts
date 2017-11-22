@@ -25,6 +25,13 @@ export {
 	NgdsTabConfig, NgdsTabOption
 } from './tab/tab.module';
 
+import { NgdsBlockModule } from './block/block.module';
+export {
+	NgdsBlockModule,
+	NgdsBlock,NgdsBlockInfo,
+	NgdsBlockConfig, NgdsBlockOption,
+	NgdsBlockInfoOption,NgdsBlockInfoItemOption
+} from './block/block.module';
 
 import { NgdsFormModule } from './form/form.module';
 export {
@@ -63,7 +70,8 @@ const NGB_MODULES = [
 	NgdsDataGridModule,
 	NgdsPanelModule,
 	NgdsFormModule,
-	NgdsTabModule
+	NgdsTabModule,
+	NgdsBlockModule
 ];
 
 @NgModule({
@@ -72,6 +80,7 @@ const NGB_MODULES = [
 	  NgdsPanelModule.forRoot(),
 	  NgdsFormModule.forRoot(),
 	  NgdsTabModule.forRoot(),
+	  NgdsBlockModule.forRoot(),
 	  NgZorroAntdModule.forRoot(),
 	  NgdsPipeModule.forRoot()
   ],

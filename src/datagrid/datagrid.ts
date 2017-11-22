@@ -12,7 +12,7 @@ import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDa
   selector: 'ngds-datagrid',
   exportAs: 'ngdsDataGrid',
   template: `
-    <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="page?.pageSize" 
+    <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="page?.pageSize" [nzIsPagination]="page?true:false"
             [nzTotal]="page?.pageCount" [nzLoading]="_loading" (nzPageIndexChange)="search()">
       <thead nz-thead>
         <tr>
@@ -163,7 +163,9 @@ export class NgdsDataGrid implements AfterContentChecked {
       this._loading = false;
       this.data = model.data;
       this.page = model.page;
-      this.searchParams.pageIndex = model.page.pageIndex;
+      if(model.page){
+        this.searchParams.pageIndex = model.page.pageIndex;        
+      }
     });
   }
 

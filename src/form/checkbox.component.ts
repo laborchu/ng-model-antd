@@ -60,7 +60,7 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         })
     }
 
-    change(event: any) {
+    change() {
         this.option.value = [];
 
         for (let item of this.data) {

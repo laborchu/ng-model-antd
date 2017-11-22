@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DataGridComponent, PanelComponent, FormComponent,TabComponent } from './ngds/index';
+import { DataGridComponent, PanelComponent, FormComponent,TabComponent,BlockComponent } from './ngds/index';
 
 @NgModule({
   imports: [
@@ -9,6 +9,7 @@ import { DataGridComponent, PanelComponent, FormComponent,TabComponent } from '.
 		  { path: 'panel', component: PanelComponent },
 		  { path: 'form', component: FormComponent },
 		  { path: 'tab', component: TabComponent },
+		  { path: 'block', component: BlockComponent },
     ])
   ],
   exports: [RouterModule]

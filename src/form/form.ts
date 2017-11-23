@@ -37,6 +37,11 @@ export class NgdsForm implements AfterContentChecked {
     compMap: any = {};
     ngOnInit() {
         this.myForm = this.fb.group({});
+        this.refresh();
+    }
+
+    refresh(){
+        this.formRef.clear();
         let maxCol:number = 0;
         this.option.labelSpan = this.option.labelSpan || 6;
         this.option.compSpan = this.option.compSpan || 18;
@@ -72,9 +77,7 @@ export class NgdsForm implements AfterContentChecked {
                     compOption.value = this.option.value[compOption.property];
                 }
             }
-            
         }
-
     }
 
     checkVal():boolean{
@@ -83,11 +86,15 @@ export class NgdsForm implements AfterContentChecked {
 
     getValue(): any {
         if(!this.option.value){
-            this.option.value = {};
+            this.option.value = {};            
         }
         for (let rowComp of this.option.components) {
             for (let compOption of rowComp) {
-                this.option.value[compOption.property] = compOption.value;
+                if(compOption.hidden){
+                    delete this.option.value[compOption.property];
+                }else{
+                    this.option.value[compOption.property] = compOption.value;                    
+                }
             }
         }
         return this.option.value;
@@ -97,10 +104,10 @@ export class NgdsForm implements AfterContentChecked {
         this.option.value = data;
         for (let rowComp of this.option.components) {
             for (let compOption of rowComp) {
-                compOption.value = this.option.value[compOption.property];
+                let value = this.option.value[compOption.property];
                 let txComp: any = this.compMap[compOption.property].instance;
                 if (txComp.onChange){
-                    txComp.onChange();
+                    txComp.onChange(value);
                 }
             }
         }

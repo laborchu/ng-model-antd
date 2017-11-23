@@ -29,6 +29,8 @@ import {
     @ViewChild("rowRef", {read: ViewContainerRef}) rowRef: ViewContainerRef;
     gutter:number;
   
+    onChange(value:any){
+    }
     addCol(compFactory: ComponentFactory<any>):ComponentRef<any>{
         return this.rowRef.createComponent(compFactory);
     }

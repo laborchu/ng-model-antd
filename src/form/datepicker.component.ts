@@ -18,7 +18,7 @@ import {NgdsModel} from '../core/datasource';
 @Component({
     selector: 'ngds-form-date',
     template: `
-    <div nz-col [nzSpan]="option.span">
+    <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
         <div nz-form-item nz-row>
             <div nz-form-label nz-col [nzSpan]="option.labelSpan">
                 <label for="{{option.property}}">{{option.label}}</label>
@@ -26,13 +26,12 @@ import {NgdsModel} from '../core/datasource';
             <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
                 <nz-datepicker [formControl]="getFormControl(option.property)" 
                 [(ngModel)]="option.value"
-                (ngModelChange)="change($event)"
+                (ngModelChange)="onChange($event)"
                 [nzSize]="'large'">
                 </nz-datepicker>
 
                 <div nz-form-explain *ngFor="let val of option.validations">
-                    <span class="error-msg" *ngIf="getFormControl(option.property).dirty&&
-                    getFormControl(option.property).errors&&
+                    <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                     getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
                 </div>
 
@@ -56,7 +55,7 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
     ngAfterContentChecked() {
     }
 
-    change($event:any){
+    onChange($event:any){
         this.option.onChange && this.option.onChange(this.option);
     }
 

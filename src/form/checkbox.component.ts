@@ -17,13 +17,13 @@ import { NgdsFormComp } from './form.component';
 @Component({
     selector: 'ngds-form-checkbox',
     template: `
-    <div nz-col [nzSpan]="option.span">
+    <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
         <div nz-form-item nz-row>
             <div nz-form-label nz-col [nzSpan]="option.labelSpan">
                 <label for="{{option.property}}">{{option.label}}</label>
             </div>
             <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-                <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="change()"></nz-checkbox-group>
+                <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="onChange()"></nz-checkbox-group>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                     getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
@@ -60,7 +60,7 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         })
     }
 
-    change() {
+    onChange() {
         this.option.value = [];
 
         for (let item of this.data) {

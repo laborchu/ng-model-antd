@@ -16,7 +16,7 @@ import { NgdsFormComp } from './form.component';
 @Component({
   selector: 'ngds-form-select',
   template: `
-  <div nz-col [nzSpan]="option.span">
+  <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
     <div nz-form-item nz-row>
         <div nz-form-label nz-col [nzSpan]="option.labelSpan">
             <label for="{{option.property}}">{{option.label}}</label>
@@ -31,8 +31,7 @@ import { NgdsFormComp } from './form.component';
             </nz-select>
 
             <div nz-form-explain *ngFor="let val of option.validations">
-                <span class="error-msg" *ngIf="getFormControl(option.property).dirty&&
-                getFormControl(option.property).errors&&
+                <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                 getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
             </div>
 

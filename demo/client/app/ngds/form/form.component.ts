@@ -3,7 +3,7 @@ import {Validators, FormControl} from '@angular/forms';
 
 import {
     NgdsFormConfig,
-    NgdsFormOption, NgdsFormInput, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect,NgdsFormDatePicker,
+    NgdsFormOption, NgdsFormInput,NgdsFormInputList, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect,NgdsFormDatePicker,
      NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
     NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp
 } from '../../../../../src/index';
@@ -93,6 +93,12 @@ export class FormComponent implements OnInit {
                 {
                     label: '性别', property: "sex", comp: NgdsFormRadio, dataSource: new SexDataSource(), value:1,
                     onChange: (option: NgdsFormCompOption) => {
+                        if(option.value==2){
+                            this.option.components[1][2].hidden = true;
+                        }else{
+                            this.option.components[1][2].hidden = false;                            
+                        }
+                        // this.myForm.refresh();
                     },
                     validations: [
                         {msg: "性别必选", type: "required", fn: Validators.required}
@@ -105,6 +111,7 @@ export class FormComponent implements OnInit {
                     dataSource: new LikeDataSource(),
                     value: [1],
                     onChange: (option: any) => {
+                        
                     },
                     validations: [
                         {msg: "爱好必选", type: "required", fn: Validators.required}
@@ -144,6 +151,10 @@ export class FormComponent implements OnInit {
 
     option2: NgdsFormOption = {
         components: [
+
+            [
+                {label: '属性值', property: "valueArray",valueField:"name", comp: NgdsFormInputList},
+            ],
             [
                 {
                     label: '上传头像',

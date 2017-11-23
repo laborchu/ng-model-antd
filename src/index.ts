@@ -39,6 +39,7 @@ export {
 	NgdsForm,
 	NgdsFormComp,
 	NgdsFormInput,
+	NgdsFormInputList,
 	NgdsFormRadio,
 	NgdsFormCheckbox,
 	NgdsFormSelect,
@@ -46,7 +47,7 @@ export {
 	NgdsFormUploader,
 	NgdsFormDatePicker,
 
-	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
+	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormSelectCompOption, 
 	NgdsFormDatePickerCompOption,NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption
 } from './form/form.module';

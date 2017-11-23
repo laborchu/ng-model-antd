@@ -16,7 +16,7 @@ import { NgdsFormComp } from './form.component';
 @Component({
     selector: 'ngds-form-umeditor',
     template: `
-        <div nz-col [nzSpan]="option.span">
+        <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
             <div nz-form-item nz-row>
                 <div nz-form-label nz-col [nzSpan]="option.labelSpan">
                     <label for="{{option.property}}">{{option.label}}</label>
@@ -28,11 +28,10 @@ import { NgdsFormComp } from './form.component';
                         [loadingTip]="option.loadingTip?option.loadingTip:'加载中...'"
                         (onReady)="editorReady()"
                         (onDestroy)="editorDestroy()"
-                        (onContentChange)="editorContentChange()"></umeditor>
+                        (onContentChange)="onChange()"></umeditor>
 
                     <div nz-form-explain *ngFor="let val of option.validations">
-                        <span class="error-msg" *ngIf="getFormControl(option.property).dirty&&
-                        getFormControl(option.property).errors&&
+                        <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                         getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
                     </div>
 
@@ -73,7 +72,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
     editorDestroy() {
     }
 
-    editorContentChange() {
+    onChange() {
         if(this.option.validations){
             for(let val of this.option.validations){
                 if(val.type=="required"){

@@ -17,7 +17,7 @@ import { NzRadioGroupComponent } from 'ng-zorro-antd';
 @Component({
   selector: 'ngds-form-radio',
   template: `
-  <div nz-col [nzSpan]="option.span">
+  <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
     <div nz-form-item nz-row>
       <div nz-form-label nz-col [nzSpan]="option.labelSpan">
         <label for="{{option.property}}">{{option.label}}</label>

@@ -20,11 +20,11 @@ import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDa
             <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
             </label>
           </th>
-          <th *ngFor="let col of option.table.columns; nz-th"  [style.width.px]="col.width">
+          <th *ngFor="let col of option.table.columns;" nz-th [nzWidth]="col.width">
             <span>{{col.text}}</span>
             <nz-table-sort *ngIf="col.showSort" (nzValueChange)="_sort(col.property,$event)"></nz-table-sort>
           </th>
-          <th *ngIf="option.table.op" nz-th [style.width.px]="option.table.op.width">操作</th>
+          <th *ngIf="option.table.op" nz-th [nzWidth]="option.table.op.width">操作</th>
         </tr>
       </thead>
       <tbody nz-tbody>
@@ -40,7 +40,7 @@ import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDa
           </td>
           <td *ngIf="option.table.op" class="op-td">
               <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
-                <span nz-table-divider *ngIf="btn.hidden?!btn.hidden(item):true"></span>
+                <span nz-table-divider *ngIf="btnIndex!=0"></span>
                 <a [hidden]="btn.hidden?btn.hidden(item):false"
                       (click)="btn.action(item,dataIndex)"
                       class="{{getBtnStyle(btn,item)}}">

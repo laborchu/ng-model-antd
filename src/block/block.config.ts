@@ -10,11 +10,14 @@ export class NgdsBlockOption {
 }
 
 export class NgdsBlockInfoOption {
+	dataSource: NgdsDataSource|any;
     col?:number;
     items:Array<NgdsBlockInfoItemOption>;
 }
 
 export class NgdsBlockInfoItemOption {
     label:string;
-    text:string;
+    field:string;
+    width?:number;
+    type?:'text'|'image';
 }

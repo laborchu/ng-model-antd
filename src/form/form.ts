@@ -93,7 +93,19 @@ export class NgdsForm implements AfterContentChecked {
                 if(compOption.hidden){
                     delete this.option.value[compOption.property];
                 }else{
-                    this.option.value[compOption.property] = compOption.value;                    
+                    let propertyArray: Array<string> = compOption.property.split(".");
+                    let value = this.option.value;
+                    propertyArray.forEach((item:string,index:number)=>{
+                        if(index==propertyArray.length-1){
+                            value[item] = compOption.value;
+                        }else{
+                            if(!value[item]){
+                                value[item] = {};
+                            }
+                            value = value[item];
+                        }
+                    })
+                    // this.option.value[compOption.property] = compOption.value;                    
                 }
             }
         }

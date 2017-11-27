@@ -35,7 +35,7 @@ class Block1DataSource implements NgdsDataSource {
         return new Promise<NgdsModel>((resolve, reject) => {
             setTimeout(()=>{
                 resolve({
-                    data: { field1: "1000000000", field2: "已取货", field3: "1234123421", field4: "3214321432" }
+                    data: { field1: new Date(), field2: "已取货", field3: "1234123421", field4: "3214321432" }
                 });
             },2000)
             
@@ -63,7 +63,7 @@ export class BlockComponent implements OnInit {
         dataSource:new Block1DataSource(),
         col:1,
         items:[
-            {label:"取货单号",field:"field1"},
+            {label:"取货单号",field:"field1",type:"date",fomart:"yyyy-MM-dd HH:mm:ss"},
             {label:"状态",field:"field2"},
             {label:"销售单号",field:"field3"},
             {label:"子订单",field:"field4"}

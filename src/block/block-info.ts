@@ -2,10 +2,10 @@ import {
     Component,
     Input
 } from '@angular/core';
-
+import { DatePipe } from "@angular/common";
 import { AnimationBuilder, animate, style } from '@angular/animations';
 
-import { NgdsBlockConfig, NgdsBlockOption,NgdsBlockInfoOption } from './block.config';
+import { NgdsBlockConfig, NgdsBlockOption,NgdsBlockInfoOption,NgdsBlockInfoItemOption } from './block.config';
 import { NgdsDataSource,NgdsModel } from '../core/datasource';
 
 @Component({
@@ -16,8 +16,8 @@ import { NgdsDataSource,NgdsModel } from '../core/datasource';
         <div nz-row  *ngIf="!_isSpinning">
             <div class="info-item" nz-col [nzSpan]="_span" *ngFor="let item of option.items">
                 <span class="info-label">{{item.label}}</span>
-                <span *ngIf="item.type=='text'">
-                    {{data[item.field]}}
+                <span *ngIf="item.type!='image'">
+                    {{getText(item)}}
                 </span>
                 <span *ngIf="item.type=='image'">
                     <img src="{{data[item.field]}}" [style.width.px]="item.width"/>
@@ -30,7 +30,7 @@ import { NgdsDataSource,NgdsModel } from '../core/datasource';
     `
 })
 export class NgdsBlockInfo {
-    constructor(config: NgdsBlockConfig) {
+    constructor(config: NgdsBlockConfig,protected datePipe: DatePipe) {
     }
     
 
@@ -46,7 +46,7 @@ export class NgdsBlockInfo {
             for(let item of this.option.items){
                 if(!item.type){
                     item.type = "text";
-                }
+                } 
             }
         }
         this._span = parseInt(24/this.option.col+"");
@@ -60,5 +60,17 @@ export class NgdsBlockInfo {
             this._isSpinning = false;
         }
         
+    }
+
+    getText(item:NgdsBlockInfoItemOption):string{
+        if(item.type=="date"){
+            return this.datePipe.transform(this.data[item.field], item.fomart);
+        }else{
+            return this.data[item.field];
+        }
+    }
+
+    update(data:any):void{
+        Object.assign(this.data,data);
     }
 }

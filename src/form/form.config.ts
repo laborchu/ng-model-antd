@@ -34,7 +34,7 @@ export class NgdsFormOption {
 }
 
 
-export type onChangeFunc = (option:NgdsFormCompOption) => void;
+export type onChangeFunc = (option:NgdsFormCompOption,valueObj?:any) => void;
 
 export class NgdsFormCompOption {
 	comp: any;

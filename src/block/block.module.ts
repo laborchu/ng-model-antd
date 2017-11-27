@@ -1,5 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule,DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
@@ -19,5 +19,5 @@ const NGB_TABSET_DIRECTIVES = [NgdsBlock,NgdsBlockInfo];
 
 @NgModule({ declarations: NGB_TABSET_DIRECTIVES, exports: NGB_TABSET_DIRECTIVES, imports: [CommonModule,NgZorroAntdModule] })
 export class NgdsBlockModule {
-	static forRoot(): ModuleWithProviders { return { ngModule: NgdsBlockModule, providers: [NgdsBlockConfig] }; }
+	static forRoot(): ModuleWithProviders { return { ngModule: NgdsBlockModule, providers: [NgdsBlockConfig,DatePipe] }; }
 }

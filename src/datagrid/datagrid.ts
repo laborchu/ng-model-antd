@@ -1,7 +1,9 @@
 import {
   Component,
   AfterContentChecked,
-  Input
+  Input,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel } from './datagrid.config';
 
@@ -72,6 +74,8 @@ export class NgdsDataGrid implements AfterContentChecked {
   }
 
   @Input() option: NgdsDataGridOption;
+  @Output() checkboxChange: EventEmitter<any> = new EventEmitter();
+  
   page: NgdsDataGridPageModel;
   data: Array<any> = [];
   searchParams: any = {};
@@ -195,6 +199,13 @@ export class NgdsDataGrid implements AfterContentChecked {
     const allUnChecked = this.data.every(value => value.disabled || !value.checked);
     this._allChecked = allChecked;
     this._indeterminate = (!allChecked) && (!allUnChecked);
+    let checkedArray:Array<any> = [];
+    this.data.forEach((item: any) => {
+      if(item.checked){
+        checkedArray.push(item);
+      }
+    });
+    this.checkboxChange.emit(checkedArray);
   };
 
   _sort(sortName:string, value:any) {

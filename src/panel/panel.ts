@@ -16,7 +16,8 @@ import {NgdsPanelConfig, NgdsPanelOption, NgdsPanelBtnOption} from './panel.conf
             <ng-template #title>
                 <nz-breadcrumb>
                     <nz-breadcrumb-item *ngFor="let crumb of option.crumbs;">
-                    {{crumb.text}}
+                        <a (click)="crumb.action&&crumb.action()" *ngIf="crumb.action">{{crumb.text}}</a>
+                        <span *ngIf="!crumb.action">{{crumb.text}}</span>
                     </nz-breadcrumb-item>
                 </nz-breadcrumb>
             </ng-template>

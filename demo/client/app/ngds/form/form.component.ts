@@ -42,13 +42,15 @@ class LikeDataSource implements NgdsDataSource {
 class SelectDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsModel> {
         return new Promise<NgdsModel>((resolve, reject) => {
-            resolve([
-                {label: "全部", value: ""},
-                {label: "杭州", value: 1},
-                {label: "宁波", value: 2},
-                {label: "温州", value: 3},
-                {label: "上海", value: 4}
-            ]);
+            resolve({
+                data:[
+                    {label: "全部", value: ""},
+                    {label: "杭州", value: 1},
+                    {label: "宁波", value: 2},
+                    {label: "温州", value: 3},
+                    {label: "上海", value: 4}
+                ]
+            });
         });
     }
 }
@@ -86,8 +88,8 @@ export class FormComponent implements OnInit {
                     {msg: "必须为数字", type: "digits", fn: CustomValidators.digits},
                 ]
                 },
-                {label: '密码', property: "password", comp: NgdsFormInput, type: "password"},
-                {label: '邮件', property: "email", comp: NgdsFormInput, type: "email"}
+                {label: '密码', property: "user.password", comp: NgdsFormInput, type: "password"},
+                {label: '邮件', property: "user.email", comp: NgdsFormInput, type: "email"}
             ],
             [
                 {
@@ -130,6 +132,9 @@ export class FormComponent implements OnInit {
                     property: "location",
                     comp: NgdsFormSelect,
                     dataSource: new SelectDataSource(),
+                    onChange: (option: NgdsFormCompOption,value:any) => {
+                       debugger
+                    },
                     validations: [
                         {msg: "地区必选", type: "required", fn: Validators.required}
                     ]
@@ -200,7 +205,8 @@ export class FormComponent implements OnInit {
                 text: '保存',
                 action: (item) => {
                     if(this.myForm.checkVal()){
-                        alert(item);
+                        let data = this.myForm.getValue();
+                        debugger;
                     }
                 }
             }

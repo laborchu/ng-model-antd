@@ -19,5 +19,6 @@ export class NgdsBlockInfoItemOption {
     label:string;
     field:string;
     width?:number;
-    type?:'text'|'image';
+    fomart?:string;
+    type?:'text'|'image'|'date';
 }

@@ -55,13 +55,25 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
     if(!this.option.dsValue){
         this.option.dsValue = "value";
     }
-    this.option.dataSource.getData({}).then((data: Array<any>) => {
-      this.data = data;
+    this.option.dataSource.getData({}).then((model: any) => {
+      this.data = model.data;
     })
   }
 
   onChange(event:any){
-    this.option.onChange && this.option.onChange(this.option);
+    if(this.option.onChange){
+      let dataValue:any = null;
+      if(this.data){
+        this.data.every((data:any)=>{
+          if(data[this.option.dsValue]==this.option.value){
+            dataValue = data;
+            return false;
+          }
+          return true;
+        })
+      }
+      this.option.onChange(this.option,dataValue);
+    }
   }
 
   ngAfterContentChecked() {

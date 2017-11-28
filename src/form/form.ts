@@ -116,7 +116,15 @@ export class NgdsForm implements AfterContentChecked {
         this.option.value = data;
         for (let rowComp of this.option.components) {
             for (let compOption of rowComp) {
-                let value = this.option.value[compOption.property];
+                let propertyArray: Array<string> = compOption.property.split(".");
+                let value = data;
+                for (let p of propertyArray){
+                    if (!value){
+                        value = "";
+                        break;
+                    }
+                    value = value[p];
+                }
                 let txComp: any = this.compMap[compOption.property].instance;
                 if (txComp.onChange){
                     txComp.onChange(value);

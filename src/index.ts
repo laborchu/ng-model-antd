@@ -63,7 +63,7 @@ import {
 } from './pipe/index';
 
 export {
-	NgdsPipeModule, DatagridDeepPropertyPipe
+	NgdsPipeModule, DatagridDeepPropertyPipe,DatagridDatePropertyPipe
 } from './pipe/index';
 
 

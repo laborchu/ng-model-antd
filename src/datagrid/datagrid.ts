@@ -130,7 +130,11 @@ export class NgdsDataGrid implements AfterContentChecked {
         if (Array.isArray(col.propertyPipe)) {
           let value: any;
           for (let pipe of col.propertyPipe) {
-            value = pipe.transform(col.property, item, value);
+            if (typeof pipe === "function") {
+              value = pipe(col.property, item, value);                          
+            }else{
+              value = pipe.transform(col.property, item, value);              
+            }
           }
           return value;
         } else {

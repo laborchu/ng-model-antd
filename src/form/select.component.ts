@@ -24,7 +24,7 @@ import { NgdsFormComp } from './form.component';
         <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
             <nz-select [formControl]="getFormControl(option.property)" 
             [(ngModel)]="option.value"
-            (ngModelChange)="onChange($event)"
+            (ngModelChange)="onChange()"
             [nzSize]="'large'" 
             [nzMode]="option.model">
               <nz-option *ngFor="let item of data" [nzLabel]="item[option.dsLabel]" [nzValue]="item[option.dsValue]"></nz-option>
@@ -49,37 +49,40 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
   data: Array<any>;
 
   ngOnInit() {
-    if(!this.option.dsLabel){
-        this.option.dsLabel = "label";
+    if (!this.option.dsLabel) {
+      this.option.dsLabel = "label";
     }
-    if(!this.option.dsValue){
-        this.option.dsValue = "value";
+    if (!this.option.dsValue) {
+      this.option.dsValue = "value";
     }
     this.option.dataSource.getData({}).then((model: any) => {
       this.data = model.data;
     })
   }
 
-  onChange(event:any){
-    if(this.option.onChange){
-      let dataValue:any = null;
-      if(this.data){
-        this.data.every((data:any)=>{
-          if(data[this.option.dsValue]==this.option.value){
+  onChange(value: any) {
+    if (value !== undefined) {
+      this.option.value = value;
+    }
+    if (this.option.onChange) {
+      let dataValue: any = null;
+      if (this.data) {
+        this.data.every((data: any) => {
+          if (data[this.option.dsValue] == this.option.value) {
             dataValue = data;
             return false;
           }
           return true;
         })
       }
-      this.option.onChange(this.option,dataValue);
+      this.option.onChange(this.option, dataValue);
     }
   }
 
   ngAfterContentChecked() {
   }
 
-  getFormControl(name:string):any{
-    return this.option.formGroup.controls[ name ];
+  getFormControl(name: string): any {
+    return this.option.formGroup.controls[name];
   }
 }

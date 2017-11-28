@@ -14,6 +14,5 @@ export class NgdsTabConfig {
 
 export class NgdsTabOption {
     tabSource: NgdsDataSource;
-    tabSelect:tabSelect;
 }
 

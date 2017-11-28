@@ -218,6 +218,15 @@ export class FormComponent implements OnInit {
      * Get the names OnInit
      */
     ngOnInit() {
+        setTimeout(()=>{
+            this.myForm.setValue({
+                user:{
+                    password:"dddd"
+                }
+            })
+
+        },1000)
+        
     }
 
 

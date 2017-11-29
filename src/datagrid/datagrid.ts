@@ -3,9 +3,11 @@ import {
   AfterContentChecked,
   Input,
   EventEmitter,
-  Output
+  Output,
+  PipeTransform
 } from '@angular/core';
-import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel } from './datagrid.config';
+import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFunc,
+  NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel } from './datagrid.config';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -38,7 +40,8 @@ import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, NgdsDa
         
           <td *ngFor="let col of option.table.columns;"
               title="{{col.title? (item[col.property]):''}}">
-              <span [ngClass]="getPropertyClass(item,col)" [innerHTML]="getColInnerHtml(item,col)"></span>
+              <nz-badge *ngIf="col.badgePipe" [nzStatus]="getValueFromPipe(item,col,col.badgePipe)"></nz-badge>
+              <span [innerHTML]="getValueFromPipe(item,col,col.propertyPipe)"></span>
           </td>
           <td *ngIf="option.table.op" class="op-td">
               <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
@@ -122,43 +125,27 @@ export class NgdsDataGrid implements AfterContentChecked {
     }
   }
 
-  getColInnerHtml = function (item: any, col: NgdsDataGridColumnOption) {
-    if (col.propertyPipe) {
-      if (typeof col.propertyPipe === "function") {
-        return col.propertyPipe(col.property, item);
+  getValueFromPipe = function (item: any, col: NgdsDataGridColumnOption,pipe:PipeTransform | pipeFunc | PipeTransform[]) {
+    if (pipe) {
+      if (typeof pipe === "function") {
+        return pipe(col.property, item);
       } else {
-        if (Array.isArray(col.propertyPipe)) {
+        if (Array.isArray(pipe)) {
           let value: any;
-          for (let pipe of col.propertyPipe) {
-            if (typeof pipe === "function") {
-              value = pipe(col.property, item, value);                          
+          for (let pipeItem of pipe) {
+            if (typeof pipeItem === "function") {
+              value = pipeItem(col.property, item, value);                          
             }else{
-              value = pipe.transform(col.property, item, value);              
+              value = pipeItem.transform(col.property, item, value);              
             }
           }
           return value;
         } else {
-          return col.propertyPipe.transform(col.property, item);
+          return pipe.transform(col.property, item);
         }
       }
     } else {
       return item[col.property];
-    }
-  }
-
-  getPropertyClass = function (item: any, col: NgdsDataGridColumnOption) {
-    if (col.propertyClassPipe) {
-      if (Array.isArray(col.propertyClassPipe)) {
-        let value: any;
-        for (let pipe of col.propertyClassPipe) {
-          value = pipe.transform(col.property, item, value);
-        }
-        return value;
-      } else {
-        return col.propertyClassPipe.transform(col.property, item);
-      }
-    } else {
-      return "";
     }
   }
 

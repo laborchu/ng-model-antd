@@ -40,6 +40,7 @@ export interface NgdsDataGridColumnOption {
 	text: string;
 	property: string;
 	propertyPipe?: PipeTransform | pipeFunc | PipeTransform[];
+	badgePipe?: PipeTransform | pipeFunc | PipeTransform[];
 	width?: string;
 	title?:boolean;
 	overflow?: boolean;

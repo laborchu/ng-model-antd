@@ -22,7 +22,7 @@ import { NgdsFormComp } from './form.component';
             <div nz-form-label nz-col [nzSpan]="option.labelSpan">
                 <label for="{{option.property}}">{{option.label}}</label>
             </div>
-            <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
+            <div nz-form-control nz-col [nzSpan]="option.compSpan">
                 <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="onChange()"></nz-checkbox-group>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
@@ -60,16 +60,30 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         })
     }
 
-    onChange() {
-        this.option.value = [];
-
-        for (let item of this.data) {
-            if (item.checked) {
-                this.option.value.push(item.value);
+    onChange(value:any) {
+        if(value===undefined){
+            this.option.value = [];
+            for (let item of this.data) {
+                if (item.checked) {
+                    this.option.value.push(item.value);
+                }
+            }
+        }else{
+            this.option.value = value||[];
+            for (let item of this.data) {
+                if (this.option.value.indexOf(item.value)!=-1) {
+                    item.checked = true;
+                }else{
+                    item.checked = false;                    
+                }
             }
         }
+        
        
         if (this.option.validations) {
+            let formControl = this.option.formGroup.controls[this.option.property];
+            formControl.setErrors({});
+            
             for (let val of this.option.validations) {
                 if (val.type == "required") {
                     if (this.option.value.length == 0) {

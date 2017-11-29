@@ -17,7 +17,7 @@ import {
   @Component({
     selector: 'ngds-form-row',
     template: `
-      <div nz-row [nzGutter]="gutter">
+      <div nz-row [nzGutter]="gutter" [nzType]="nzType">
         <div #rowRef><div>
       </div>
     `
@@ -28,6 +28,7 @@ import {
     }
     @ViewChild("rowRef", {read: ViewContainerRef}) rowRef: ViewContainerRef;
     gutter:number;
+    nzType:string;
   
     onChange(value:any){
     }

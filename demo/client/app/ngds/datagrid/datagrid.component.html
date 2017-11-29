@@ -1,11 +1,11 @@
 <div>
     <ngds-panel [option]="panelOption">
-        <ngds-form [option]="formOption" #myForm></ngds-form>
-        <div nz-row class="pr20">
+        <ngds-form [option]="formOption" (onSearch)="search($event)" #myForm></ngds-form>
+        <!-- <div nz-row class="pr20">
             <div nz-col [nzSpan]="24" style="text-align: right;">
                 <button nz-button [nzType]="'primary'" (click)="search()">查询</button>
             </div>
-        </div>
+        </div> -->
         <ngds-tab [option]="tabOption" (ngdsTabSelect)="tabSelect($event)"></ngds-tab>
         <ngds-datagrid #myTable [option]="option" class="panel-dg"></ngds-datagrid>
     </ngds-panel>

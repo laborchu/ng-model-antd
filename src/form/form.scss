@@ -70,7 +70,18 @@
             }
         }
     }
+    .input-range{
+        .split-input{
+            margin-right: 8px;
+        }
+    }
+    .search-bar{
+        .split-btn{
+            margin-right: 8px;
+        }
+    }
     .error-msg {
         color: #f04134;;
     }
+
 }

@@ -136,13 +136,11 @@ export class DataGridComponent implements OnInit {
     }
 
     tabOption: NgdsTabOption = {
-        tabSource: new AuthStatusDataSource(),
-        tabSelect: (data: any) => {
-
-        }
+        tabSource: new AuthStatusDataSource()
     }
 
     formOption: NgdsFormOption = {
+        showSearch:true,
         components: [
             [
                 {
@@ -203,7 +201,13 @@ export class DataGridComponent implements OnInit {
                     text: '认证状态',
                     property: "authStatus",
                     propertyPipe: this.datagridPropertyPipe,
-                    propertyClassPipe: this.datagridPropertyBadgePipe,
+                    badgePipe: (property: string,data:any):string=>{
+                        if(data[property]==1){
+                            return "success";                        
+                        }else{
+                            return "error";                        
+                        }
+                    },
                     width: "130px"
                 },
                 {
@@ -286,14 +290,14 @@ export class DataGridComponent implements OnInit {
     ngOnInit() {
     }
 
-    search(){
-        let value:any = this.myForm.getValue();
-        this.myTable.search(value);
-    }
-
     tabSelect(data:any){
         let value:any = this.myForm.getValue();
         this.myTable.search({auth:data.value});
+    }
+
+    search(value:any){
+        debugger
+        this.myTable.search(value);
     }
 
 }

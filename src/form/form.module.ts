@@ -18,6 +18,9 @@ import {
 	NgdsFormInputList
 } from './input-list.component';
 import {
+	NgdsFormInputRange
+} from './input-range.component';
+import {
 	NgdsFormRadio
 } from './radio.component';
 import {
@@ -38,12 +41,18 @@ import {
 import {
 	NgdsFormDatePicker
 } from './datepicker.component';
+import {
+	NgdsFormDatePickerRange
+} from './datepicker-range.component';
+import {
+	NgdsFormSearchBar
+} from './search-bar.component';
 
 
 export { NgdsForm } from './form';
 export { NgdsFormComp } from './form.component';
 export {
-	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
+	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption,NgdsFormInputRangeCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormSelectCompOption, NgdsFormDatePickerCompOption,
 	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption
 } from './form.config';
@@ -53,6 +62,9 @@ export {
 export {
 	NgdsFormInputList
 } from './input-list.component';
+export {
+	NgdsFormInputRange
+} from './input-range.component';
 export {
 	NgdsFormRadio
 } from './radio.component';
@@ -71,9 +83,12 @@ export {
 export {
 	NgdsFormDatePicker
 } from './datepicker.component';
+export {
+	NgdsFormDatePickerRange
+} from './datepicker-range.component';
 
-const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect, 
-	NgdsFormDatePicker,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow];
+const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect, 
+	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar];
 
 @NgModule({ 
 	declarations: NGB_TABSET_DIRECTIVES, 

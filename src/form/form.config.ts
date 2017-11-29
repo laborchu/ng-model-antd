@@ -1,6 +1,7 @@
-import { Injectable} from '@angular/core';
-import { ValidatorFn,FormGroup} from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { ValidatorFn, FormGroup } from '@angular/forms';
 import { NgdsDataSource, NgdsModel } from '../core/datasource';
+import { NgdsForm } from './form';
 
 
 export type wrapperUploadDataFunc = (data: any) => void;
@@ -20,49 +21,59 @@ export class NgdsFormConfig {
 export class NgdsFormUploaderConfig {
 	server: string;//服务器地址
 	md5Source?: NgdsDataSource;
-	wrapperUploadData ?: wrapperUploadDataFunc;
+	wrapperUploadData?: wrapperUploadDataFunc;
 	uploadBeforeSend?: uploadBeforeSendFunc;//错误处理
 	uploadSuccess?: uploadSuccessFunc;//上传完成
 }
 
 export class NgdsFormOption {
-	labelSpan?:number;
-	compSpan?:number;
-	gutter?:number;
-	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption|NgdsFormInputListCompOption|NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption>>;
+	labelSpan?: number;
+	compSpan?: number;
+	gutter?: number;
+	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption>>;
 	value?: any;
+	showSearch?: boolean;	
+	column?: number;//最大列数量	
 }
 
 
-export type onChangeFunc = (option:NgdsFormCompOption,valueObj?:any) => void;
+export type onChangeFunc = (option: NgdsFormCompOption, valueObj?: any) => void;
 
 export class NgdsFormCompOption {
 	comp: any;
 	label: string;
 	property: string;
+	property2?: string;	
 	value?: any;
 	span?: number;//组件span
-	labelSpan?:number;//组件标签span
-	compSpan?:number;//组件输入组件span
-    validations?:Array<NgdsFormValidationOption>;
-    formGroup?: FormGroup;
-    onChange?: onChangeFunc;
-    hidden?: boolean;
+	labelSpan?: number;//组件标签span
+	compSpan?: number;//组件输入组件span
+	validations?: Array<NgdsFormValidationOption>;
+	formGroup?: FormGroup;
+	onChange?: onChangeFunc;
+	hidden?: boolean;
+	formComp?: NgdsForm;
 }
 
 export class NgdsFormValidationOption {
-    msg: string;
-    type: string;
-    fn:ValidatorFn;
+	property?: string;
+	msg: string;
+	type: string;
+	fn: ValidatorFn;
 }
-
+export class NgdsFormSearchOption extends NgdsFormCompOption {
+	offset: number;
+}
 
 export class NgdsFormInputCompOption extends NgdsFormCompOption {
 	type: 'text' | 'password';
 }
 
+export class NgdsFormInputRangeCompOption extends NgdsFormCompOption {
+}
+
 export class NgdsFormInputListCompOption extends NgdsFormInputCompOption {
-	valueField:string;
+	valueField: string;
 }
 
 export class NgdsFormTextareaCompOption extends NgdsFormCompOption {
@@ -71,27 +82,27 @@ export class NgdsFormTextareaCompOption extends NgdsFormCompOption {
 
 
 export interface NgdsLvDataSource extends NgdsDataSource {
-	label?:string;
-	value?:string;
+	label?: string;
+	value?: string;
 }
 
 export class NgdsFormRadioCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
-	dsLabel?:string;
-	dsValue?:string;
+	dsLabel?: string;
+	dsValue?: string;
 }
 
 export class NgdsFormCheckboxCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
-	dsLabel?:string;
-	dsValue?:string;
+	dsLabel?: string;
+	dsValue?: string;
 }
 
 export class NgdsFormSelectCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
-	dsLabel?:string;
-	dsValue?:string;
-	model?:string;
+	dsLabel?: string;
+	dsValue?: string;
+	model?: string;
 }
 
 export class NgdsFormDatePickerCompOption extends NgdsFormCompOption {
@@ -106,9 +117,9 @@ export class NgdsFormUmeditorCompOption extends NgdsFormCompOption {
 export type errHandlerFunc = (err: any) => void;
 
 export class NgdsFormUploaderCompOption extends NgdsFormCompOption {
-	accept?:'image'|'video';
-	multiple?:boolean;
-	limit?:number;
+	accept?: 'image' | 'video';
+	multiple?: boolean;
+	limit?: number;
 	uploaderId?: string;//默认picker
 	errHandler?: errHandlerFunc;//错误处理
 }

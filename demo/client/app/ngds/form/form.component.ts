@@ -3,7 +3,8 @@ import {Validators, FormControl} from '@angular/forms';
 
 import {
     NgdsFormConfig,
-    NgdsFormOption, NgdsFormInput,NgdsFormInputList, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect,NgdsFormDatePicker,
+    NgdsFormOption, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect,
+    NgdsFormDatePicker,NgdsFormDatePickerRange,
      NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
     NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp
 } from '../../../../../src/index';
@@ -133,7 +134,6 @@ export class FormComponent implements OnInit {
                     comp: NgdsFormSelect,
                     dataSource: new SelectDataSource(),
                     onChange: (option: NgdsFormCompOption,value:any) => {
-                       debugger
                     },
                     validations: [
                         {msg: "地区必选", type: "required", fn: Validators.required}
@@ -149,6 +149,21 @@ export class FormComponent implements OnInit {
                         {msg: "地区必选", type: "required", fn: Validators.required}
                     ]
                 },
+                {
+                    label: '价格区间',
+                    property: "startPrice",
+                    property2: "endPrice",
+                    comp: NgdsFormInputRange
+                }
+                
+            ],
+            [
+                {
+                    label: '时间区间',
+                    property: "startDate",
+                    property2: "endDate",
+                    comp: NgdsFormDatePickerRange
+                }
             ]
         ]
 

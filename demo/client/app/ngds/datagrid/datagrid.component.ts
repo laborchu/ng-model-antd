@@ -149,42 +149,7 @@ export class DataGridComponent implements OnInit {
                 { label: '商品名称', property: "goodName", comp: NgdsFormInput, type: "password" },
                 { label: '邮件', property: "email", comp: NgdsFormInput, type: "email" }
             ],
-            [
-                {
-                    label: '性别', property: "sex", comp: NgdsFormRadio, dataSource: new SexDataSource(), value: 1,
-                    onChange: (option: NgdsFormCompOption) => {
-                    }
-                },
-                {
-                    label: '爱好',
-                    property: "like",
-                    comp: NgdsFormCheckbox,
-                    dataSource: new LikeDataSource(),
-                    value: [1],
-                    onChange: (option: any) => {
-                    }
-                },
-                {
-                    label: '出生日期', property: "date", comp: NgdsFormDatePicker
-                },
-            ],
-            [
-                {
-                    label: '单选地区',
-                    property: "location",
-                    comp: NgdsFormSelect,
-                    value:1,
-                    dataSource: new SelectDataSource()
-                },
-                {
-                    label: '多选地区',
-                    property: "location2",
-                    comp: NgdsFormSelect,
-                    value:[1,2],
-                    dataSource: new SelectDataSource(),
-                    model: "multiple"
-                },
-            ]
+            
         ]
 
     }

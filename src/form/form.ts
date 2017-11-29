@@ -96,18 +96,18 @@ export class NgdsForm implements AfterContentChecked {
         }
         if(this.option.showSearch){
             let nzOffset:number = 0;
-            if(this.option.components.length!=1){
-                let lastCompSize:number = this.option.components[this.option.components.length-1].length;
-                let everyColSize:number = ~~24/maxCol;
-                if(lastCompSize<3){
-                    nzOffset = (2-lastCompSize)*everyColSize;
-                }else{
-                    nzOffset = (2)*everyColSize;
-                    let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
-                    rowComp = this.formRef.createComponent(rowFactory);
-                    rowComp.instance.gutter = this.option.gutter;
-                    
+
+            let lastCompSize:number = this.option.components[this.option.components.length-1].length;
+            let everyColSize:number = ~~24/maxCol;
+            if(lastCompSize<3){
+                if(this.option.components.length!=1){
+                    nzOffset = (2-lastCompSize)*everyColSize;                    
                 }
+            }else{
+                nzOffset = (2)*everyColSize;
+                let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
+                rowComp = this.formRef.createComponent(rowFactory);
+                rowComp.instance.gutter = this.option.gutter;
             }
 
             let searchFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormSearchBar);

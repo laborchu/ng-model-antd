@@ -45,7 +45,7 @@ import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFu
           </td>
           <td *ngIf="option.table.op" class="op-td">
               <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
-                <span nz-table-divider *ngIf="btnIndex!=0"></span>
+                <span nz-table-divider *ngIf="btnIndex!=0&&(btn.hidden?!btn.hidden(item):true)"></span>
                 <a [hidden]="btn.hidden?btn.hidden(item):false"
                       (click)="btn.action(item,dataIndex)"
                       class="{{getBtnStyle(btn,item)}}">

@@ -18,7 +18,7 @@ export interface NgdsDataGridModel extends NgdsModel {
 export interface NgdsDataGridPageModel extends NgdsModel {
 	pageSize?: number; //每页个数
 	pageCount: number; //页面总数
-	pageIndex: number;//当前页数
+	totalCount: number;//当前页数
 }
 
 export type styleFunc = (data: any) => string;
@@ -26,7 +26,7 @@ export type pipeFunc = (property: string,data:any) => string;
 export type textFunc = (data:any) => string;
 
 export interface NgdsDataGridOption {
-	dataSource: NgdsDataSource;
+	dataSource: NgdsDataSource|Array<any>;
 	table: NgdsDataGridTableOption;
 }
 

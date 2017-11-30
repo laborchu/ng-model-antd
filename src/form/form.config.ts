@@ -92,6 +92,12 @@ export class NgdsFormRadioCompOption extends NgdsFormCompOption {
 	dsValue?: string;
 }
 
+export class NgdsFormCascaderCompOption extends NgdsFormCompOption {
+	dataSource: NgdsDataSource;
+	dsLabel?: string;
+	dsValue?: string;
+}
+
 export class NgdsFormCheckboxCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
 	dsLabel?: string;

@@ -9,7 +9,7 @@ export class DatagridDatePropertyPipe implements PipeTransform {
 		if(!value){
 			value = data[property];
 		}
-		return datePipe.transform(value, 'yyyy-MM-dd');
+		return datePipe.transform(value, this.fomart);
 	}
 
 	public setFomart(fomart:string):DatagridDatePropertyPipe{

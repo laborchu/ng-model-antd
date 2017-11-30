@@ -47,6 +47,9 @@ import {
 import {
 	NgdsFormSearchBar
 } from './search-bar.component';
+import {
+	NgdsFormCascader
+} from './cascader.component';
 
 
 export { NgdsForm } from './form';
@@ -54,7 +57,7 @@ export { NgdsFormComp } from './form.component';
 export {
 	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption,NgdsFormInputRangeCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormSelectCompOption, NgdsFormDatePickerCompOption,
-	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption
+	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption,NgdsFormCascaderCompOption
 } from './form.config';
 export {
 	NgdsFormInput
@@ -86,9 +89,12 @@ export {
 export {
 	NgdsFormDatePickerRange
 } from './datepicker-range.component';
+export {
+	NgdsFormCascader
+} from './cascader.component';
 
 const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect, 
-	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar];
+	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar];
 
 @NgModule({ 
 	declarations: NGB_TABSET_DIRECTIVES, 

@@ -52,7 +52,8 @@ export class NgdsFormSearchBar extends NgdsFormComp implements AfterContentCheck
     }
     reset(){
         this.option.formComp.setValue({});
-        this.option.formComp.onSearch.emit({});
+        let data = this.option.formComp.getValue();
+        this.option.formComp.onSearch.emit(data);
     }
 
 }

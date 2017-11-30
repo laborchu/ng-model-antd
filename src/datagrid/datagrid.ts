@@ -6,8 +6,12 @@ import {
   Output,
   PipeTransform
 } from '@angular/core';
-import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFunc,
-  NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel } from './datagrid.config';
+import {
+  NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFunc,
+  NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel
+} from './datagrid.config';
+
+let hashPageMap: Map<number, number> = new Map();
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -16,8 +20,14 @@ import { NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFu
   selector: 'ngds-datagrid',
   exportAs: 'ngdsDataGrid',
   template: `
-    <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="page?.pageSize" [nzIsPagination]="page?true:false"
-            [nzTotal]="page?.pageCount" [nzLoading]="_loading" (nzPageIndexChange)="search()">
+    <nz-table #nzTable 
+            [nzAjaxData]="data" 
+            [nzPageSize]="page?.pageSize"
+            [nzTotal]="page?.totalCount" 
+            [(nzPageIndex)]="_pageIndex" 
+            [nzLoading]="_loading" 
+            [nzIsPagination]="(page&&page.pageSize>1)?true:false"
+            (nzPageIndexChange)="search()">
       <thead nz-thead>
         <tr>
           <th nz-th [nzCheckbox]="option.table.showCheck" *ngIf="option.table.showCheck">
@@ -78,7 +88,8 @@ export class NgdsDataGrid implements AfterContentChecked {
 
   @Input() option: NgdsDataGridOption;
   @Output() checkboxChange: EventEmitter<any> = new EventEmitter();
-  
+
+  _pageIndex: number = 1;
   page: NgdsDataGridPageModel;
   data: Array<any> = [];
   searchParams: any = {};
@@ -86,8 +97,15 @@ export class NgdsDataGrid implements AfterContentChecked {
 
   _allChecked: boolean = false;
   _indeterminate = false;
+  hash: number;
+
+  hashCode(source: string): number {
+    return source.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
+  };
 
   ngOnInit() {
+    this.hash = this.hashCode(JSON.stringify(this.option.table));
+    this._pageIndex = hashPageMap.get(this.hash) || 1;
     this.search();
   }
 
@@ -125,7 +143,7 @@ export class NgdsDataGrid implements AfterContentChecked {
     }
   }
 
-  getValueFromPipe = function (item: any, col: NgdsDataGridColumnOption,pipe:PipeTransform | pipeFunc | PipeTransform[]) {
+  getValueFromPipe = function (item: any, col: NgdsDataGridColumnOption, pipe: PipeTransform | pipeFunc | PipeTransform[]) {
     if (pipe) {
       if (typeof pipe === "function") {
         return pipe(col.property, item);
@@ -134,9 +152,9 @@ export class NgdsDataGrid implements AfterContentChecked {
           let value: any;
           for (let pipeItem of pipe) {
             if (typeof pipeItem === "function") {
-              value = pipeItem(col.property, item, value);                          
-            }else{
-              value = pipeItem.transform(col.property, item, value);              
+              value = pipeItem(col.property, item, value);
+            } else {
+              value = pipeItem.transform(col.property, item, value);
             }
           }
           return value;
@@ -149,24 +167,29 @@ export class NgdsDataGrid implements AfterContentChecked {
     }
   }
 
-  search(params?:any) {
-    if(params){
-      Object.assign(this.searchParams, params);      
-    }
-    this._loading = true;
-    this.option.dataSource.getData(this.searchParams).then((model: NgdsDataGridModel) => {
-      this._loading = false;
-      this.data = model.data;
-      this.page = model.page;
-      if(model.page){
-        this.searchParams.pageIndex = model.page.pageIndex;        
-      }
-    });
+  reSearch(params: any) {
+    this._pageIndex = 1;
+    this.search(params);
   }
 
-  goto(pageNum: number) {
-    this.searchParams.pageIndex = pageNum;
-    this.search();
+  search(params?: any) {
+    hashPageMap.set(this.hash, this._pageIndex);
+    this.searchParams.pageIndex = this._pageIndex;
+    if (params) {
+      Object.assign(this.searchParams, params);
+    }
+    this._loading = true;
+    if (Array.isArray(this.option.dataSource)) {
+      this._loading = false;
+      this.data = this.option.dataSource;
+    }else{
+      this.option.dataSource.getData(this.searchParams).then((model: NgdsDataGridModel) => {
+        this._loading = false;
+        this.data = model.data;
+        this.page = model.page;
+      });
+    }
+    
   }
 
   ngAfterContentChecked() {
@@ -190,15 +213,15 @@ export class NgdsDataGrid implements AfterContentChecked {
     const allUnChecked = this.data.every(value => value.disabled || !value.checked);
     this._allChecked = allChecked;
     this._indeterminate = (!allChecked) && (!allUnChecked);
-    let checkedArray:Array<any> = [];
+    let checkedArray: Array<any> = [];
     this.data.forEach((item: any) => {
-      if(item.checked){
+      if (item.checked) {
         checkedArray.push(item);
       }
     });
     this.checkboxChange.emit(checkedArray);
   };
 
-  _sort(sortName:string, value:any) {
+  _sort(sortName: string, value: any) {
   }
 }

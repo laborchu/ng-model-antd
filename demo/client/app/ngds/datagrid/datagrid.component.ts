@@ -25,9 +25,9 @@ class DemoDataSource implements NgdsDataSource {
             setTimeout(() => {
                 resolve({
                     page: {
-                        pageSize: 10,
+                        pageSize: 4,
                         pageCount: 10,
-                        pageIndex: 10,
+                        totalCount:9
                     },
                     data: [
                         { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, org: { name: 1 } },

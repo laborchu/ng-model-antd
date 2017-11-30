@@ -4,7 +4,7 @@ import {Validators, FormControl} from '@angular/forms';
 import {
     NgdsFormConfig,
     NgdsFormOption, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect,
-    NgdsFormDatePicker,NgdsFormDatePickerRange,
+    NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,
      NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
     NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp
 } from '../../../../../src/index';
@@ -52,6 +52,28 @@ class SelectDataSource implements NgdsDataSource {
                     {label: "上海", value: 4}
                 ]
             });
+        });
+    }
+}
+class AddressDataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            if(params.index==-1){
+                resolve([
+                    {label: "浙江省", value: 1},
+                    {label: "江苏省", value: 2},
+                ]);
+            }else if(params.index==0){
+                resolve([
+                    {label: "杭州市", value: 3},
+                    {label: "宁波市", value: 4},
+                ]);
+            }else if(params.index==1){
+                resolve([
+                    {label: "慈溪市", value: 5,isLeaf: true},
+                    {label: "余姚市", value: 6,isLeaf: true},
+                ]);
+            }
         });
     }
 }
@@ -163,6 +185,13 @@ export class FormComponent implements OnInit {
                     property: "startDate",
                     property2: "endDate",
                     comp: NgdsFormDatePickerRange
+                },
+                {
+                    label: '地区级联',
+                    property: "address",
+                    dataSource: new AddressDataSource(),
+                    comp:NgdsFormCascader
+                   
                 }
             ]
         ]
@@ -234,11 +263,12 @@ export class FormComponent implements OnInit {
      */
     ngOnInit() {
         setTimeout(()=>{
-            this.myForm.setValue({
-                user:{
-                    password:"dddd"
-                }
-            })
+            // this.myForm.setValue({
+            //     user:{
+            //         password:"dddd",
+            //     },
+            //     address:[{value:1,label:"浙江省"},{value:3,label:"杭州省"},{value:5,label:"慈溪省"}]
+            // })
 
         },1000)
         

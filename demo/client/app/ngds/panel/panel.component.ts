@@ -12,7 +12,7 @@ class DemoDataSource implements NgdsDataSource {
                 page: {
                     pageSize: 10,
                     pageCount: 10,
-                    pageIndex: 10,
+                    totalCount: 10,
                 },
                 data: [
                     {

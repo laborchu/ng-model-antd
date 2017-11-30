@@ -11,7 +11,7 @@ class DemoDataSource implements NgdsDataSource {
                     page: {
                         pageSize: 10,
                         pageCount: 10,
-                        pageIndex: 10,
+                        totalCount: 10,
                     },
                     data: [
                         { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, org: { name: 1 } },

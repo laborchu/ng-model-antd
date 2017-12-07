@@ -26,7 +26,7 @@ import {NgdsModel} from '../core/datasource';
             <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
                 <nz-datepicker [formControl]="getFormControl(option.property)" 
                 [(ngModel)]="option.value"
-                (ngModelChange)="onChange()"
+                (ngModelChange)="onChange($event)"
                 [nzSize]="'large'">
                 </nz-datepicker>
 
@@ -55,10 +55,7 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
     ngAfterContentChecked() {
     }
 
-    onChange(value:any){
-        if (value !== undefined) {
-            this.option.value = value;
-        }
+    onChange($event:any){
         this.option.onChange && this.option.onChange(this.option);
     }
 

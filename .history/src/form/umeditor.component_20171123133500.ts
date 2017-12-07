@@ -72,10 +72,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
     editorDestroy() {
     }
 
-    onChange(value:any) {
-        if (value !== undefined) {
-            this.option.value = value;
-        }
+    onChange() {
         if(this.option.validations){
             for(let val of this.option.validations){
                 if(val.type=="required"){

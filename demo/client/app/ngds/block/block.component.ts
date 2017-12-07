@@ -57,7 +57,19 @@ export class BlockComponent implements OnInit {
     }
 
     blockOption: NgdsBlockOption = {
-        title:"一行一列"
+        title:"一行一列",
+        buttons: [
+            {
+                text: '同步公告页数',
+                action: (item) => {
+                }
+            },
+            {
+                text: '同步公告图片',
+                action: (item) => {
+                }
+            }
+        ]
     }
     blockInfoOption:NgdsBlockInfoOption = {
         dataSource:new Block1DataSource(),

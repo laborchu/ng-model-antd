@@ -14,10 +14,9 @@ import { NgdsDataSource,NgdsModel } from '../core/datasource';
     template: `
     <div class="ngds-block-info">
         <div nz-row  *ngIf="!_isSpinning">
-            <div class="info-item" nz-col [nzSpan]="_span" *ngFor="let item of option.items">
+            <div class="info-item" nz-col [nzSpan]="item.span?item.span:_span" *ngFor="let item of option.items">
                 <span class="info-label">{{item.label}}</span>
-                <span *ngIf="item.type!='image'">
-                    {{getText(item)}}
+                <span *ngIf="item.type!='image'" [innerHTML]="getText(item)">
                 </span>
                 <span *ngIf="item.type=='image'">
                     <img src="{{data[item.field]}}" [style.width.px]="item.width"/>

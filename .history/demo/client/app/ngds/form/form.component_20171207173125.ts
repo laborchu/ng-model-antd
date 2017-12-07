@@ -31,14 +31,12 @@ class SexDataSource implements NgdsDataSource {
 class LikeDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsModel> {
         return new Promise<NgdsModel>((resolve, reject) => {
-            resolve({
-                data:[
-                    {label: "游泳", value: 1},
-                    {label: "下棋", value: 2},
-                    {label: "编程", value: 3},
-                    {label: "跑步", value: 4}
-                ]
-            });
+            resolve([
+                {label: "游泳", value: 1},
+                {label: "下棋", value: 2},
+                {label: "编程", value: 3},
+                {label: "跑步", value: 4}
+            ]);
         });
     }
 }
@@ -292,11 +290,9 @@ export class FormComponent implements OnInit {
             // }
         
             this.myForm.setValue({
-                date:new Date(),
-            })
-
-            this.myForm2.setValue({
-                desc:"sfsdfsdf",
+                user:{
+                    date:new Date(),
+                }
             })
 
         },5000)

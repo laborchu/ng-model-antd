@@ -7,6 +7,11 @@ export class NgdsBlockConfig {
 
 export class NgdsBlockOption {
     title: string;
+    buttons?: Array<NgdsBlockBtnOption>;    
+}
+export interface NgdsBlockBtnOption {
+    text: string;
+    action: (data: any) => void;
 }
 
 export class NgdsBlockInfoOption {
@@ -21,4 +26,5 @@ export class NgdsBlockInfoItemOption {
     width?:number;
     fomart?:string;
     type?:'text'|'image'|'date';
+    span?:number;
 }

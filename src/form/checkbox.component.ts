@@ -48,15 +48,24 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         if (!this.option.dsValue) {
             this.option.dsValue = "value";
         }
-        this.option.dataSource.getData({}).then((data: Array<any>) => {
-            if (this.option.value != undefined) {
-                for (let item of data) {
+        this.option.dataSource.getData({}).then((model: any) => {
+            for (let item of model.data) {
+                item.label = item[this.option.dsLabel];
+                if(this.option.dsLabel!="label"){
+                    delete item[this.option.dsLabel];
+                }
+                item.value = item[this.option.dsValue];
+                if(this.option.dsValue!="value"){
+                    delete item[this.option.dsValue];
+                }
+                if (this.option.value != undefined) {
                     if (this.option.value.indexOf(item.value) != -1) {
                         item.checked = true;
                     }
                 }
             }
-            this.data = data;
+            
+            this.data = model.data;
         })
     }
 

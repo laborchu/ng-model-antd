@@ -31,14 +31,12 @@ class SexDataSource implements NgdsDataSource {
 class LikeDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsModel> {
         return new Promise<NgdsModel>((resolve, reject) => {
-            resolve({
-                data:[
-                    {label: "游泳", value: 1},
-                    {label: "下棋", value: 2},
-                    {label: "编程", value: 3},
-                    {label: "跑步", value: 4}
-                ]
-            });
+            resolve([
+                {label: "游泳", value: 1},
+                {label: "下棋", value: 2},
+                {label: "编程", value: 3},
+                {label: "跑步", value: 4}
+            ]);
         });
     }
 }
@@ -271,33 +269,32 @@ export class FormComponent implements OnInit {
      */
     ngOnInit() {
         setTimeout(()=>{
-            // this.option = {
-            //     components: [
-            //         [
-            //             {label: '属性值', property: "valueArray",valueField:"name", comp: NgdsFormInputList},
-            //         ],
-            //         [
-            //             {
-            //                 label: '上传头像',
-            //                 property: "touxiang",
-            //                 accept:"image",
-            //                 multiple:false,
-            //                 limit:1,
-            //                 uploaderId: new Date().getTime() + "",
-            //                 comp: NgdsFormUploader
-            //             },
-            //         ]
-            //     ]
+            this.option = {
+                components: [
+                    [
+                        {label: '属性值', property: "valueArray",valueField:"name", comp: NgdsFormInputList},
+                    ],
+                    [
+                        {
+                            label: '上传头像',
+                            property: "touxiang",
+                            accept:"image",
+                            multiple:false,
+                            limit:1,
+                            uploaderId: new Date().getTime() + "",
+                            comp: NgdsFormUploader
+                        },
+                    ]
+                ]
         
-            // }
+            }
         
-            this.myForm.setValue({
-                date:new Date(),
-            })
-
-            this.myForm2.setValue({
-                desc:"sfsdfsdf",
-            })
+            // this.myForm.setValue({
+            //     user:{
+            //         password:"dddd",
+            //     },
+            //     address:[{value:1,label:"浙江省"},{value:3,label:"杭州省"},{value:5,label:"慈溪省"}]
+            // })
 
         },5000)
         

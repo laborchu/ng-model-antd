@@ -292,11 +292,9 @@ export class FormComponent implements OnInit {
             // }
         
             this.myForm.setValue({
-                date:new Date(),
-            })
-
-            this.myForm2.setValue({
-                desc:"sfsdfsdf",
+                user:{
+                    date:new Date(),
+                }
             })
 
         },5000)

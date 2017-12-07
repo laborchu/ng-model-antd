@@ -22,6 +22,11 @@ import { NgdsBlockConfig, NgdsBlockOption } from './block.config';
         <ng-template #title>
             {{option.title}}
         </ng-template>
+        <ng-template #extra>
+            <a *ngFor="let btn of option.buttons;" (click)="btn.action()">
+                {{btn.text}}
+            </a>
+        </ng-template>
         <ng-template #body>
             <ng-content></ng-content>
         </ng-template>

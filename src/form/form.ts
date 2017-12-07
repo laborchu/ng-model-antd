@@ -35,32 +35,35 @@ export class NgdsForm implements AfterContentChecked {
     }
 
     @ViewChild("formRef", {read: ViewContainerRef}) formRef: ViewContainerRef;
-    @Input() option: NgdsFormOption;
+    _option: NgdsFormOption;
+    @Input() set option(o: NgdsFormOption) {
+        this._option = o;
+        this.refresh();
+    }
     @Output() onSearch: EventEmitter<any> = new EventEmitter();
     
     myForm: FormGroup;
     compMap: any = {};
     ngOnInit() {
-        this.myForm = this.fb.group({});
-        this.refresh();
     }
 
     refresh(){
         this.formRef.clear();
-        let maxCol:number = this.option.column||0;
-        this.option.labelSpan = this.option.labelSpan || 6;
-        this.option.compSpan = this.option.compSpan || 18;
+        this.myForm = this.fb.group({});
+        let maxCol:number = this._option.column||0;
+        this._option.labelSpan = this._option.labelSpan || 6;
+        this._option.compSpan = this._option.compSpan || 18;
         if(!maxCol){
-            for (let rowCompOption of this.option.components) {
+            for (let rowCompOption of this._option.components) {
                 maxCol = rowCompOption.length>maxCol?rowCompOption.length:maxCol;
             }
         }
         
         let rowComp: ComponentRef<any>;
-        for (let rowCompOption of this.option.components) {
+        for (let rowCompOption of this._option.components) {
             let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
             rowComp = this.formRef.createComponent(rowFactory);
-            rowComp.instance.gutter = this.option.gutter;
+            rowComp.instance.gutter = this._option.gutter;
             
             for (let compOption of rowCompOption) {
                 let compFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(compOption.comp);
@@ -68,8 +71,8 @@ export class NgdsForm implements AfterContentChecked {
                 if(!compOption.span){
                     compOption.span = ~~24/maxCol;
                 }
-                compOption.labelSpan = this.option.labelSpan;
-                compOption.compSpan = this.option.compSpan;
+                compOption.labelSpan = this._option.labelSpan;
+                compOption.compSpan = this._option.compSpan;
                 compOption.formGroup = this.myForm;
                 comp.instance.option = compOption;
                 this.compMap[compOption.property] = comp;
@@ -89,33 +92,33 @@ export class NgdsForm implements AfterContentChecked {
                         this.myForm.addControl(compOption.property,new FormControl(compOption.value));                        
                     }
                 }
-                if(this.option.value){
-                    compOption.value = this.option.value[compOption.property];
+                if(this._option.value){
+                    compOption.value = this._option.value[compOption.property];
                 }
             }
         }
-        if(this.option.showSearch){
+        if(this._option.showSearch){
             let nzOffset:number = 0;
 
-            let lastCompSize:number = this.option.components[this.option.components.length-1].length;
+            let lastCompSize:number = this._option.components[this._option.components.length-1].length;
             let everyColSize:number = ~~24/maxCol;
             if(lastCompSize<3){
-                if(this.option.components.length!=1){
+                if(this._option.components.length!=1){
                     nzOffset = (2-lastCompSize)*everyColSize;                    
                 }
             }else{
                 nzOffset = (2)*everyColSize;
                 let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
                 rowComp = this.formRef.createComponent(rowFactory);
-                rowComp.instance.gutter = this.option.gutter;
+                rowComp.instance.gutter = this._option.gutter;
             }
 
             let searchFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormSearchBar);
             let comp: ComponentRef<any> = rowComp.instance.addCol(searchFactory);
             let searchOption:any = {
                 span:~~24/maxCol,
-                labelSpan:this.option.labelSpan,
-                compSpan:this.option.compSpan,
+                labelSpan:this._option.labelSpan,
+                compSpan:this._option.compSpan,
                 formComp:this,
                 offset:nzOffset
             };
@@ -128,16 +131,16 @@ export class NgdsForm implements AfterContentChecked {
     }
 
     getValue(): any {
-        if(!this.option.value){
-            this.option.value = {};            
+        if(!this._option.value){
+            this._option.value = {};            
         }
-        for (let rowComp of this.option.components) {
+        for (let rowComp of this._option.components) {
             for (let compOption of rowComp) {
                 if(compOption.hidden){
-                    delete this.option.value[compOption.property];
+                    delete this._option.value[compOption.property];
                 }else{
                     let propertyArray: Array<string> = compOption.property.split(".");
-                    let value = this.option.value;
+                    let value = this._option.value;
                     propertyArray.forEach((item:string,index:number)=>{
                         if(index==propertyArray.length-1){
                             let txComp: any = this.compMap[compOption.property].instance;
@@ -149,11 +152,11 @@ export class NgdsForm implements AfterContentChecked {
                             value = value[item];
                         }
                     })
-                    // this.option.value[compOption.property] = compOption.value;                    
+                    // this._option.value[compOption.property] = compOption.value;                    
                 }
             }
         }
-        return this.option.value;
+        return this._option.value;
     }
 
     getModelValue(property:string,data:any):any{
@@ -170,8 +173,8 @@ export class NgdsForm implements AfterContentChecked {
     }
 
     setValue(data:any){
-        this.option.value = data;
-        for (let rowComp of this.option.components) {
+        this._option.value = data;
+        for (let rowComp of this._option.components) {
             for (let compOption of rowComp) {
                 let value:any = this.getModelValue(compOption.property,data);
                 if(compOption.property2){

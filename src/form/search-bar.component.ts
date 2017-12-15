@@ -19,9 +19,9 @@ import { NgdsFormComp } from './form.component';
     template: `
     <div class="search-bar" nz-col [nzSpan]="option.span" [nzOffset]="option.offset">
         <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="option.labelSpan">
+            <div nz-form-label nz-col [nzSpan]="option.labelSpan" *ngIf="option.offset!=0">
             </div>
-            <div nz-form-control nz-col [nzSpan]="option.compSpan">
+            <div nz-form-control nz-col [nzSpan]="option.compSpan" [ngClass]="{pl10:option.offset==0}">
                 <button nz-button [nzType]="'primary'" (click)="search()">查询</button>
                 <span class="split-btn"></span>
                 <button nz-button (click)="reset()">重置</button>

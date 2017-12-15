@@ -71,8 +71,8 @@ export class NgdsForm implements AfterContentChecked {
                 if(!compOption.span){
                     compOption.span = ~~24/maxCol;
                 }
-                compOption.labelSpan = this._option.labelSpan;
-                compOption.compSpan = this._option.compSpan;
+                compOption.labelSpan = compOption.labelSpan || this._option.labelSpan;
+                compOption.compSpan = compOption.compSpan || this._option.compSpan;
                 compOption.formGroup = this.myForm;
                 comp.instance.option = compOption;
                 this.compMap[compOption.property] = comp;

@@ -232,7 +232,8 @@ export class FormComponent implements OnInit {
                 {
                     label: '介绍', property: "desc", comp: NgdsFormUmeditor, 
                     config: {
-                        imagePath: "http://www.baidu.com"
+                        imagePath: "http://www.baidu.com",
+                        toolbar: ['image']                        
                     },
                     validations: [
                     {msg: "介绍必填", type: "required", fn: Validators.required},

@@ -22,7 +22,7 @@ import { NgdsFormComp } from './form.component';
                     <label for="{{option.property}}">{{option.label}}</label>
                 </div>
                 <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-                    <umeditor #editor [(ngModel)]="option.value"
+                    <umeditor #editor [(ngModel)]="option.value" *ngIf="showEditor"
                         [config]="setting"
                         [path]="option.path"
                         [loadingTip]="option.loadingTip?option.loadingTip:'加载中...'"
@@ -56,6 +56,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
     };
 
     option: NgdsFormUmeditorCompOption;
+    showEditor: boolean = false;
 
     ngOnInit() {
         if (!this.option.path) {
@@ -64,6 +65,9 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
         if (this.option.config) {
             Object.assign(this.setting, this.option.config);
         }
+        setTimeout(()=>{
+            this.showEditor = true;
+        },100)
     }
 
     editorReady() {

@@ -118,6 +118,7 @@ export class NgdsFormUmeditorCompOption extends NgdsFormCompOption {
 	config?: any; //umeditor配置项
 	path?: string;//umeditor代码根目录路径，以 / 结尾
 	loadingTip?: string;//初始化提示文本
+	setting?:any;
 }
 
 export type errHandlerFunc = (err: any) => void;

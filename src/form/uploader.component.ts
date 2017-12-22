@@ -67,6 +67,9 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         if(!this.option.value){
             this.option.value = [];
         }
+        if(this.option.limit==undefined){
+            this.option.limit = 5;
+        }
 
         setTimeout(()=>{
             this.ngxOptions = {
@@ -177,8 +180,10 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         }
     }
 
-    onChange(){
-        
+    onChange(value:any){
+        if (value !== undefined) {
+            this.option.value = value || [];
+        }
     }
 
     ngAfterContentChecked() {

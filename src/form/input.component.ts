@@ -21,7 +21,7 @@ import { NgdsFormComp } from './form.component';
         <label for="{{option.property}}">{{option.label}}</label>
       </div>
       <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-        <nz-input [nzSize]="'large'" nzType="{{option.type}}" 
+        <nz-input [nzSize]="'large'" nzType="{{option.type}}" [nzPlaceHolder]="option.placeHolder || '请输入'" 
         [ngModel]="option.value"
         (ngModelChange)="onChange($event)"
         [formControl]="getFormControl(option.property)"></nz-input>

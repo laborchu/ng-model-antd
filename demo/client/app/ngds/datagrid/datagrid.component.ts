@@ -141,13 +141,13 @@ export class DataGridComponent implements OnInit {
 
     formOption: NgdsFormOption = {
         showSearch:true,
+        column:3,
         components: [
             [
                 {
                     label: '店铺名称', property: "shopName", comp: NgdsFormInput, type: "text"
                 },
-                { label: '商品名称', property: "goodName", comp: NgdsFormInput, type: "password" },
-                { label: '邮件', property: "email", comp: NgdsFormInput, type: "email" }
+                { label: '商品名称', property: "goodName", comp: NgdsFormInput, type: "password" }
             ],
             
         ]
@@ -161,7 +161,7 @@ export class DataGridComponent implements OnInit {
             columns: [
                 { text: '用户名', property: "username", width: "60px" },
                 { text: '姓名', property: "name", width: "80px" },
-                { text: '手机号', property: "mobile", width: "80px" },
+                { text: '手机号', property: "mobile", width: "100px" },
                 {
                     text: '认证状态',
                     property: "authStatus",
@@ -184,7 +184,7 @@ export class DataGridComponent implements OnInit {
                 },
             ],
             op: {
-                width: "130px",
+                width: "220px",
                 buttons: [
                     {
                         text: '选择框可用',

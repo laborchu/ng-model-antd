@@ -61,7 +61,7 @@ export class ProjectConfig extends SeedConfig {
       path: 'node_modules/angular-ngv/bundles/angular-ngv.umd.js'
     },{
       name: 'ng-zorro-antd',
-      path: 'node_modules/ng-zorro-antd/bundles/ng-zorro-antd.umd.js'
+      path: 'node_modules/ng-zorro-antd/bundles/antd.umd.js'
     },{
       name: 'ngx-umeditor',
       path: 'node_modules/ngx-umeditor/bundles/ngx-umeditor.umd.js'

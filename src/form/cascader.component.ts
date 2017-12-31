@@ -22,6 +22,7 @@ import { NgdsFormComp } from './form.component';
       </div>
       <div nz-form-control nz-col [nzSpan]="option.compSpan">
         <nz-cascader
+            [nzPlaceHolder]="option.placeHolder || '请输入'"
             [nzValueProperty]="option.dsValue"
             [nzLabelProperty]="option.dsLabel"
             [(ngModel)]="option.value"

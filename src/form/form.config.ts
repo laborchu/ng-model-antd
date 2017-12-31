@@ -67,6 +67,7 @@ export class NgdsFormSearchOption extends NgdsFormCompOption {
 
 export class NgdsFormInputCompOption extends NgdsFormCompOption {
 	type: 'text' | 'password';
+	placeHolder?:string;
 }
 
 export class NgdsFormInputRangeCompOption extends NgdsFormCompOption {
@@ -96,6 +97,7 @@ export class NgdsFormCascaderCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
 	dsLabel?: string;
 	dsValue?: string;
+	placeHolder?: string;
 }
 
 export class NgdsFormCheckboxCompOption extends NgdsFormCompOption {
@@ -109,6 +111,7 @@ export class NgdsFormSelectCompOption extends NgdsFormCompOption {
 	dsLabel?: string;
 	dsValue?: string;
 	model?: string;
+	placeHolder?: string;
 }
 
 export class NgdsFormDatePickerCompOption extends NgdsFormCompOption {

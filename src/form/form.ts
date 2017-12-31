@@ -22,7 +22,7 @@ import {NgdsFormSearchBar} from './search-bar.component';
     selector: 'ngds-form',
     template: `
         <div class="ngds-form">
-            <form nz-form [formGroup]="myForm">
+            <form nz-form [formGroup]="myForm" [ngClass]="{'search-bar':_option.showSearch}">
                 <div #formRef></div>
             </form>
         </div>

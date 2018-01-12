@@ -18,6 +18,7 @@
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,
+    "annotationsAs":"decorators",
     "genDir": "../dist/tmp/waste"
   }
 }

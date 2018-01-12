@@ -59,6 +59,7 @@ let hashPageMap: Map<number, number> = new Map();
                 <a [hidden]="btn.hidden?btn.hidden(item):false"
                       (click)="btn.action(item,dataIndex)"
                       class="{{getBtnStyle(btn,item)}}">
+                      <i class="anticon anticon-loading anticon-spin" *ngIf="showBtnLoading(btn,item)"></i>
                       {{getBtnText(btn,item)}}
                 </a>
               </span>
@@ -106,7 +107,7 @@ export class NgdsDataGrid implements AfterContentChecked {
   ngOnInit() {
     this.hash = this.hashCode(JSON.stringify(this.option.table));
     this._pageIndex = hashPageMap.get(this.hash) || 1;
-    this.search();
+    this.option.initToSearch!==false &&this.search();
   }
 
   getBtnStyle = function (btn: NgdsDataGridOpBtnOption, item: any) {
@@ -120,6 +121,19 @@ export class NgdsDataGrid implements AfterContentChecked {
       return 'btn-default';
     }
   }
+
+  showBtnLoading = function (btn: NgdsDataGridOpBtnOption, item: any):boolean {
+    if (btn.loading) {
+      if (typeof btn.loading === "function") {
+        return btn.loading(item);
+      } else {
+        return btn.loading;
+      }
+    } else {
+      return false;
+    }
+  }
+  
 
 
   getBtnText = function (col: NgdsDataGridOpBtnOption, item: any) {
@@ -187,6 +201,8 @@ export class NgdsDataGrid implements AfterContentChecked {
         this._loading = false;
         this.data = model.data;
         this.page = model.page;
+      }).catch((e)=>{
+        this._loading = false;
       });
     }
     

@@ -22,12 +22,14 @@ export interface NgdsDataGridPageModel extends NgdsModel {
 }
 
 export type styleFunc = (data: any) => string;
+export type loadingFunc = (data: any) => boolean;
 export type pipeFunc = (property: string,data:any) => string;
 export type textFunc = (data:any) => string;
 
 export interface NgdsDataGridOption {
 	dataSource: NgdsDataSource|Array<any>;
 	table: NgdsDataGridTableOption;
+	initToSearch?:boolean;
 }
 
 export interface NgdsDataGridTableOption {
@@ -63,6 +65,7 @@ export interface NgdsDataGridOpGroupBtnOption {
 export interface NgdsDataGridOpBtnOption {
 	text: string | textFunc;
 	style?: string | styleFunc;
+	loading?: boolean | loadingFunc;
 	action: (data: any) => void;
 	hidden?: (data: any) => boolean;
 }

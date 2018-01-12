@@ -24,7 +24,7 @@ import { NgdsFormComp } from './form.component';
             <div nz-form-control nz-col [nzSpan]="option.compSpan" [ngClass]="{pl10:option.offset==0}">
                 <button nz-button [nzType]="'primary'" (click)="search()">查询</button>
                 <span class="split-btn"></span>
-                <button nz-button (click)="reset()">重置</button>
+                <button *ngIf="!option.hideReset" nz-button (click)="reset()">重置</button>
             </div>
         </div>
     </div>
@@ -53,7 +53,9 @@ export class NgdsFormSearchBar extends NgdsFormComp implements AfterContentCheck
     reset(){
         this.option.formComp.setValue({});
         let data = this.option.formComp.getValue();
-        this.option.formComp.onSearch.emit(data);
+        setTimeout(()=>{
+            this.option.formComp.onSearch.emit(data);
+        },100)
     }
 
 }

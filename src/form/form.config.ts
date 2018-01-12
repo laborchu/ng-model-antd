@@ -33,6 +33,7 @@ export class NgdsFormOption {
 	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption>>;
 	value?: any;
 	showSearch?: boolean;	
+	search?:NgdsFormSearchOption;
 	column?: number;//最大列数量	
 }
 
@@ -62,7 +63,8 @@ export class NgdsFormValidationOption {
 	fn: ValidatorFn;
 }
 export class NgdsFormSearchOption extends NgdsFormCompOption {
-	offset: number;
+	offset?:number;
+	hideReset?: boolean;
 }
 
 export class NgdsFormInputCompOption extends NgdsFormCompOption {

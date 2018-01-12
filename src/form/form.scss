@@ -91,4 +91,7 @@
         color: #f04134;;
     }
 
+    .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+        margin-left: 0;
+    }
 }

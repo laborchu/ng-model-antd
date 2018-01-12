@@ -10,10 +10,10 @@ import {
     EventEmitter,
     Input
 } from '@angular/core';
-import {FormGroup, FormControl, FormBuilder,Validators} from '@angular/forms';
-import {NgdsFormConfig, NgdsFormOption,NgdsFormCompOption} from './form.config';
-import {NgdsFormRow} from './row.component';
-import {NgdsFormSearchBar} from './search-bar.component';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { NgdsFormConfig, NgdsFormOption, NgdsFormCompOption } from './form.config';
+import { NgdsFormRow } from './row.component';
+import { NgdsFormSearchBar } from './search-bar.component';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -29,47 +29,46 @@ import {NgdsFormSearchBar} from './search-bar.component';
     `
 })
 export class NgdsForm implements AfterContentChecked {
-    constructor(config: NgdsFormConfig,
-                private cfr: ComponentFactoryResolver,
-                private fb: FormBuilder) {
+    constructor(private cfr: ComponentFactoryResolver,
+        private fb: FormBuilder) {
     }
 
-    @ViewChild("formRef", {read: ViewContainerRef}) formRef: ViewContainerRef;
+    @ViewChild("formRef", { read: ViewContainerRef }) formRef: ViewContainerRef;
     _option: NgdsFormOption;
     @Input() set option(o: NgdsFormOption) {
         this._option = o;
         this.refresh();
     }
     @Output() onSearch: EventEmitter<any> = new EventEmitter();
-    
+
     myForm: FormGroup;
     compMap: any = {};
     ngOnInit() {
     }
 
-    refresh(){
+    refresh() {
         this.formRef.clear();
         this.myForm = this.fb.group({});
-        let maxCol:number = this._option.column||0;
+        let maxCol: number = this._option.column || 0;
         this._option.labelSpan = this._option.labelSpan || 6;
         this._option.compSpan = this._option.compSpan || 18;
-        if(!maxCol){
+        if (!maxCol) {
             for (let rowCompOption of this._option.components) {
-                maxCol = rowCompOption.length>maxCol?rowCompOption.length:maxCol;
+                maxCol = rowCompOption.length > maxCol ? rowCompOption.length : maxCol;
             }
         }
-        
+
         let rowComp: ComponentRef<any>;
         for (let rowCompOption of this._option.components) {
             let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
             rowComp = this.formRef.createComponent(rowFactory);
             rowComp.instance.gutter = this._option.gutter;
-            
+
             for (let compOption of rowCompOption) {
                 let compFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(compOption.comp);
                 let comp: ComponentRef<any> = rowComp.instance.addCol(compFactory);
-                if(!compOption.span){
-                    compOption.span = ~~24/maxCol;
+                if (!compOption.span) {
+                    compOption.span = ~~24 / maxCol;
                 }
                 compOption.labelSpan = compOption.labelSpan || this._option.labelSpan;
                 compOption.compSpan = compOption.compSpan || this._option.compSpan;
@@ -78,36 +77,40 @@ export class NgdsForm implements AfterContentChecked {
                 this.compMap[compOption.property] = comp;
 
 
-                if(compOption.validations){
+                if (compOption.validations) {
                     let fnArray = [];
-                    for(let validation of compOption.validations){
-                        fnArray.push(validation.fn);                                                    
+                    for (let validation of compOption.validations) {
+                        fnArray.push(validation.fn);
                     }
-                    this.myForm.addControl(compOption.property,new FormControl(compOption.value,Validators.compose(fnArray)));
-                }else{
-                    if(compOption.property2){
-                        this.myForm.addControl(compOption.property,new FormControl(compOption.value?compOption.value.first:null));
-                        this.myForm.addControl(compOption.property2,new FormControl(compOption.value?compOption.value.second:null));
-                    }else{
-                        this.myForm.addControl(compOption.property,new FormControl(compOption.value));                        
+                    this.myForm.addControl(compOption.property, new FormControl(compOption.value, Validators.compose(fnArray)));
+                } else {
+                    if (compOption.property2) {
+                        this.myForm.addControl(compOption.property, new FormControl(compOption.value ? compOption.value.first : null));
+                        this.myForm.addControl(compOption.property2, new FormControl(compOption.value ? compOption.value.second : null));
+                    } else {
+                        this.myForm.addControl(compOption.property, new FormControl(compOption.value));
                     }
                 }
-                if(this._option.value){
+                if (this._option.value) {
                     compOption.value = this._option.value[compOption.property];
                 }
             }
         }
-        if(this._option.showSearch){
-            let nzOffset:number = 0;
+        if (this._option.showSearch) {
+            let nzOffset: number = 0;
 
-            let lastCompSize:number = this._option.components[this._option.components.length-1].length;
-            let everyColSize:number = ~~24/maxCol;
-            if(lastCompSize<3){
-                if(this._option.components.length!=1){
-                    nzOffset = (2-lastCompSize)*everyColSize;                    
+            let lastCompSize: number = this._option.components[this._option.components.length - 1].length;
+            let everyColSize: number = ~~24 / maxCol;
+            let lastSpan: number;
+            if (lastCompSize < 3) {
+                if (this._option.components.length != 1) {
+                    nzOffset = (2 - lastCompSize) * everyColSize;
                 }
-            }else{
-                nzOffset = (2)*everyColSize;
+                if (lastCompSize == 1) {
+                    lastSpan = this._option.components[this._option.components.length - 1][0].span;
+                }
+            } else {
+                nzOffset = (2) * everyColSize;
                 let rowFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormRow);
                 rowComp = this.formRef.createComponent(rowFactory);
                 rowComp.instance.gutter = this._option.gutter;
@@ -115,38 +118,39 @@ export class NgdsForm implements AfterContentChecked {
 
             let searchFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormSearchBar);
             let comp: ComponentRef<any> = rowComp.instance.addCol(searchFactory);
-            let searchOption:any = {
-                span:~~24/maxCol,
-                labelSpan:this._option.labelSpan,
-                compSpan:this._option.compSpan,
-                formComp:this,
-                offset:nzOffset
+            let searchOption: any =  {
+                span: lastSpan ? (24 - lastSpan) : ~~24 / maxCol,
+                labelSpan: this._option.labelSpan,
+                compSpan: this._option.compSpan,
+                formComp: this,
+                offset: lastSpan?0:nzOffset
             };
+            Object.assign(searchOption,this._option.search);
             comp.instance.option = searchOption;
         }
     }
 
-    checkVal():boolean{
+    checkVal(): boolean {
         return this.myForm.valid;
     }
 
     getValue(): any {
-        if(!this._option.value){
-            this._option.value = {};            
+        if (!this._option.value) {
+            this._option.value = {};
         }
         for (let rowComp of this._option.components) {
             for (let compOption of rowComp) {
-                if(compOption.hidden){
+                if (compOption.hidden) {
                     delete this._option.value[compOption.property];
-                }else{
+                } else {
                     let propertyArray: Array<string> = compOption.property.split(".");
                     let value = this._option.value;
-                    propertyArray.forEach((item:string,index:number)=>{
-                        if(index==propertyArray.length-1){
+                    propertyArray.forEach((item: string, index: number) => {
+                        if (index == propertyArray.length - 1) {
                             let txComp: any = this.compMap[compOption.property].instance;
-                            txComp.setCompValue(value,item,compOption.value);
-                        }else{
-                            if(!value[item]){
+                            txComp.setCompValue(value, item, compOption.value);
+                        } else {
+                            if (!value[item]) {
                                 value[item] = {};
                             }
                             value = value[item];
@@ -159,11 +163,11 @@ export class NgdsForm implements AfterContentChecked {
         return this._option.value;
     }
 
-    getModelValue(property:string,data:any):any{
+    getModelValue(property: string, data: any): any {
         let propertyArray: Array<string> = property.split(".");
         let value = data;
-        for (let p of propertyArray){
-            if (!value){
+        for (let p of propertyArray) {
+            if (!value) {
                 value = "";
                 break;
             }
@@ -172,27 +176,27 @@ export class NgdsForm implements AfterContentChecked {
         return value;
     }
 
-    setValue(data:any){
+    setValue(data: any) {
         this._option.value = data;
         for (let rowComp of this._option.components) {
             for (let compOption of rowComp) {
-                let value:any = this.getModelValue(compOption.property,data);
-                if(compOption.property2){
-                   let secondValue:any  = this.getModelValue(compOption.property2,data);
-                   value = {
-                       first:value,
-                       second:secondValue
-                   }
+                let value: any = this.getModelValue(compOption.property, data);
+                if (compOption.property2) {
+                    let secondValue: any = this.getModelValue(compOption.property2, data);
+                    value = {
+                        first: value,
+                        second: secondValue
+                    }
                 }
                 let txComp: any = this.compMap[compOption.property].instance;
-                if (txComp.onChange){
-                    txComp.onChange(value==undefined?null:value);
+                if (txComp.onChange) {
+                    txComp.onChange(value == undefined ? null : value);
                 }
             }
         }
     }
 
-    getComp(property:string){
+    getComp(property: string) {
         return this.compMap[property];
     }
 

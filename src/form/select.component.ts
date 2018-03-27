@@ -67,13 +67,27 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
     if (this.option.onChange) {
       let dataValue: any = null;
       if (this.data) {
-        this.data.every((data: any) => {
-          if (data[this.option.dsValue] == this.option.value) {
-            dataValue = data;
-            return false;
-          }
-          return true;
-        })
+        if(this.option.model=="multiple"){
+          dataValue = [];
+          this.data.forEach((data: any) => {
+            this.option.value.every((value:any)=>{
+              if (data[this.option.dsValue] == value) {
+                dataValue.push(data);
+                return false;
+              }
+              return true;
+            })
+          })
+        }else{
+          this.data.every((data: any) => {
+            if (data[this.option.dsValue] == this.option.value) {
+              dataValue = data;
+              return false;
+            }
+            return true;
+          })
+        }
+        
       }
       this.option.onChange(this.option, dataValue);
     }

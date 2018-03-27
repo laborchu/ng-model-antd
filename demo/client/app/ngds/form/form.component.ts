@@ -164,6 +164,7 @@ export class FormComponent implements OnInit {
                     comp: NgdsFormSelect,
                     dataSource: new SelectDataSource(),
                     onChange: (option: NgdsFormCompOption,value:any) => {
+                        debugger
                     },
                     validations: [
                         {msg: "地区必选", type: "required", fn: Validators.required}
@@ -175,6 +176,9 @@ export class FormComponent implements OnInit {
                     comp: NgdsFormSelect,
                     dataSource: new SelectDataSource(),
                     model:"multiple",
+                    onChange: (option: NgdsFormCompOption,value:any) => {
+                        debugger
+                    },
                     validations: [
                         {msg: "地区必选", type: "required", fn: Validators.required}
                     ]

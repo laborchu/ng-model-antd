@@ -123,7 +123,7 @@
     "ng2-validation": "^4.2.0",
     "ngx-umeditor": "^1.0.3",
     "ngx-webuploader": "^1.0.1",
-    "rxjs": "^5.5.2",
+    "rxjs": "5.5.2",
     "systemjs": "0.20.19",
     "um-editor": "^1.2.2",
     "web-animations-js": "^2.3.1",

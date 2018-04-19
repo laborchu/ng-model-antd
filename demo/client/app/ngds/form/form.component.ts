@@ -3,7 +3,7 @@ import {Validators, FormControl} from '@angular/forms';
 
 import {
     NgdsFormConfig,
-    NgdsFormOption, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect,
+    NgdsFormOption, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox,NgdsFormCheckboxGroup, NgdsFormSelect,
     NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,
      NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
     NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp
@@ -85,6 +85,25 @@ class AddressDataSource implements NgdsDataSource {
         });
     }
 }
+class CheckboxGroupDataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve({
+                data:[
+                    {title: "用户权限",children:[
+                        {label:"权限管理",value:1},
+                        {label:"角色管理",value:2},
+                        {label:"用户管理",value:3},
+                    ]},
+                    {title: "订单管理",children:[
+                        {label:"订单列表",value:4},
+                        {label:"申请退款",value:5},
+                    ]},
+                ]
+            });
+        });
+    }
+}
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -102,7 +121,6 @@ export class FormComponent implements OnInit {
             md5Source: new Md5DataSource(),
             uploadBeforeSend : (block: any, data: any, headers: any) => {
                 data.token = "";
-                debugger
             }
         };
     }
@@ -164,7 +182,6 @@ export class FormComponent implements OnInit {
                     comp: NgdsFormSelect,
                     dataSource: new SelectDataSource(),
                     onChange: (option: NgdsFormCompOption,value:any) => {
-                        debugger
                     },
                     validations: [
                         {msg: "地区必选", type: "required", fn: Validators.required}
@@ -177,7 +194,6 @@ export class FormComponent implements OnInit {
                     dataSource: new SelectDataSource(),
                     model:"multiple",
                     onChange: (option: NgdsFormCompOption,value:any) => {
-                        debugger
                     },
                     validations: [
                         {msg: "地区必选", type: "required", fn: Validators.required}
@@ -203,6 +219,14 @@ export class FormComponent implements OnInit {
                     property: "address",
                     dataSource: new AddressDataSource(),
                     comp:NgdsFormCascader
+                   
+                },
+                {
+                    label: '授权',
+                    property: "auth",
+                    dataSource: new CheckboxGroupDataSource(),
+                    comp:NgdsFormCheckboxGroup,
+                    value:[1,2,4]
                    
                 }
             ]
@@ -261,9 +285,10 @@ export class FormComponent implements OnInit {
             {
                 text: '保存',
                 action: (item) => {
+                    let data2 = this.myForm.getValue();
+                    debugger
                     if(this.myForm.checkVal()){
                         let data = this.myForm.getValue();
-                        debugger;
                     }
                 }
             }
@@ -296,13 +321,13 @@ export class FormComponent implements OnInit {
         
             // }
         
-            this.myForm.setValue({
-                date:new Date(),
-            })
+            // this.myForm.setValue({
+            //     date:new Date(),
+            // })
 
-            this.myForm2.setValue({
-                desc:"sfsdfsdf",
-            })
+            // this.myForm2.setValue({
+            //     desc:"sfsdfsdf",
+            // })
 
         },5000)
         

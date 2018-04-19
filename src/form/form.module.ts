@@ -27,6 +27,9 @@ import {
 	NgdsFormCheckbox
 } from './checkbox.component';
 import {
+	NgdsFormCheckboxGroup
+} from './checkbox-group.component';
+import {
 	NgdsFormSelect
 } from './select.component';
 import {
@@ -57,7 +60,7 @@ export { NgdsFormComp } from './form.component';
 export {
 	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption,NgdsFormInputRangeCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormSelectCompOption, NgdsFormDatePickerCompOption,
-	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption,NgdsFormCascaderCompOption
+	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption,NgdsFormCascaderCompOption,NgdsFormCheckboxGroupCompOption
 } from './form.config';
 export {
 	NgdsFormInput
@@ -74,6 +77,9 @@ export {
 export {
 	NgdsFormCheckbox
 } from './checkbox.component';
+export {
+	NgdsFormCheckboxGroup
+} from './checkbox-group.component';
 export {
 	NgdsFormSelect
 } from './select.component';
@@ -93,7 +99,7 @@ export {
 	NgdsFormCascader
 } from './cascader.component';
 
-const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect, 
+const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox,NgdsFormCheckboxGroup, NgdsFormSelect, 
 	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar];
 
 @NgModule({ 

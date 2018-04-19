@@ -108,6 +108,13 @@ export class NgdsFormCheckboxCompOption extends NgdsFormCompOption {
 	dsValue?: string;
 }
 
+export class NgdsFormCheckboxGroupCompOption extends NgdsFormCompOption {
+	dataSource: NgdsDataSource;
+	dsTitle?: string
+	dsLabel?: string;
+	dsValue?: string;
+}
+
 export class NgdsFormSelectCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
 	dsLabel?: string;

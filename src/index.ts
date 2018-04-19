@@ -28,9 +28,9 @@ export {
 import { NgdsBlockModule } from './block/block.module';
 export {
 	NgdsBlockModule,
-	NgdsBlock,NgdsBlockInfo,
+	NgdsBlock, NgdsBlockInfo,
 	NgdsBlockConfig, NgdsBlockOption,
-	NgdsBlockInfoOption,NgdsBlockInfoItemOption
+	NgdsBlockInfoOption, NgdsBlockInfoItemOption
 } from './block/block.module';
 
 import { NgdsFormModule } from './form/form.module';
@@ -43,6 +43,7 @@ export {
 	NgdsFormInputRange,
 	NgdsFormRadio,
 	NgdsFormCheckbox,
+	NgdsFormCheckboxGroup,
 	NgdsFormSelect,
 	NgdsFormUmeditor,
 	NgdsFormUploader,
@@ -50,9 +51,9 @@ export {
 	NgdsFormDatePickerRange,
 	NgdsFormCascader,
 
-	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
-	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormSelectCompOption, 
-	NgdsFormDatePickerCompOption,NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption,NgdsFormCascaderCompOption
+	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption, NgdsFormInputListCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
+	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormCheckboxGroupCompOption, NgdsFormSelectCompOption,
+	NgdsFormDatePickerCompOption, NgdsFormUmeditorCompOption, NgdsFormUploaderCompOption, NgdsFormCascaderCompOption
 } from './form/form.module';
 
 
@@ -66,7 +67,7 @@ import {
 } from './pipe/index';
 
 export {
-	NgdsPipeModule, DatagridDeepPropertyPipe,DatagridDatePropertyPipe
+	NgdsPipeModule, DatagridDeepPropertyPipe, DatagridDatePropertyPipe
 } from './pipe/index';
 
 
@@ -79,21 +80,21 @@ const NGB_MODULES = [
 ];
 
 @NgModule({
-  imports: [
-	  NgdsDataGridModule.forRoot(),
-	  NgdsPanelModule.forRoot(),
-	  NgdsFormModule.forRoot(),
-	  NgdsTabModule.forRoot(),
-	  NgdsBlockModule.forRoot(),
-	  NgZorroAntdModule.forRoot(),
-	  NgdsPipeModule.forRoot()
-  ],
-  exports: NGB_MODULES
+	imports: [
+		NgdsDataGridModule.forRoot(),
+		NgdsPanelModule.forRoot(),
+		NgdsFormModule.forRoot(),
+		NgdsTabModule.forRoot(),
+		NgdsBlockModule.forRoot(),
+		NgZorroAntdModule.forRoot(),
+		NgdsPipeModule.forRoot()
+	],
+	exports: NGB_MODULES
 })
 export class NgdsRootModule {
 }
 
 @NgModule({ imports: NGB_MODULES, exports: NGB_MODULES })
 export class NgdsModule {
-  static forRoot(): ModuleWithProviders { return { ngModule: NgdsRootModule }; }
+	static forRoot(): ModuleWithProviders { return { ngModule: NgdsRootModule }; }
 }

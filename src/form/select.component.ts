@@ -70,7 +70,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
         if(this.option.model=="multiple"){
           dataValue = [];
           this.data.forEach((data: any) => {
-            this.option.value.every((value:any)=>{
+            this.option.value&&this.option.value.every((value:any)=>{
               if (data[this.option.dsValue] == value) {
                 dataValue.push(data);
                 return false;

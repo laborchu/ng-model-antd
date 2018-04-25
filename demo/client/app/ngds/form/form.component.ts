@@ -138,7 +138,7 @@ export class FormComponent implements OnInit {
                 ]
                 },
                 {label: '密码', property: "user.password", comp: NgdsFormInput, type: "password"},
-                {label: '邮件', property: "user.email", comp: NgdsFormInput, type: "email"}
+                {label: '邮件', property: "user.email", comp: NgdsFormInput, type: "email",disabled:true}
             ],
             [
                 {
@@ -285,10 +285,12 @@ export class FormComponent implements OnInit {
             {
                 text: '保存',
                 action: (item) => {
-                    let data2 = this.myForm.getValue();
-                    debugger
                     if(this.myForm.checkVal()){
                         let data = this.myForm.getValue();
+                    }
+                    if(this.myForm2.checkVal()){
+                        let data = this.myForm2.getValue();
+                        debugger
                     }
                 }
             }

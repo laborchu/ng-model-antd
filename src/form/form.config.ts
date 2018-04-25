@@ -30,7 +30,7 @@ export class NgdsFormOption {
 	labelSpan?: number;
 	compSpan?: number;
 	gutter?: number;
-	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption>>;
+	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption>>;
 	value?: any;
 	showSearch?: boolean;	
 	search?:NgdsFormSearchOption;
@@ -54,6 +54,7 @@ export class NgdsFormCompOption {
 	onChange?: onChangeFunc;
 	hidden?: boolean;
 	formComp?: NgdsForm;
+	disabled?:boolean;
 }
 
 export class NgdsFormValidationOption {

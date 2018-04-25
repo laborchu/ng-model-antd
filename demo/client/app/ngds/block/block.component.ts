@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {NgdsBlockOption,NgdsBlockInfoOption,NgdsDataGridOption,NgdsDataSource,NgdsDataGridModel,NgdsModel} from '../../../../../src/index';
 
+import { DatagridPropertyPipe, DatagridPropertyBadgePipe,OrderStatusPipe } from '../../shared/pipe/index';
 class DemoDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsDataGridModel> {
         return new Promise<NgdsDataGridModel>((resolve, reject) => {
@@ -35,7 +36,7 @@ class Block1DataSource implements NgdsDataSource {
         return new Promise<NgdsModel>((resolve, reject) => {
             setTimeout(()=>{
                 resolve({
-                    data: { field1: new Date(), field2: "已取货", field3: "1234123421", field4: "3214321432" }
+                    data: { field1: new Date(), orderStatus: 1, field3: "1234123421", field4: "3214321432" }
                 });
             },2000)
             
@@ -53,7 +54,7 @@ class Block1DataSource implements NgdsDataSource {
 })
 export class BlockComponent implements OnInit {
 
-    constructor() {
+    constructor(private orderStatusPipe:OrderStatusPipe) {
     }
 
     blockOption: NgdsBlockOption = {
@@ -76,7 +77,7 @@ export class BlockComponent implements OnInit {
         col:1,
         items:[
             {label:"取货单号",field:"field1",type:"date",fomart:"yyyy-MM-dd HH:mm:ss"},
-            {label:"状态",field:"field2"},
+            {label:"状态",field:"orderStatus"},
             {label:"销售单号",field:"field3"},
             {label:"子订单",field:"field4"}
         ]
@@ -90,7 +91,7 @@ export class BlockComponent implements OnInit {
         col:2,
         items:[
             {label:"取货单号",field:"field1"},
-            {label:"状态",field:"field2"},
+            {label:"状态",field:"orderStatus"},
             {label:"销售单号",field:"field3"},
             {label:"子订单",field:"field4"}
         ]
@@ -104,7 +105,7 @@ export class BlockComponent implements OnInit {
         col:3,
         items:[
             {label:"取货单号",field:"field1"},
-            {label:"状态",field:"field2"},
+            {label:"状态",field:"orderStatus",pipe:this.orderStatusPipe},
             {label:"销售单号",field:"field3"},
             {label:"子订单",field:"field4"}
         ]

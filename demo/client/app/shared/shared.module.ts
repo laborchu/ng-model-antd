@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NgdsModule } from '../../../../src/index';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { DatagridPropertyPipe, DatagridPropertyBadgePipe } from './pipe/index';
+import { DatagridPropertyPipe, DatagridPropertyBadgePipe,OrderStatusPipe } from './pipe/index';
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */
@@ -15,7 +15,7 @@ import { DatagridPropertyPipe, DatagridPropertyBadgePipe } from './pipe/index';
   imports: [CommonModule, RouterModule, NgdsModule,NgZorroAntdModule],
   declarations: [],
   exports: [CommonModule, FormsModule, RouterModule, NgdsModule,NgZorroAntdModule],
-  providers: [DatagridPropertyPipe, DatagridPropertyBadgePipe]
+  providers: [DatagridPropertyPipe, DatagridPropertyBadgePipe,OrderStatusPipe]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

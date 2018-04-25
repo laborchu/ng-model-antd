@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,PipeTransform } from '@angular/core';
 import { NgdsDataSource,NgdsModel } from '../core/datasource';
 
 @Injectable()
@@ -20,6 +20,7 @@ export class NgdsBlockInfoOption {
     items:Array<NgdsBlockInfoItemOption>;
 }
 
+export type pipeFunc = (data:any) => string;
 export class NgdsBlockInfoItemOption {
     label:string;
     field:string;
@@ -27,4 +28,5 @@ export class NgdsBlockInfoItemOption {
     fomart?:string;
     type?:'text'|'image'|'date';
     span?:number;
+	pipe?: PipeTransform | pipeFunc | PipeTransform[];
 }

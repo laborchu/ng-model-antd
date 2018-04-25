@@ -64,13 +64,13 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
             for (let item of model.data) {
                 item.title = item[this.option.dsTitle];
                 for (let child of item.children) {
-                    item.label = item[this.option.dsLabel];
+                    child.label = child[this.option.dsLabel];
                     if (this.option.dsLabel != "label") {
-                        delete item[this.option.dsLabel];
+                        delete child[this.option.dsLabel];
                     }
-                    item.value = item[this.option.dsValue];
+                    child.value = child[this.option.dsValue];
                     if (this.option.dsValue != "value") {
-                        delete item[this.option.dsValue];
+                        delete child[this.option.dsValue];
                     }
                     if (this.option.value != undefined) {
                         if (this.option.value.indexOf(child.value) != -1) {

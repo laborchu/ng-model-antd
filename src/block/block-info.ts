@@ -65,7 +65,27 @@ export class NgdsBlockInfo {
         if(item.type=="date"){
             return this.datePipe.transform(this.data[item.field], item.fomart);
         }else{
-            return this.data[item.field];
+            if(item.pipe){
+                if (typeof item.pipe === "function") {
+                    return item.pipe(this.data[item.field]);
+                  } else {
+                    if (Array.isArray(item.pipe)) {
+                      let value: any;
+                      for (let pipeItem of item.pipe) {
+                        if (typeof pipeItem === "function") {
+                          value = pipeItem(this.data[item.field]);
+                        } else {
+                          value = pipeItem.transform(this.data[item.field]);
+                        }
+                      }
+                      return value;
+                    } else {
+                      return item.pipe.transform(this.data[item.field]);
+                    }
+                  }
+            }else{
+                return this.data[item.field];
+            }
         }
     }
 

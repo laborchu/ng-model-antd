@@ -2,37 +2,43 @@
     .uploader {
         border: 1px dashed #ddd;
         padding: 10px;
-        
+
         .upload-item {
             width: 80px;
             height: 80px;
             margin-right: 10px;
             position: relative;
             float: left;
-            img{
+
+            img {
                 width: 100%;
                 height: 100%;
             }
-            .upload-item-video{
+
+            .upload-item-video {
                 background-color: #444;
                 text-align: center;
                 height: 100%;
                 padding-top: 20px;
-                .iconfont{
+
+                .iconfont {
                     color: white;
                     font-size: 30px;
                 }
             }
-            .upload-item-other{
+
+            .upload-item-other {
                 width: 80px;
                 height: 80px;
-                .iconfont{
+
+                .iconfont {
                     font-size: 77px;
                     position: relative;
                     top: -17px;
                     color: #666;
                 }
-                .file-type{
+
+                .file-type {
                     color: #666;
                     display: inline-block;
                     width: 80px;
@@ -41,18 +47,21 @@
                     top: 28px;
                 }
             }
-            .icon{
+
+            .icon {
                 width: 14px;
                 height: 14px;
                 position: absolute;
-                top:0;
+                top: 0;
                 right: 0;
                 cursor: pointer;
             }
         }
+
         .webuploader-container {
             width: 80px;
             height: 80px;
+
             .webuploader-pick {
                 width: 80px;
                 height: 80px;
@@ -63,35 +72,49 @@
             }
         }
     }
-    .input-list{
-        .ant-input-group{
+
+    .input-list {
+        .ant-input-group {
             margin-bottom: 10px;
-            .anticon-down,.anticon-up,.anticon-minus{
+
+            .anticon-down, .anticon-up, .anticon-minus {
                 cursor: pointer;
             }
         }
     }
-    .input-range{
-        .split-input{
+
+    .input-range {
+        .split-input {
             margin-right: 8px;
         }
     }
-    .search-bar{
-        .split-btn{
+
+    .search-bar {
+        .split-btn {
             margin-right: 8px;
         }
-        .ant-form-item{
+
+        .ant-form-item {
             margin-bottom: 15px;
         }
-        .pl10{
+
+        .pl10 {
             padding-left: 10px;
         }
     }
+
     .error-msg {
-        color: #f04134;;
+        color: #f04134;
     }
 
     .ant-checkbox-wrapper + .ant-checkbox-wrapper {
         margin-left: 0;
+    }
+
+    .input-limit {
+        position: absolute;
+        top: 1px;
+        right: 10px;
+        color: #aaa;   
     }
 }

@@ -131,7 +131,7 @@ export class FormComponent implements OnInit {
         components: [
             [
                 {
-                    label: '用户名', property: "username", comp: NgdsFormInput, type: "text", validations: [
+                    label: '用户名', property: "username", comp: NgdsFormInput, type: "text",maxLength:20, validations: [
                     {msg: "用户名不能为空", type: "required", fn: Validators.required},
                     {msg: "长度在5-9", type: "rangeLength", fn: CustomValidators.rangeLength([5, 9])},
                     {msg: "必须为数字", type: "digits", fn: CustomValidators.digits},

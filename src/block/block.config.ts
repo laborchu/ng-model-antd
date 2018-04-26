@@ -20,7 +20,7 @@ export class NgdsBlockInfoOption {
     items:Array<NgdsBlockInfoItemOption>;
 }
 
-export type pipeFunc = (data:any) => string;
+export type pipeFunc = (property: string,data:any) => string;
 export class NgdsBlockInfoItemOption {
     label:string;
     field:string;

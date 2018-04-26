@@ -32,8 +32,8 @@ export class NgdsFormOption {
 	gutter?: number;
 	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption>>;
 	value?: any;
-	showSearch?: boolean;	
-	search?:NgdsFormSearchOption;
+	showSearch?: boolean;
+	search?: NgdsFormSearchOption;
 	column?: number;//最大列数量	
 }
 
@@ -44,7 +44,7 @@ export class NgdsFormCompOption {
 	comp: any;
 	label: string;
 	property: string;
-	property2?: string;	
+	property2?: string;
 	value?: any;
 	span?: number;//组件span
 	labelSpan?: number;//组件标签span
@@ -54,7 +54,7 @@ export class NgdsFormCompOption {
 	onChange?: onChangeFunc;
 	hidden?: boolean;
 	formComp?: NgdsForm;
-	disabled?:boolean;
+	disabled?: boolean;
 }
 
 export class NgdsFormValidationOption {
@@ -64,13 +64,14 @@ export class NgdsFormValidationOption {
 	fn: ValidatorFn;
 }
 export class NgdsFormSearchOption extends NgdsFormCompOption {
-	offset?:number;
+	offset?: number;
 	hideReset?: boolean;
 }
 
 export class NgdsFormInputCompOption extends NgdsFormCompOption {
 	type: 'text' | 'password';
-	placeHolder?:string;
+	placeHolder?: string;
+	maxLength?: number;
 }
 
 export class NgdsFormInputRangeCompOption extends NgdsFormCompOption {
@@ -131,7 +132,7 @@ export class NgdsFormUmeditorCompOption extends NgdsFormCompOption {
 	config?: any; //umeditor配置项
 	path?: string;//umeditor代码根目录路径，以 / 结尾
 	loadingTip?: string;//初始化提示文本
-	setting?:any;
+	setting?: any;
 }
 
 export type errHandlerFunc = (err: any) => void;

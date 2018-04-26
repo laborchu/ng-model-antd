@@ -67,20 +67,20 @@ export class NgdsBlockInfo {
         }else{
             if(item.pipe){
                 if (typeof item.pipe === "function") {
-                    return item.pipe(this.data[item.field]);
+                    return item.pipe(item.field,this.data);
                   } else {
                     if (Array.isArray(item.pipe)) {
                       let value: any;
                       for (let pipeItem of item.pipe) {
                         if (typeof pipeItem === "function") {
-                          value = pipeItem(this.data[item.field]);
+                          value = pipeItem(item.field,this.data);
                         } else {
-                          value = pipeItem.transform(this.data[item.field]);
+                          value = pipeItem.transform(item.field,this.data);
                         }
                       }
                       return value;
                     } else {
-                      return item.pipe.transform(this.data[item.field]);
+                      return item.pipe.transform(item.field,this.data);
                     }
                   }
             }else{

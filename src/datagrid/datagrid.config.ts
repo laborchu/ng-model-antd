@@ -25,6 +25,7 @@ export type styleFunc = (data: any) => string;
 export type loadingFunc = (data: any) => boolean;
 export type pipeFunc = (property: string,data:any) => string;
 export type textFunc = (data:any) => string;
+export type editFinishFunc = (item:any) => void;
 
 export interface NgdsDataGridOption {
 	dataSource: NgdsDataSource|Array<any>;
@@ -49,6 +50,8 @@ export interface NgdsDataGridColumnOption {
 	showSort?: boolean;
 	propertyClassPipe?: PipeTransform | PipeTransform[];
 	component?:any;
+	canEdit?:any;
+	editFinish?:editFinishFunc;
 }
 
 export interface NgdsDataGridOpOption {

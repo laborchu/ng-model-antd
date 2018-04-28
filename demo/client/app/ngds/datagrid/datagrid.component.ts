@@ -49,14 +49,21 @@ class DemoDataSource implements NgdsDataSource {
                         totalCount: 9
                     },
                     data: [
-                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, org: { name: 1 } },
-                        { username: "13999", name: "胡立波", mobile: "13333333331", authStatus: 0 },
-                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
-                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
-                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 0 },
-                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
-                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
-                        { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1 },
+                        { 
+                            key:1, username: "13999", name: "胡立波1", mobile: "13333333333", authStatus: 1, org: { name: 1 } ,
+                            children:[
+                                { key:9, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0 },
+                                { key:10, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
+                                { key:11, username: "13999", name: "胡立波11", mobile: "13333333333", authStatus: 1 },
+                            ]
+                        },
+                        { key:2, username: "13999", name: "胡立波2", mobile: "13333333331", authStatus: 0,disableEdit:true },
+                        { key:3, username: "13999", name: "胡立波3", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { key:4, username: "13999", name: "胡立波4", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { key:5, username: "13999", name: "胡立波5", mobile: "13333333333", authStatus: 0,disableEdit:true },
+                        { key:6, username: "13999", name: "胡立波6", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { key:7, username: "13999", name: "胡立波7", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { key:8, username: "13999", name: "胡立波8", mobile: "13333333333", authStatus: 1,disableEdit:true },
                     ]
                 });
             }, 1000)
@@ -178,9 +185,11 @@ export class DataGridComponent implements OnInit {
         table: {
             showCheck: false,
             columns: [
-                { text: '用户名', property: "username", width: "60px",component:DemoColumnComponent },
-                { text: '姓名', property: "name", width: "80px" },
-                { text: '手机号', property: "mobile", width: "100px" },
+                { text: '用户名', property: "username",canEdit:true,editFinish:(item:any)=>{
+                    debugger
+                }},
+                { text: '姓名', property: "name",  },
+                { text: '手机号', property: "mobile", },
                 {
                     text: '认证状态',
                     property: "authStatus",

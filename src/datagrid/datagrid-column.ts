@@ -20,32 +20,60 @@ import {
     selector: 'ngds-column',
     exportAs: 'ngdsColumn',
     template: `
-    <span #columnRef>
+    <span class="dg-column" #columnRef>
         <span *ngIf="!hasCustomComp">
             <nz-badge *ngIf="colOption.badgePipe" [nzStatus]="getValueFromPipe(colOption.badgePipe)"></nz-badge>
-            <span [innerHTML]="getValueFromPipe(colOption.propertyPipe)"></span>
+            <span *ngIf="!edit" [innerHTML]="getValueFromPipe(colOption.propertyPipe)"></span>
+
+            <span class="edit-input" *ngIf="edit">
+              <nz-input [(ngModel)]="item[colOption.property]" (keyup.enter)="finishEdit()"></nz-input>
+              <i class="anticon anticon-check editable-cell-icon-check" (click)="finishEdit()"></i>
+              <i class="anticon anticon-close" (click)="closeEdit()"></i>
+            </span>
+            <span class="edit-icon" *ngIf="canEdit()&&!edit">
+                <i class="anticon anticon-edit editable-cell-icon" (click)="startEdit()"></i>
+            </span>
+            
         </span>
     </span>
     `
 })
 export class NgdsColumn {
-    constructor(private cfr: ComponentFactoryResolver,) {
+    constructor(private cfr: ComponentFactoryResolver, ) {
     }
 
     @ViewChild("columnRef", { read: ViewContainerRef }) columnRef: ViewContainerRef;
     @Input() colOption: NgdsDataGridColumnOption;
     @Input() item: any;
-    hasCustomComp:boolean = false;
+    hasCustomComp: boolean = false;
+    edit: boolean = false;
+    oldValue:any = null;
 
     ngOnInit() {
-        if(this.colOption.component){
+        if (this.colOption.component) {
             this.hasCustomComp = true;
             let compFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(this.colOption.component);
             let comp = this.columnRef.createComponent(compFactory);
             comp.instance.colOption = this.colOption;
             comp.instance.item = this.item;
         }
-        
+    }
+
+    canEdit():boolean{
+        return this.colOption.canEdit&&!this.item.disableEdit;
+    }
+
+    startEdit():void{
+        this.oldValue = this.item[this.colOption.property];
+        this.edit = !this.edit;
+    }
+    closeEdit():void{
+        this.item[this.colOption.property] = this.oldValue;
+        this.edit = !this.edit;
+    }
+    finishEdit():void{
+        this.edit = !this.edit;
+        this.colOption.editFinish&&this.colOption.editFinish(this.item);
     }
 
     getValueFromPipe = function (pipe: PipeTransform | pipeFunc | PipeTransform[]) {

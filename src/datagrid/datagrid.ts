@@ -42,42 +42,44 @@ let hashPageMap: Map<number, number> = new Map();
         </tr>
       </thead>
       <tbody nz-tbody>
-        <tr *ngFor="let item of data" nz-tbody-tr>
-          <td nz-td [nzCheckbox]="option.table.showCheck" *ngIf="option.table.showCheck">
-            <label nz-checkbox [nzDisabled]="item.disabled" [(ngModel)]="item.checked" (ngModelChange)="_refreshStatus($event)">
-            </label>
-          </td>
-        
-          <td *ngFor="let col of option.table.columns;"
-              title="{{col.title? (item[col.property]):''}}">
-              <ngds-column [colOption]="col" [item]="item"></ngds-column>
-          </td>
-
-          <td *ngIf="option.table.op" class="op-td">
-              <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
-                <span nz-table-divider *ngIf="btnIndex!=0&&(btn.hidden?!btn.hidden(item):true)"></span>
-                <a [hidden]="btn.hidden?btn.hidden(item):false"
-                      (click)="btn.action(item,dataIndex)"
-                      class="{{getBtnStyle(btn,item)}}">
-                      <i class="anticon anticon-loading anticon-spin" *ngIf="showBtnLoading(btn,item)"></i>
-                      {{getBtnText(btn,item)}}
-                </a>
-              </span>
-
-              <nz-dropdown *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index">
-                <span nz-table-divider></span>
-                <a class="ant-dropdown-link" nz-dropdown>
-                  {{getBtnText(groupButton,item)}} <i class="anticon anticon-down"></i>
-                </a>
-                <ul nz-menu>
-                  <li nz-menu-item *ngFor="let gbtn of groupButton.buttons">
-                    <a>{{gbtn.text}}</a>
-                  </li>
-                </ul>
-              </nz-dropdown>
-
-          </td>
-        </tr>
+        <ng-template ngFor let-data [ngForOf]="nzTable.data">
+          <ng-template ngFor let-item [ngForOf]="expandDataCache[data.key]">
+            <tr nz-tbody-tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)">
+              <td nz-td [nzCheckbox]="option.table.showCheck" *ngIf="option.table.showCheck">
+                <label nz-checkbox [nzDisabled]="item.disabled" [(ngModel)]="item.checked" (ngModelChange)="_refreshStatus($event)">
+                </label>
+              </td>
+              <td *ngFor="let col of option.table.columns;let colIndex = index"
+                  title="{{col.title? (item[col.property]):''}}">
+                  <nz-row-indent [nzIndentSize]="item.level"></nz-row-indent>
+                  <nz-row-expand-icon [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data.key],item,$event)" [nzShowExpand]="!!item.children&&colIndex==0"></nz-row-expand-icon>
+                  <ngds-column [colOption]="col" [item]="item"></ngds-column>
+              </td>
+              <td *ngIf="option.table.op" class="op-td">
+                  <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
+                    <span nz-table-divider *ngIf="btnIndex!=0&&(btn.hidden?!btn.hidden(item):true)"></span>
+                    <a [hidden]="btn.hidden?btn.hidden(item):false"
+                          (click)="btn.action(item,dataIndex)"
+                          class="{{getBtnStyle(btn,item)}}">
+                          <i class="anticon anticon-loading anticon-spin" *ngIf="showBtnLoading(btn,item)"></i>
+                          {{getBtnText(btn,item)}}
+                    </a>
+                  </span>
+                  <nz-dropdown *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index">
+                    <span nz-table-divider></span>
+                    <a class="ant-dropdown-link" nz-dropdown>
+                      {{getBtnText(groupButton,item)}} <i class="anticon anticon-down"></i>
+                    </a>
+                    <ul nz-menu>
+                      <li nz-menu-item *ngFor="let gbtn of groupButton.buttons">
+                        <a>{{gbtn.text}}</a>
+                      </li>
+                    </ul>
+                  </nz-dropdown>
+              </td>
+            </tr>
+          </ng-template>
+        </ng-template>
       </tbody>
     </nz-table>
 
@@ -201,11 +203,52 @@ export class NgdsDataGrid implements AfterContentChecked {
         this._loading = false;
         this.data = model.data;
         this.page = model.page;
+        this.data.forEach(item => {
+          this.expandDataCache[ item.key ] = this.convertTreeToList(item);
+        });
       }).catch((e)=>{
         this._loading = false;
       });
     }
     
+  }
+
+  expandDataCache:any = {};
+  convertTreeToList(root:any) {
+    const stack:any = [], array:any = [], hashMap:any = {};
+    stack.push({ ...root, level: 0, expand: false });
+
+    while (stack.length !== 0) {
+      const node = stack.pop();
+      this.visitNode(node, hashMap, array);
+      if (node.children) {
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push({ ...node.children[ i ], level: node.level + 1, expand: false, parent: node });
+        }
+      }
+    }
+
+    return array;
+  }
+
+  visitNode(node:any, hashMap:any, array:any) {
+    if (!hashMap[ node.key ]) {
+      hashMap[ node.key ] = true;
+      array.push(node);
+    }
+  }
+  collapse(array:any, data:any, $event:any) {
+    if ($event === false) {
+      if (data.children) {
+        data.children.forEach((d:any) => {
+          const target = array.find((a:any) => a.key === d.key);
+          target.expand = false;
+          this.collapse(array, target, false);
+        });
+      } else {
+        return;
+      }
+    }
   }
 
   ngAfterContentChecked() {

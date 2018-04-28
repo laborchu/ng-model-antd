@@ -48,6 +48,7 @@ export interface NgdsDataGridColumnOption {
 	overflow?: boolean;
 	showSort?: boolean;
 	propertyClassPipe?: PipeTransform | PipeTransform[];
+	component?:any;
 }
 
 export interface NgdsDataGridOpOption {

@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { DataGridComponent,PanelComponent,FormComponent,TabComponent,BlockComponent } from './ngds/index';
+import { DataGridComponent,DemoColumnComponent,PanelComponent,FormComponent,TabComponent,BlockComponent } from './ngds/index';
 import { SharedModule } from './shared/shared.module';
 
 import { NgdsModule } from '../../../src/index';
@@ -19,11 +19,12 @@ import { NgdsModule } from '../../../src/index';
 	imports: [BrowserModule,BrowserAnimationsModule, HttpModule, AppRoutingModule,
 		NgdsModule.forRoot(),
 		SharedModule.forRoot()],
-	declarations: [AppComponent, DataGridComponent, PanelComponent, FormComponent,TabComponent,BlockComponent],
+	declarations: [AppComponent, DataGridComponent,DemoColumnComponent, PanelComponent, FormComponent,TabComponent,BlockComponent],
 	providers: [{
 		provide: APP_BASE_HREF,
 		useValue: '<%= APP_BASE %>'
 	}],
+	entryComponents:[DemoColumnComponent],
 	bootstrap: [AppComponent]
 
 })

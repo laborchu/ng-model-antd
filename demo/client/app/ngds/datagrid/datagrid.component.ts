@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import {
     NgdsDataGridOption, NgdsPanelOption,
@@ -10,13 +10,32 @@ import {
     NgdsFormConfig,
     NgdsFormOption, NgdsFormInput, NgdsFormRadio, NgdsFormCheckbox, NgdsFormSelect, NgdsFormDatePicker,
     NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
-    NgdsForm, NgdsFormComp,NgdsDataGrid
+    NgdsForm, NgdsFormComp, NgdsDataGrid, NgdsDataGridColumnOption
 } from '../../../../../src/index';
 import { DatagridPropertyPipe, DatagridPropertyBadgePipe } from '../../shared/pipe/index';
 
 // pageSize: number; //每页个数
 // pageCount: number; //页面总数
 // pageIndex: number;//当前页数
+@Component({
+    template: `
+    <div>
+     {{item.username}}
+     <div>
+        自定义组件
+     </div>
+    </div>
+    `
+})
+export class DemoColumnComponent {
+    elRef: ElementRef
+    colOption:NgdsDataGridColumnOption;
+    item:any;
+
+    constructor(elRef: ElementRef) {
+        this.elRef = elRef;
+    }
+}
 
 class DemoDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsDataGridModel> {
@@ -27,7 +46,7 @@ class DemoDataSource implements NgdsDataSource {
                     page: {
                         pageSize: 4,
                         pageCount: 10,
-                        totalCount:9
+                        totalCount: 9
                     },
                     data: [
                         { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, org: { name: 1 } },
@@ -61,8 +80,8 @@ class SexDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsModel> {
         return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
-                {label: "男", value: 1},
-                {label: "女", value: 2}
+                { label: "男", value: 1 },
+                { label: "女", value: 2 }
             ]);
         });
     }
@@ -71,10 +90,10 @@ class LikeDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsModel> {
         return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
-                {label: "游泳", value: 1},
-                {label: "下棋", value: 2},
-                {label: "编程", value: 3},
-                {label: "跑步", value: 4}
+                { label: "游泳", value: 1 },
+                { label: "下棋", value: 2 },
+                { label: "编程", value: 3 },
+                { label: "跑步", value: 4 }
             ]);
         });
     }
@@ -83,11 +102,11 @@ class SelectDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsModel> {
         return new Promise<NgdsModel>((resolve, reject) => {
             resolve([
-                {label: "全部", value: ""},
-                {label: "杭州", value: 1},
-                {label: "宁波", value: 2},
-                {label: "温州", value: 3},
-                {label: "上海", value: 4}
+                { label: "全部", value: "" },
+                { label: "杭州", value: 1 },
+                { label: "宁波", value: 2 },
+                { label: "温州", value: 3 },
+                { label: "上海", value: 4 }
             ]);
         });
     }
@@ -107,9 +126,9 @@ export class DataGridComponent implements OnInit {
         private datagridPropertyBadgePipe: DatagridPropertyBadgePipe,
         private datagridDeepPropertyPipe: DatagridDeepPropertyPipe) {
     }
-    @ViewChild('myForm') myForm:NgdsForm;
-    @ViewChild('myTable') myTable:NgdsDataGrid;
-    
+    @ViewChild('myForm') myForm: NgdsForm;
+    @ViewChild('myTable') myTable: NgdsDataGrid;
+
     panelOption: NgdsPanelOption = {
         crumbs: [
             {
@@ -140,8 +159,8 @@ export class DataGridComponent implements OnInit {
     }
 
     formOption: NgdsFormOption = {
-        showSearch:true,
-        column:3,
+        showSearch: true,
+        column: 3,
         components: [
             [
                 {
@@ -149,7 +168,7 @@ export class DataGridComponent implements OnInit {
                 },
                 { label: '商品名称', property: "goodName", comp: NgdsFormInput, type: "password" }
             ],
-            
+
         ]
 
     }
@@ -159,18 +178,18 @@ export class DataGridComponent implements OnInit {
         table: {
             showCheck: false,
             columns: [
-                { text: '用户名', property: "username", width: "60px" },
+                { text: '用户名', property: "username", width: "60px",component:DemoColumnComponent },
                 { text: '姓名', property: "name", width: "80px" },
                 { text: '手机号', property: "mobile", width: "100px" },
                 {
                     text: '认证状态',
                     property: "authStatus",
                     propertyPipe: this.datagridPropertyPipe,
-                    badgePipe: (property: string,data:any):string=>{
-                        if(data[property]==1){
-                            return "success";                        
-                        }else{
-                            return "error";                        
+                    badgePipe: (property: string, data: any): string => {
+                        if (data[property] == 1) {
+                            return "success";
+                        } else {
+                            return "error";
                         }
                     },
                     width: "130px"
@@ -255,12 +274,12 @@ export class DataGridComponent implements OnInit {
     ngOnInit() {
     }
 
-    tabSelect(data:any){
-        let value:any = this.myForm.getValue();
-        this.myTable.search({auth:data.value});
+    tabSelect(data: any) {
+        let value: any = this.myForm.getValue();
+        this.myTable.search({ auth: data.value });
     }
 
-    search(value:any){
+    search(value: any) {
         debugger
         this.myTable.search(value);
     }

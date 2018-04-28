@@ -50,9 +50,9 @@ let hashPageMap: Map<number, number> = new Map();
         
           <td *ngFor="let col of option.table.columns;"
               title="{{col.title? (item[col.property]):''}}">
-              <nz-badge *ngIf="col.badgePipe" [nzStatus]="getValueFromPipe(item,col,col.badgePipe)"></nz-badge>
-              <span [innerHTML]="getValueFromPipe(item,col,col.propertyPipe)"></span>
+              <ngds-column [colOption]="col" [item]="item"></ngds-column>
           </td>
+
           <td *ngIf="option.table.op" class="op-td">
               <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
                 <span nz-table-divider *ngIf="btnIndex!=0&&(btn.hidden?!btn.hidden(item):true)"></span>

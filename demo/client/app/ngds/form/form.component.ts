@@ -210,8 +210,7 @@ export class FormComponent implements OnInit {
             [
                 {
                     label: '时间区间',
-                    property: "startDate",
-                    property2: "endDate",
+                    property: "rangeDate",
                     comp: NgdsFormDatePickerRange
                 },
                 {

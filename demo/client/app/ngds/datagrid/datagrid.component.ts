@@ -50,20 +50,20 @@ class DemoDataSource implements NgdsDataSource {
                     },
                     data: [
                         { 
-                            key:1, username: "13999", name: "胡立波1", mobile: "13333333333", authStatus: 1, org: { name: 1 } ,
+                            id:1, username: "13999", name: "胡立波1", mobile: "13333333333", authStatus: 1, org: { name: 1 } ,
                             children:[
-                                { key:9, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0 },
-                                { key:10, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
-                                { key:11, username: "13999", name: "胡立波11", mobile: "13333333333", authStatus: 1 },
+                                { id:9, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0 },
+                                { id:10, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
+                                { id:11, username: "13999", name: "胡立波11", mobile: "13333333333", authStatus: 1 },
                             ]
                         },
-                        { key:2, username: "13999", name: "胡立波2", mobile: "13333333331", authStatus: 0,disableEdit:true },
-                        { key:3, username: "13999", name: "胡立波3", mobile: "13333333333", authStatus: 1,disableEdit:true },
-                        { key:4, username: "13999", name: "胡立波4", mobile: "13333333333", authStatus: 1,disableEdit:true },
-                        { key:5, username: "13999", name: "胡立波5", mobile: "13333333333", authStatus: 0,disableEdit:true },
-                        { key:6, username: "13999", name: "胡立波6", mobile: "13333333333", authStatus: 1,disableEdit:true },
-                        { key:7, username: "13999", name: "胡立波7", mobile: "13333333333", authStatus: 1,disableEdit:true },
-                        { key:8, username: "13999", name: "胡立波8", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { id:2, username: "13999", name: "胡立波2", mobile: "13333333331", authStatus: 0,disableEdit:true },
+                        { id:3, username: "13999", name: "胡立波3", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { id:4, username: "13999", name: "胡立波4", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { id:5, username: "13999", name: "胡立波5", mobile: "13333333333", authStatus: 0,disableEdit:true },
+                        { id:6, username: "13999", name: "胡立波6", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { id:7, username: "13999", name: "胡立波7", mobile: "13333333333", authStatus: 1,disableEdit:true },
+                        { id:8, username: "13999", name: "胡立波8", mobile: "13333333333", authStatus: 1,disableEdit:true },
                     ]
                 });
             }, 1000)

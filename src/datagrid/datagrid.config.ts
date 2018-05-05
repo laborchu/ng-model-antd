@@ -31,6 +31,7 @@ export interface NgdsDataGridOption {
 	dataSource: NgdsDataSource|Array<any>;
 	table: NgdsDataGridTableOption;
 	initToSearch?:boolean;
+	dataKey?:string;
 }
 
 export interface NgdsDataGridTableOption {

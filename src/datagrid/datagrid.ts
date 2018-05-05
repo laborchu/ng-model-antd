@@ -43,7 +43,7 @@ let hashPageMap: Map<number, number> = new Map();
       </thead>
       <tbody nz-tbody>
         <ng-template ngFor let-data [ngForOf]="nzTable.data">
-          <ng-template ngFor let-item [ngForOf]="expandDataCache[data.key]">
+          <ng-template ngFor let-item [ngForOf]="expandDataCache[data[option.dataKey]]">
             <tr nz-tbody-tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)">
               <td nz-td [nzCheckbox]="option.table.showCheck" *ngIf="option.table.showCheck">
                 <label nz-checkbox [nzDisabled]="item.disabled" [(ngModel)]="item.checked" (ngModelChange)="_refreshStatus($event)">
@@ -52,7 +52,7 @@ let hashPageMap: Map<number, number> = new Map();
               <td *ngFor="let col of option.table.columns;let colIndex = index"
                   title="{{col.title? (item[col.property]):''}}">
                   <nz-row-indent [nzIndentSize]="item.level"></nz-row-indent>
-                  <nz-row-expand-icon [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data.key],item,$event)" [nzShowExpand]="!!item.children&&colIndex==0"></nz-row-expand-icon>
+                  <nz-row-expand-icon [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="!!item.children&&colIndex==0"></nz-row-expand-icon>
                   <ngds-column [colOption]="col" [item]="item"></ngds-column>
               </td>
               <td *ngIf="option.table.op" class="op-td">
@@ -107,9 +107,10 @@ export class NgdsDataGrid implements AfterContentChecked {
   };
 
   ngOnInit() {
+    this.option.dataKey = this.option.dataKey || "id";
     this.hash = this.hashCode(JSON.stringify(this.option.table));
     this._pageIndex = hashPageMap.get(this.hash) || 1;
-    this.option.initToSearch!==false &&this.search();
+    this.option.initToSearch !== false && this.search();
   }
 
   getBtnStyle = function (btn: NgdsDataGridOpBtnOption, item: any) {
@@ -124,7 +125,7 @@ export class NgdsDataGrid implements AfterContentChecked {
     }
   }
 
-  showBtnLoading = function (btn: NgdsDataGridOpBtnOption, item: any):boolean {
+  showBtnLoading = function (btn: NgdsDataGridOpBtnOption, item: any): boolean {
     if (btn.loading) {
       if (typeof btn.loading === "function") {
         return btn.loading(item);
@@ -135,7 +136,7 @@ export class NgdsDataGrid implements AfterContentChecked {
       return false;
     }
   }
-  
+
 
 
   getBtnText = function (col: NgdsDataGridOpBtnOption, item: any) {
@@ -198,24 +199,24 @@ export class NgdsDataGrid implements AfterContentChecked {
     if (Array.isArray(this.option.dataSource)) {
       this._loading = false;
       this.data = this.option.dataSource;
-    }else{
+    } else {
       this.option.dataSource.getData(this.searchParams).then((model: NgdsDataGridModel) => {
         this._loading = false;
         this.data = model.data;
         this.page = model.page;
         this.data.forEach(item => {
-          this.expandDataCache[ item.key ] = this.convertTreeToList(item);
+          this.expandDataCache[item[this.option.dataKey]] = this.convertTreeToList(item);
         });
-      }).catch((e)=>{
+      }).catch((e) => {
         this._loading = false;
       });
     }
-    
+
   }
 
-  expandDataCache:any = {};
-  convertTreeToList(root:any) {
-    const stack:any = [], array:any = [], hashMap:any = {};
+  expandDataCache: any = {};
+  convertTreeToList(root: any) {
+    const stack: any = [], array: any = [], hashMap: any = {};
     stack.push({ ...root, level: 0, expand: false });
 
     while (stack.length !== 0) {
@@ -223,7 +224,7 @@ export class NgdsDataGrid implements AfterContentChecked {
       this.visitNode(node, hashMap, array);
       if (node.children) {
         for (let i = node.children.length - 1; i >= 0; i--) {
-          stack.push({ ...node.children[ i ], level: node.level + 1, expand: false, parent: node });
+          stack.push({ ...node.children[i], level: node.level + 1, expand: false, parent: node });
         }
       }
     }
@@ -231,17 +232,17 @@ export class NgdsDataGrid implements AfterContentChecked {
     return array;
   }
 
-  visitNode(node:any, hashMap:any, array:any) {
-    if (!hashMap[ node.key ]) {
-      hashMap[ node.key ] = true;
+  visitNode(node: any, hashMap: any, array: any) {
+    if (!hashMap[node[this.option.dataKey]]) {
+      hashMap[node[this.option.dataKey]] = true;
       array.push(node);
     }
   }
-  collapse(array:any, data:any, $event:any) {
+  collapse(array: any, data: any, $event: any) {
     if ($event === false) {
       if (data.children) {
-        data.children.forEach((d:any) => {
-          const target = array.find((a:any) => a.key === d.key);
+        data.children.forEach((d: any) => {
+          const target = array.find((a: any) => a[this.option.dataKey] === d[this.option.dataKey]);
           target.expand = false;
           this.collapse(array, target, false);
         });

@@ -90,6 +90,7 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
         } else {
             this.data[index].children.forEach((item:any) => item.checked = false);
         }
+        this.onChange(undefined);
     }
 
     onChange(value: any) {

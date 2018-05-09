@@ -79,7 +79,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                 },
                 accept:this.getAccept()
             }
-        },100);
+        },200);
         
     }
 

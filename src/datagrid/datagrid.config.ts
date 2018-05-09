@@ -26,6 +26,7 @@ export type loadingFunc = (data: any) => boolean;
 export type pipeFunc = (property: string,data:any) => string;
 export type textFunc = (data:any) => string;
 export type editFinishFunc = (item:any) => void;
+export type expandChange = (item: any, extend: any) => void;
 
 export interface NgdsDataGridOption {
 	dataSource: NgdsDataSource|Array<any>;
@@ -38,6 +39,7 @@ export interface NgdsDataGridTableOption {
 	columns: Array<NgdsDataGridColumnOption>;
 	op?: NgdsDataGridOpOption;
 	showCheck?:boolean;
+	expandChange?:expandChange;
 }
 
 export interface NgdsDataGridColumnOption {

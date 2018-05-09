@@ -52,7 +52,7 @@ let hashPageMap: Map<number, number> = new Map();
               <td *ngFor="let col of option.table.columns;let colIndex = index"
                   title="{{col.title? (item[col.property]):''}}">
                   <nz-row-indent [nzIndentSize]="item.level"></nz-row-indent>
-                  <nz-row-expand-icon [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="!!item.children&&colIndex==0"></nz-row-expand-icon>
+                  <nz-row-expand-icon [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="item.showExpand&&colIndex==0"></nz-row-expand-icon>
                   <ngds-column [colOption]="col" [item]="item"></ngds-column>
               </td>
               <td *ngIf="option.table.op" class="op-td">
@@ -204,9 +204,7 @@ export class NgdsDataGrid implements AfterContentChecked {
         this._loading = false;
         this.data = model.data;
         this.page = model.page;
-        this.data.forEach(item => {
-          this.expandDataCache[item[this.option.dataKey]] = this.convertTreeToList(item);
-        });
+        this.initTreeData();
       }).catch((e) => {
         this._loading = false;
       });
@@ -214,17 +212,35 @@ export class NgdsDataGrid implements AfterContentChecked {
 
   }
 
-  expandDataCache: any = {};
+  expandDataCache: any;
+  originDataCache: any;
+  addNodeChildren(item: any, children: any) {
+    if (!item.children) {
+      item.children = children;
+      item.expand = true;
+      this.initTreeData();
+    }
+  }
+  initTreeData() {
+    this.expandDataCache = {}
+    this.originDataCache = {}
+    this.data.forEach(item => {
+      this.expandDataCache[item[this.option.dataKey]] = this.convertTreeToList(item);
+    });
+  }
   convertTreeToList(root: any) {
     const stack: any = [], array: any = [], hashMap: any = {};
-    stack.push({ ...root, level: 0, expand: false });
+    stack.push({ ...root, level: 0, expand: (root.expand || false) });
+    this.originDataCache[root[this.option.dataKey]] = root;
 
     while (stack.length !== 0) {
       const node = stack.pop();
       this.visitNode(node, hashMap, array);
       if (node.children) {
         for (let i = node.children.length - 1; i >= 0; i--) {
-          stack.push({ ...node.children[i], level: node.level + 1, expand: false, parent: node });
+          let child = node.children[i];
+          stack.push({ ...child, level: node.level + 1, expand: (root.expand || false), parent: node });
+          this.originDataCache[child[this.option.dataKey]] = child;
         }
       }
     }
@@ -247,8 +263,9 @@ export class NgdsDataGrid implements AfterContentChecked {
           this.collapse(array, target, false);
         });
       } else {
-        return;
       }
+    } else {
+      this.option.table.expandChange && this.option.table.expandChange(this.originDataCache[data[this.option.dataKey]], $event);
     }
   }
 

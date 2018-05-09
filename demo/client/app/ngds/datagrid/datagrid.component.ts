@@ -51,13 +51,21 @@ class DemoDataSource implements NgdsDataSource {
                     data: [
                         { 
                             id:1, username: "13999", name: "胡立波1", mobile: "13333333333", authStatus: 1, org: { name: 1 } ,
-                            children:[
-                                { id:9, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0 },
-                                { id:10, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
-                                { id:11, username: "13999", name: "胡立波11", mobile: "13333333333", authStatus: 1 },
-                            ]
+                            showExpand:true,
+                            // children:[
+                            //     { id:9, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0 ,
+                            //     showExpand:true,
+                            //     children:[
+                            //         { id:12, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
+                            //         { id:13, username: "13999", name: "胡立波11", mobile: "13333333333", authStatus: 1 },
+                            //     ]
+                            //     },
+                            //     { id:10, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
+                            //     { id:11, username: "13999", name: "胡立波11", mobile: "13333333333", authStatus: 1 },
+                            
+                            // ]
                         },
-                        { id:2, username: "13999", name: "胡立波2", mobile: "13333333331", authStatus: 0,disableEdit:true },
+                        { id:2, username: "13999", name: "胡立波2", mobile: "13333333331", authStatus: 0,disableEdit:true,showExpand:true },
                         { id:3, username: "13999", name: "胡立波3", mobile: "13333333333", authStatus: 1,disableEdit:true },
                         { id:4, username: "13999", name: "胡立波4", mobile: "13333333333", authStatus: 1,disableEdit:true },
                         { id:5, username: "13999", name: "胡立波5", mobile: "13333333333", authStatus: 0,disableEdit:true },
@@ -71,6 +79,41 @@ class DemoDataSource implements NgdsDataSource {
         });
     }
 }
+
+class ChildrenDataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve([
+                { id:9, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0,showExpand:true },
+                { id:10, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
+                { id:11, username: "13999", name: "胡立波11", mobile: "13333333333", authStatus: 1 },
+            ]);
+        });
+    }
+}
+
+class Children2DataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve([
+                { id:12, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0 },
+                { id:13, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
+            ]);
+        });
+    }
+}
+
+class Children3DataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve([
+                { id:14, username: "13999", name: "胡立波9", mobile: "13333333331", authStatus: 0 },
+                { id:15, username: "13999", name: "胡立波10", mobile: "13333333333", authStatus: 1 },
+            ]);
+        });
+    }
+}
+
 class AuthStatusDataSource implements NgdsDataSource {
     getData(params: any): Promise<NgdsModel> {
         return new Promise<NgdsModel>((resolve, reject) => {
@@ -184,6 +227,24 @@ export class DataGridComponent implements OnInit {
         dataSource: new DemoDataSource(),
         table: {
             showCheck: false,
+            expandChange:(item: any, extend: any)=>{
+                if(!item.children){
+                    if(item.id==1){
+                        new ChildrenDataSource().getData(null).then((data)=>{
+                            this.myTable.addNodeChildren(item,data);
+                        })
+                    }else if(item.id==2){
+                        new Children2DataSource().getData(null).then((data)=>{
+                            this.myTable.addNodeChildren(item,data);
+                        })
+                    }else{
+                        new Children3DataSource().getData(null).then((data)=>{
+                            this.myTable.addNodeChildren(item,data);
+                        })
+                    }
+                }
+               
+            },
             columns: [
                 { text: '用户名', property: "username",canEdit:true,editFinish:(item:any)=>{
                     debugger

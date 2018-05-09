@@ -247,7 +247,11 @@ export class FormComponent implements OnInit {
                     multiple:false,
                     limit:1,
                     uploaderId: new Date().getTime() + "",
-                    comp: NgdsFormUploader
+                    comp: NgdsFormUploader,
+                    value:[{
+                        filePath:"sss",
+                        fileType:"images"
+                    }]
                 },
             ],
             [

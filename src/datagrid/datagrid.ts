@@ -46,13 +46,13 @@ let hashPageMap: Map<number, number> = new Map();
           <ng-template ngFor let-item [ngForOf]="expandDataCache[data[option.dataKey]]">
             <tr nz-tbody-tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)">
               <td nz-td [nzCheckbox]="option.table.showCheck" *ngIf="option.table.showCheck">
-                <label nz-checkbox [nzDisabled]="item.disabled" [(ngModel)]="item.checked" (ngModelChange)="_refreshStatus($event)">
+                <label nz-checkbox [nzDisabled]="item.disabled" [(ngModel)]="originDataCache[item[option.dataKey]].checked" (ngModelChange)="_refreshStatus($event)">
                 </label>
               </td>
               <td *ngFor="let col of option.table.columns;let colIndex = index"
                   title="{{col.title? (item[col.property]):''}}">
                   <nz-row-indent [nzIndentSize]="item.level"></nz-row-indent>
-                  <nz-row-expand-icon [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="item.showExpand&&colIndex==0"></nz-row-expand-icon>
+                  <nz-row-expand-icon *ngIf="item.showExpand" [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="item.showExpand&&colIndex==0"></nz-row-expand-icon>
                   <ngds-column [colOption]="col" [item]="item"></ngds-column>
               </td>
               <td *ngIf="option.table.op" class="op-td">
@@ -107,7 +107,6 @@ export class NgdsDataGrid implements AfterContentChecked {
   };
 
   ngOnInit() {
-    this.option.dataKey = this.option.dataKey || "id";
     this.hash = this.hashCode(JSON.stringify(this.option.table));
     this._pageIndex = hashPageMap.get(this.hash) || 1;
     this.option.initToSearch !== false && this.search();
@@ -214,14 +213,15 @@ export class NgdsDataGrid implements AfterContentChecked {
 
   expandDataCache: any;
   originDataCache: any;
-  addNodeChildren(item: any, children: any) {
-    if (!item.children) {
+  addNodeChildren(item: any, children: Array<any>) {
+    if (!item.children&&children.length) {
       item.children = children;
       item.expand = true;
       this.initTreeData();
     }
   }
   initTreeData() {
+    this.option.dataKey = this.option.dataKey || "id";
     this.expandDataCache = {}
     this.originDataCache = {}
     this.data.forEach(item => {
@@ -239,7 +239,7 @@ export class NgdsDataGrid implements AfterContentChecked {
       if (node.children) {
         for (let i = node.children.length - 1; i >= 0; i--) {
           let child = node.children[i];
-          stack.push({ ...child, level: node.level + 1, expand: (root.expand || false), parent: node });
+          stack.push({ ...child, level: node.level + 1, expand: false, parent: node });
           this.originDataCache[child[this.option.dataKey]] = child;
         }
       }
@@ -256,6 +256,7 @@ export class NgdsDataGrid implements AfterContentChecked {
   }
   collapse(array: any, data: any, $event: any) {
     if ($event === false) {
+      this.originDataCache[data[this.option.dataKey]].expand = false;
       if (data.children) {
         data.children.forEach((d: any) => {
           const target = array.find((a: any) => a[this.option.dataKey] === d[this.option.dataKey]);

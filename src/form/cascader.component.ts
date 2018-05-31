@@ -69,18 +69,25 @@ export class NgdsFormCascader extends NgdsFormComp implements AfterContentChecke
     if (e.option) {
       e.option.loading = true;
     }
-    this.option.dataSource.getData({ "index": e.index,"parentId":e.option?e.option[this.option.dsValue]:0 }).then((value: any) => {
+    if (Array.isArray(this.option.dataSource)) {
       if (e.option) {
         e.option.loading = false;
       }
-      e.resolve(value.data);
-    })
+      e.resolve(this.option.dataSource);
+    } else {
+      this.option.dataSource.getData({ "index": e.index, "parentId": e.option ? e.option[this.option.dsValue] : 0 }).then((value: any) => {
+        if (e.option) {
+          e.option.loading = false;
+        }
+        e.resolve(value.data);
+      })
+    }
   }
 
   setCompValue(formValue: any, compKey: string, compValue: any): void {
     if (this.option.value && this.option.value.length) {
-      let valueArray:Array<any> = [];
-      for(let v of this.option.value){
+      let valueArray: Array<any> = [];
+      for (let v of this.option.value) {
         delete v.children;
         delete v.loading;
         delete v.isLeaf;

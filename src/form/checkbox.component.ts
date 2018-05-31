@@ -48,51 +48,57 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         if (!this.option.dsValue) {
             this.option.dsValue = "value";
         }
-        this.option.dataSource.getData({}).then((model: any) => {
-            for (let item of model.data) {
-                item.label = item[this.option.dsLabel];
-                if(this.option.dsLabel!="label"){
-                    delete item[this.option.dsLabel];
-                }
-                item.value = item[this.option.dsValue];
-                if(this.option.dsValue!="value"){
-                    delete item[this.option.dsValue];
-                }
-                if (this.option.value != undefined) {
-                    if (this.option.value.indexOf(item.value) != -1) {
-                        item.checked = true;
+        if (Array.isArray(this.option.dataSource)) {
+            this.data = this.option.dataSource;
+        } else {
+            this.option.dataSource.getData({}).then((model: any) => {
+                for (let item of model.data) {
+                    item.label = item[this.option.dsLabel];
+                    if (this.option.dsLabel != "label") {
+                        delete item[this.option.dsLabel];
+                    }
+                    item.value = item[this.option.dsValue];
+                    if (this.option.dsValue != "value") {
+                        delete item[this.option.dsValue];
+                    }
+                    if (this.option.value != undefined) {
+                        if (this.option.value.indexOf(item.value) != -1) {
+                            item.checked = true;
+                        }
                     }
                 }
-            }
-            
-            this.data = model.data;
-        })
+
+                this.data = model.data;
+            })
+        }
+
+
     }
 
-    onChange(value:any) {
-        if(value===undefined){
+    onChange(value: any) {
+        if (value === undefined) {
             this.option.value = [];
             for (let item of this.data) {
                 if (item.checked) {
                     this.option.value.push(item.value);
                 }
             }
-        }else{
-            this.option.value = value||[];
+        } else {
+            this.option.value = value || [];
             for (let item of this.data) {
-                if (this.option.value.indexOf(item.value)!=-1) {
+                if (this.option.value.indexOf(item.value) != -1) {
                     item.checked = true;
-                }else{
-                    item.checked = false;                    
+                } else {
+                    item.checked = false;
                 }
             }
         }
-        
-       
+
+
         if (this.option.validations) {
             let formControl = this.option.formGroup.controls[this.option.property];
             formControl.setErrors({});
-            
+
             for (let val of this.option.validations) {
                 if (val.type == "required") {
                     if (this.option.value.length == 0) {

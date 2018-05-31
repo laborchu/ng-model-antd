@@ -94,6 +94,7 @@ export class NgdsForm implements AfterContentChecked {
                 if (this._option.value) {
                     compOption.value = this._option.value[compOption.property];
                 }
+                compOption.formOption = this._option;
             }
         }
         if (this._option.showSearch) {

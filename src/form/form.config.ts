@@ -55,6 +55,7 @@ export class NgdsFormCompOption {
 	hidden?: boolean;
 	formComp?: NgdsForm;
 	disabled?: boolean;
+	formOption?: NgdsFormOption;
 }
 
 export class NgdsFormValidationOption {

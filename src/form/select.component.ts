@@ -26,6 +26,7 @@ import { NgdsFormComp } from './form.component';
             [(ngModel)]="option.value"
             (ngModelChange)="onChange()"
             [nzSize]="'large'" 
+            nzShowSearch
             [nzMode]="option.model">
               <nz-option *ngFor="let item of data" [nzLabel]="item[option.dsLabel]" [nzValue]="item[option.dsValue]"></nz-option>
             </nz-select>

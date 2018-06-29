@@ -72,7 +72,10 @@ let hashPageMap: Map<number, number> = new Map();
                     </a>
                     <ul nz-menu>
                       <li nz-menu-item *ngFor="let gbtn of groupButton.buttons">
-                        <a>{{gbtn.text}}</a>
+                        <a [hidden]="gbtn.hidden?gbtn.hidden(item):false"
+                              (click)="gbtn.action(item)">
+                              {{getBtnText(gbtn,item)}}
+                        </a>
                       </li>
                     </ul>
                   </nz-dropdown>
@@ -214,7 +217,7 @@ export class NgdsDataGrid implements AfterContentChecked {
   expandDataCache: any;
   originDataCache: any;
   addNodeChildren(item: any, children: Array<any>) {
-    if (!item.children&&children.length) {
+    if (!item.children && children.length) {
       item.children = children;
       item.expand = true;
       this.initTreeData();

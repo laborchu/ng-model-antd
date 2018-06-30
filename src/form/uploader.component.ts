@@ -24,7 +24,7 @@ import { NgdsFormComp } from './form.component';
                 <label for="{{option.property}}">{{option.label}}</label>
             </div>
             <div nz-form-control class="uploader" nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-                <div class="upload-item" *ngFor="let item of option.value" (click)="tapItem(item)">
+                <div class="upload-item" *ngFor="let item of option.value" (click)="tapItem(item)" [style.width]="option.width+'px'" [style.height]="option.height+'px'">
                     <img *ngIf="isImg(item)" src="{{item.filePath}}"/>
                     <div class="upload-item-video" *ngIf="isVideo(item)">
                         <i class="iconfont icon-play"></i>

@@ -190,7 +190,9 @@ export class FormComponent implements OnInit {
                     ]
                 },
                 {
-                    label: '出生日期', property: "date", comp: NgdsFormDatePicker, validations: [
+                    label: '出生日期', property: "date", comp: NgdsFormDatePicker, 
+                    showTime:true, format:"YYYY-MM-DD HH:mm:ss",
+                    validations: [
                         { msg: "出生日期必填", type: "required", fn: Validators.required },
                     ]
                 },
@@ -237,7 +239,10 @@ export class FormComponent implements OnInit {
                     label: '地区级联',
                     property: "address",
                     dataSource: areaDs,
-                    comp: NgdsFormCascader
+                    comp: NgdsFormCascader,
+                    validations: [
+                        { msg: "地区级联", type: "required", fn: Validators.required }
+                    ]
 
                 },
                 {
@@ -268,6 +273,7 @@ export class FormComponent implements OnInit {
                     limit: 1,
                     uploaderId: new Date().getTime() + "",
                     comp: NgdsFormUploader,
+                    width:200,
                     value: [{
                         filePath: "sss",
                         fileType: "images"
@@ -313,7 +319,6 @@ export class FormComponent implements OnInit {
                     }
                     if (this.myForm2.checkVal()) {
                         let data = this.myForm2.getValue();
-                        debugger
                     }
                 }
             }

@@ -171,7 +171,8 @@ export class NgdsDataGrid implements AfterContentChecked {
           let value: any;
           for (let pipeItem of pipe) {
             if (typeof pipeItem === "function") {
-              value = pipeItem(col.property, item, value);
+              let pipeFunc: any = pipeItem;
+              value = pipeFunc(col.property, item, value);
             } else {
               value = pipeItem.transform(col.property, item, value);
             }
@@ -242,7 +243,7 @@ export class NgdsDataGrid implements AfterContentChecked {
       if (node.children) {
         for (let i = node.children.length - 1; i >= 0; i--) {
           let child = node.children[i];
-          stack.push({ ...child, level: node.level + 1, expand: false, parent: node });
+          stack.push({ ...child, level: node.level + 1, expand: (child.expand || false), parent: node });
           this.originDataCache[child[this.option.dataKey]] = child;
         }
       }

@@ -47,7 +47,7 @@ export class NgdsColumn {
     @Input() item: any;
     hasCustomComp: boolean = false;
     edit: boolean = false;
-    oldValue:any = null;
+    oldValue: any = null;
 
     ngOnInit() {
         if (this.colOption.component) {
@@ -59,21 +59,21 @@ export class NgdsColumn {
         }
     }
 
-    canEdit():boolean{
-        return this.colOption.canEdit&&!this.item.disableEdit;
+    canEdit(): boolean {
+        return this.colOption.canEdit && !this.item.disableEdit;
     }
 
-    startEdit():void{
+    startEdit(): void {
         this.oldValue = this.item[this.colOption.property];
         this.edit = !this.edit;
     }
-    closeEdit():void{
+    closeEdit(): void {
         this.item[this.colOption.property] = this.oldValue;
         this.edit = !this.edit;
     }
-    finishEdit():void{
+    finishEdit(): void {
         this.edit = !this.edit;
-        this.colOption.editFinish&&this.colOption.editFinish(this.item);
+        this.colOption.editFinish && this.colOption.editFinish(this.item);
     }
 
     getValueFromPipe = function (pipe: PipeTransform | pipeFunc | PipeTransform[]) {
@@ -85,7 +85,8 @@ export class NgdsColumn {
                     let value: any;
                     for (let pipeItem of pipe) {
                         if (typeof pipeItem === "function") {
-                            value = pipeItem(this.colOption.property, this.item, value);
+                            let pipeFunc: any = pipeItem;
+                            value = pipeFunc(this.colOption.property, this.item, value);
                         } else {
                             value = pipeItem.transform(this.colOption.property, this.item, value);
                         }

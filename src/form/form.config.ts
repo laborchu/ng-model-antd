@@ -30,7 +30,7 @@ export class NgdsFormOption {
 	labelSpan?: number;
 	compSpan?: number;
 	gutter?: number;
-	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption| NgdsFormDatePickerCompOption>>;
+	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption | NgdsFormDatePickerCompOption | NgdsFormCheckboxCompOption>>;
 	value?: any;
 	showSearch?: boolean;
 	search?: NgdsFormSearchOption;
@@ -107,6 +107,8 @@ export class NgdsFormCascaderCompOption extends NgdsFormCompOption {
 
 export class NgdsFormCheckboxCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
+	data:Array<any>;
+	showAllChecked?: boolean;
 	dsLabel?: string;
 	dsValue?: string;
 }
@@ -146,8 +148,8 @@ export class NgdsFormUploaderCompOption extends NgdsFormCompOption {
 	limit?: number;
 	uploaderId?: string;//默认picker
 	errHandler?: errHandlerFunc;//错误处理
-	width?:number;
-	height?:number;
+	width?: number;
+	height?: number;
 }
 
 

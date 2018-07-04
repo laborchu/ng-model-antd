@@ -179,6 +179,7 @@ export class FormComponent implements OnInit {
                     label: '爱好',
                     property: "like",
                     comp: NgdsFormCheckbox,
+                    showAllChecked: true,
                     dataSource: new LikeDataSource(),
                     value: [1],
                     onChange: (option: any) => {
@@ -190,8 +191,8 @@ export class FormComponent implements OnInit {
                     ]
                 },
                 {
-                    label: '出生日期', property: "date", comp: NgdsFormDatePicker, 
-                    showTime:true, format:"YYYY-MM-DD HH:mm:ss",
+                    label: '出生日期', property: "date", comp: NgdsFormDatePicker,
+                    showTime: true, format: "YYYY-MM-DD HH:mm:ss",
                     validations: [
                         { msg: "出生日期必填", type: "required", fn: Validators.required },
                     ]
@@ -273,7 +274,7 @@ export class FormComponent implements OnInit {
                     limit: 1,
                     uploaderId: new Date().getTime() + "",
                     comp: NgdsFormUploader,
-                    width:200,
+                    width: 200,
                     value: [{
                         filePath: "sss",
                         fileType: "images"

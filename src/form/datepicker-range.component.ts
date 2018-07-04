@@ -54,6 +54,19 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
         if (value !== undefined) {
             this.option.value = value;
         }
+        if (this.option.validations) {
+            let formControl = this.option.formGroup.controls[this.option.property];
+            formControl.setErrors({});
+
+            for (let val of this.option.validations) {
+                if (val.type == "required") {
+                    if (this.option.value.length == 0) {
+                        let formControl = this.option.formGroup.controls[this.option.property];
+                        formControl.setErrors({ "required": true })
+                    }
+                }
+            }
+        }
         this.option.onChange && this.option.onChange(this.option);
     }
 

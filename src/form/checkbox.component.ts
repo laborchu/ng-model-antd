@@ -20,7 +20,11 @@ import { NgdsFormComp } from './form.component';
     <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
         <div nz-form-item nz-row>
             <div nz-form-label nz-col [nzSpan]="option.labelSpan">
-                <label for="{{option.property}}">{{option.label}}</label>
+                <label for="{{option.property}}">
+                    <span *ngIf="option.showAllChecked" nz-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()">
+                    </span>
+                    {{option.label}}
+                </label>
             </div>
             <div nz-form-control nz-col [nzSpan]="option.compSpan">
                 <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="onChange()"></nz-checkbox-group>
@@ -40,6 +44,7 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
 
     option: NgdsFormCheckboxCompOption;
     data: Array<any>;
+    allChecked = false;
 
     ngOnInit() {
         if (!this.option.dsLabel) {
@@ -50,16 +55,17 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         }
         if (Array.isArray(this.option.dataSource)) {
             this.data = this.option.dataSource;
+            this.option.data = this.data;
         } else {
             this.option.dataSource.getData({}).then((model: any) => {
                 for (let item of model.data) {
                     item.label = item[this.option.dsLabel];
                     if (this.option.dsLabel != "label") {
-                        delete item[this.option.dsLabel];
+                        // delete item[this.option.dsLabel];
                     }
                     item.value = item[this.option.dsValue];
                     if (this.option.dsValue != "value") {
-                        delete item[this.option.dsValue];
+                        // delete item[this.option.dsValue];
                     }
                     if (this.option.value != undefined) {
                         if (this.option.value.indexOf(item.value) != -1) {
@@ -69,10 +75,20 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
                 }
 
                 this.data = model.data;
+                this.option.data = this.data;
             })
         }
 
 
+    }
+
+    updateAllChecked() {
+        if (this.allChecked) {
+            this.data.forEach(item => item.checked = true);
+        } else {
+            this.data.forEach(item => item.checked = false);
+        }
+        this.onChange(undefined);
     }
 
     onChange(value: any) {

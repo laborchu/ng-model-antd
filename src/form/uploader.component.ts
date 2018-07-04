@@ -7,8 +7,8 @@ import {
     Input
 } from '@angular/core';
 import { Response, Headers, RequestOptions } from '@angular/http';
-import {UMeditorComponent} from 'ngx-umeditor';
-import {NgdsFormConfig, NgdsFormUploaderCompOption} from './form.config';
+import { UMeditorComponent } from 'ngx-umeditor';
+import { NgdsFormConfig, NgdsFormUploaderCompOption } from './form.config';
 import { WebUploaderComponent, File, FileStatus, Options } from 'ngx-webuploader';
 import { NgdsFormComp } from './form.component';
 
@@ -53,7 +53,7 @@ import { NgdsFormComp } from './form.component';
     `
 })
 export class NgdsFormUploader extends NgdsFormComp implements OnInit {
-    constructor(private formConfig:NgdsFormConfig) {
+    constructor(private formConfig: NgdsFormConfig) {
         super();
     }
 
@@ -61,33 +61,33 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
     ngxOptions: Options;
 
     ngOnInit() {
-        if(this.option.multiple==undefined){
+        if (this.option.multiple == undefined) {
             this.option.multiple = true;
         }
-        if(!this.option.value){
+        if (!this.option.value) {
             this.option.value = [];
         }
-        if(this.option.limit==undefined){
+        if (this.option.limit == undefined) {
             this.option.limit = 5;
         }
 
-        setTimeout(()=>{
+        setTimeout(() => {
             this.ngxOptions = {
-                pick: { 
+                pick: {
                     id: "#" + this.getUploaderId(),
                     multiple: this.option.multiple
                 },
-                accept:this.getAccept()
+                accept: this.getAccept()
             }
-        },200);
-        
+        }, 200);
+
     }
 
-    getUploaderId():string{
-        return this.option.uploaderId?this.option.uploaderId:"picker";
+    getUploaderId(): string {
+        return this.option.uploaderId ? this.option.uploaderId : "picker";
     }
 
-    getAccept():any{
+    getAccept(): any {
         if (this.option.accept == "image") {
             return {
                 title: 'Images',
@@ -108,12 +108,13 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         uploader.Instance
             .on('fileQueued', (file: any) => {
                 if (this.formConfig.uploaderConfig && this.formConfig.uploaderConfig.md5Source) {
-                    uploader.Instance.md5File(file).then((val:string) => {
+                    uploader.Instance.md5File(file).then((val: string) => {
                         file["md5"] = val;
                         this.formConfig.uploaderConfig.md5Source.getData({ md5: val }).then((data: any) => {
                             if (data.filePath) {
                                 this.wrapperData(data, file);
                                 this.option.value.push(data);
+                                this.onChange(undefined)
                             } else {
                                 uploader.Instance.upload(file);
                             }
@@ -122,7 +123,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                             this.option.errHandler && this.option.errHandler(err);
                         })
                     });
-                }else{
+                } else {
                     uploader.Instance.upload(file);
                 }
             })
@@ -133,6 +134,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                 this.wrapperData(data, file);
                 this.formConfig.uploaderConfig && this.formConfig.uploaderConfig.uploadSuccess && this.formConfig.uploaderConfig.uploadSuccess(data);
                 this.option.value.push(data);
+                this.onChange(undefined)
             })
             .on('uploadError', (file: File, err: any) => {
                 console.log(err);
@@ -140,7 +142,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
             });
     }
 
-    wrapperData(data: any, file: any){
+    wrapperData(data: any, file: any) {
         data.fileName = file.name;
         if (file.ext) {
             data.fileType = file.ext.toLowerCase();
@@ -152,45 +154,61 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         this.formConfig.uploaderConfig && this.formConfig.uploaderConfig.wrapperUploadData && this.formConfig.uploaderConfig.wrapperUploadData(data);
     }
 
-    isImg(data:any):boolean{
-        let index:number = ["bmp", "jpg", "jpeg", "png", "gif"].indexOf(data.fileType);
-        if(index!=-1){
+    isImg(data: any): boolean {
+        let index: number = ["bmp", "jpg", "jpeg", "png", "gif"].indexOf(data.fileType);
+        if (index != -1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    isVideo(data:any):boolean{
+    isVideo(data: any): boolean {
         let index: number = ["mp4"].indexOf(data.fileType);
-        if(index!=-1){
+        if (index != -1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    tapItem(item:any):void{
+    tapItem(item: any): void {
     }
 
     tapDelItem(item: any): void {
         var index = this.option.value.indexOf(item);
         if (index > -1) {
-           this.option.value.splice(index, 1);
+            this.option.value.splice(index, 1);
         }
+        this.onChange(undefined)
     }
 
-    onChange(value:any){
+    onChange(value: any) {
         if (value !== undefined) {
             this.option.value = value || [];
         }
+
+        if (this.option.validations) {
+            let formControl = this.option.formGroup.controls[this.option.property];
+            formControl.setErrors({});
+
+            for (let val of this.option.validations) {
+                if (val.type == "required") {
+                    if (this.option.value.length == 0) {
+                        let formControl = this.option.formGroup.controls[this.option.property];
+                        formControl.setErrors({ "required": true })
+                    }
+                }
+            }
+        }
+        this.option.onChange && this.option.onChange(this.option);
     }
 
     ngAfterContentChecked() {
     }
-    
-    getFormControl(name:string):any {
-        return this.option.formGroup.controls[ name ];
-      }
-    
+
+    getFormControl(name: string): any {
+        return this.option.formGroup.controls[name];
+    }
+
 }

@@ -217,6 +217,7 @@ export class FormComponent implements OnInit {
                     dataSource: new SelectDataSource(),
                     model: "multiple",
                     onChange: (option: NgdsFormCompOption, value: any) => {
+                        let data = this.myForm.getValue();
                     },
                     validations: [
                         { msg: "地区必选", type: "required", fn: Validators.required }
@@ -352,9 +353,7 @@ export class FormComponent implements OnInit {
 
             // }
 
-            // this.myForm.setValue({
-            //     date:new Date(),
-            // })
+            this.myForm.setValue({ "username": "4345345", "user": { "password": "44444" }, "sex": 1, "like": [1], "date": "2018-07-06T15:22:43.006Z", "location": 1, "location2": [1], "startPrice": 44, "endPrice": 44, "rangeDate": ["2018-07-05T16:00:00.000Z", "2018-08-05T16:00:00.000Z"], "address": [2], "auth": [1, 2, 4] })
 
             // this.myForm2.setValue({
             //     desc:"sfsdfsdf",

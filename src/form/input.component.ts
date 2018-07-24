@@ -23,7 +23,7 @@ import { NgdsFormComp } from './form.component';
       <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
         <nz-input [nzSize]="'large'" [nzDisabled]="option.disabled" nzType="{{option.type}}" [nzPlaceHolder]="option.placeHolder || '请输入'" 
         [(ngModel)]="option.value"
-        (ngModelChange)="onChange($event)"
+        (ngModelChange)="setValue($event);onChange()"
         [formControl]="getFormControl(option.property)"></nz-input>
         <div *ngIf="option.maxLength" class="input-limit">{{option.value?option.value.length:0}}/{{option.maxLength}}</div>
         <div nz-form-explain *ngFor="let val of option.validations">
@@ -43,7 +43,10 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
 
   option: NgdsFormInputCompOption;
   oldValue: string = "";
-  onChange(value: any) {
+
+
+
+  setValue(value: any) {
     if (value && this.option.maxLength) {
       if (value.length > this.option.maxLength) {
         setTimeout(() => {
@@ -54,6 +57,9 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
     }
     this.option.value = value;
     this.oldValue = value;
+  }
+
+  onChange() {
     this.option.onChange && this.option.onChange(this.option);
   }
 

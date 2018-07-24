@@ -48,10 +48,13 @@ export class NgdsFormInputRange extends NgdsFormComp implements AfterContentChec
 
   option: NgdsFormInputRangeCompOption;
 
-  onChange(value: any) {
+  setValue(value: any) {
     if (value !== undefined) {
       this.option.value = value;
     }
+  }
+
+  onChange() {
     this.option.onChange && this.option.onChange(this.option);
   }
 
@@ -62,8 +65,8 @@ export class NgdsFormInputRange extends NgdsFormComp implements AfterContentChec
   }
 
   setCompValue(formValue: any, compKey: string, compValue: any): void {
-    formValue[this.option.property] = this.option.value.first;
-    formValue[this.option.property2] = this.option.value.second;
+    formValue[this.option.property] = this.option.value && this.option.value.first;
+    formValue[this.option.property2] = this.option.value && this.option.value.second;
   }
 
   ngAfterContentChecked() {

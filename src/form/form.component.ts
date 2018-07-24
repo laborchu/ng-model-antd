@@ -1,20 +1,22 @@
 import {
-    HostBinding
+  HostBinding
 } from '@angular/core';
 
-export abstract class NgdsFormComp{
+export abstract class NgdsFormComp {
   constructor() {
 
   }
 
-  abstract onChange(value:any):any;
+  abstract setValue(value: any): void;
+
+  abstract onChange(): void;
 
 
-  setCompValue(formValue:any,compKey:string,compValue:any):void{
+  setCompValue(formValue: any, compKey: string, compValue: any): void {
     formValue[compKey] = compValue;
   }
 
   @HostBinding('hidden')
-  isHidden:boolean = false;
+  isHidden: boolean = false;
 
 }

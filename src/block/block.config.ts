@@ -1,5 +1,5 @@
-import { Injectable,PipeTransform } from '@angular/core';
-import { NgdsDataSource,NgdsModel } from '../core/datasource';
+import { Injectable, PipeTransform } from '@angular/core';
+import { NgdsDataSource, NgdsModel } from '../core/datasource';
 
 @Injectable()
 export class NgdsBlockConfig {
@@ -7,7 +7,7 @@ export class NgdsBlockConfig {
 
 export class NgdsBlockOption {
     title: string;
-    buttons?: Array<NgdsBlockBtnOption>;    
+    buttons?: Array<NgdsBlockBtnOption>;
 }
 export interface NgdsBlockBtnOption {
     text: string;
@@ -15,18 +15,20 @@ export interface NgdsBlockBtnOption {
 }
 
 export class NgdsBlockInfoOption {
-	dataSource: NgdsDataSource|any;
-    col?:number;
-    items:Array<NgdsBlockInfoItemOption>;
+    dataSource: NgdsDataSource | any;
+    col?: number;
+    items: Array<NgdsBlockInfoItemOption>;
 }
 
-export type pipeFunc = (property: string,data:any) => string;
+export type pipeFunc = (property: string, data: any) => string;
+export type imgClickFunc = (img: string, index: number) => void;
 export class NgdsBlockInfoItemOption {
-    label:string;
-    field:string;
-    width?:number;
-    fomart?:string;
-    type?:'text'|'image'|'date';
-    span?:number;
-	pipe?: PipeTransform | pipeFunc | PipeTransform[];
+    label: string;
+    field: string;
+    width?: number;
+    fomart?: string;
+    type?: 'text' | 'image' | 'date';
+    span?: number;
+    pipe?: PipeTransform | pipeFunc | PipeTransform[];
+    click?: imgClickFunc;
 }

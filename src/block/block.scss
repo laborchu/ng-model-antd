@@ -1,17 +1,21 @@
 @import "../variable";
-.ngds-block{
+
+.ngds-block {
     border: 0 !important;
     border-radius: 0 !important;
-    padding: 0 20px;    
+    padding: 0 20px;
     padding-bottom: 10px;
-    &:hover{
-        box-shadow:none !important;
+
+    &:hover {
+        box-shadow: none !important;
     }
-    .ant-card-head{
+
+    .ant-card-head {
         border: 0;
         padding: 0;
     }
-    .ant-card-body{
+
+    .ant-card-body {
         padding: 0;
         border-bottom: 1px solid #eee;
         padding-bottom: 10px;
@@ -19,12 +23,13 @@
 }
 
 .ngds-block-info {
-    .info-item{
+    .info-item {
         margin-bottom: 10px;
         display: inline-flex;
+
         .info-label {
             text-align: right;
-    
+
             &::after {
                 content: ":";
                 margin: 0 8px 0 2px;
@@ -32,9 +37,17 @@
                 top: -0.5px;
             }
         }
+
+        .info-content {
+            width: 80%;
+        }
+
+        .can-click {
+            cursor: pointer;
+        }
     }
-    .block-spin{
+
+    .block-spin {
         text-align: center;
     }
-    
 }

@@ -119,14 +119,14 @@ export class NgdsForm implements AfterContentChecked {
 
             let searchFactory: ComponentFactory<any> = this.cfr.resolveComponentFactory(NgdsFormSearchBar);
             let comp: ComponentRef<any> = rowComp.instance.addCol(searchFactory);
-            let searchOption: any =  {
+            let searchOption: any = {
                 span: lastSpan ? (24 - lastSpan) : ~~24 / maxCol,
                 labelSpan: this._option.labelSpan,
                 compSpan: this._option.compSpan,
                 formComp: this,
-                offset: lastSpan?0:nzOffset
+                offset: lastSpan ? 0 : nzOffset
             };
-            Object.assign(searchOption,this._option.search);
+            Object.assign(searchOption, this._option.search);
             comp.instance.option = searchOption;
         }
     }
@@ -190,8 +190,16 @@ export class NgdsForm implements AfterContentChecked {
                     }
                 }
                 let txComp: any = this.compMap[compOption.property].instance;
-                if (txComp.onChange) {
-                    txComp.onChange(value == undefined ? null : value);
+                if (txComp.setValue) {
+                    txComp.setValue(value == undefined ? null : value);
+                }
+            }
+        }
+        for (let rowComp of this._option.components) {
+            for (let compOption of rowComp) {
+                let txComp: any = this.compMap[compOption.property].instance;
+                if (txComp.setValue) {
+                    txComp.onChange();
                 }
             }
         }

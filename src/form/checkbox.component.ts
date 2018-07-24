@@ -27,7 +27,7 @@ import { NgdsFormComp } from './form.component';
                 </label>
             </div>
             <div nz-form-control nz-col [nzSpan]="option.compSpan">
-                <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="onChange()"></nz-checkbox-group>
+                <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="setValue();onChange()"></nz-checkbox-group>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                     getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
@@ -88,10 +88,10 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         } else {
             this.data.forEach(item => item.checked = false);
         }
-        this.onChange(undefined);
+        this.setValue(undefined);
+        this.onChange();
     }
-
-    onChange(value: any) {
+    setValue(value: any) {
         if (value === undefined) {
             this.option.value = [];
             for (let item of this.data) {
@@ -124,6 +124,9 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
                 }
             }
         }
+    }
+
+    onChange() {
         this.option.onChange && this.option.onChange(this.option);
     }
 

@@ -61,17 +61,20 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
     })
   }
 
-  onChange(value: any) {
+  setValue(value: any) {
     if (value !== undefined) {
       this.option.value = value;
     }
+  }
+
+  onChange() {
     if (this.option.onChange) {
       let dataValue: any = null;
       if (this.data) {
-        if(this.option.model=="multiple"){
+        if (this.option.model == "multiple") {
           dataValue = [];
           this.data.forEach((data: any) => {
-            this.option.value&&this.option.value.every((value:any)=>{
+            this.option.value && this.option.value.every((value: any) => {
               if (data[this.option.dsValue] == value) {
                 dataValue.push(data);
                 return false;
@@ -79,7 +82,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
               return true;
             })
           })
-        }else{
+        } else {
           this.data.every((data: any) => {
             if (data[this.option.dsValue] == this.option.value) {
               dataValue = data;
@@ -88,7 +91,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
             return true;
           })
         }
-        
+
       }
       this.option.onChange(this.option, dataValue);
     }

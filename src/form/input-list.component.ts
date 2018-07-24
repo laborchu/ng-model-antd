@@ -50,10 +50,13 @@ export class NgdsFormInputList extends NgdsFormComp implements AfterContentCheck
 
   option: NgdsFormInputListCompOption;
 
-  onChange(value:any){
-    if(value){
-      this.option.value = value;      
+  setValue(value: any) {
+    if (value) {
+      this.option.value = value;
     }
+  }
+
+  onChange() {
     this.option.onChange && this.option.onChange(this.option);
   }
 
@@ -61,38 +64,38 @@ export class NgdsFormInputList extends NgdsFormComp implements AfterContentCheck
 
   }
 
-  addInput(){
-    if(!this.option.value){
+  addInput() {
+    if (!this.option.value) {
       this.option.value = [];
     }
     this.option.value.push({});
   }
 
-  downInput(data:any,index:number){
-    let from:number;
-    let to:number;
+  downInput(data: any, index: number) {
+    let from: number;
+    let to: number;
     from = index;
-    to = index+1;
-    this.option.value.splice(to,0,this.option.value.splice(from,1)[0]);
+    to = index + 1;
+    this.option.value.splice(to, 0, this.option.value.splice(from, 1)[0]);
   }
 
-  minusInput(data:any,index:number){
+  minusInput(data: any, index: number) {
     this.option.value.splice(index, 1);
   }
 
-  upInput(data:any,index:number){
-    let from:number;
-    let to:number;
-    from = index-1;
+  upInput(data: any, index: number) {
+    let from: number;
+    let to: number;
+    from = index - 1;
     to = index;
-    this.option.value.splice(to,0,this.option.value.splice(from,1)[0]);
+    this.option.value.splice(to, 0, this.option.value.splice(from, 1)[0]);
   }
 
   ngAfterContentChecked() {
   }
 
-  getFormControl(name:string):any {
-    return this.option.formGroup.controls[ name ];
+  getFormControl(name: string): any {
+    return this.option.formGroup.controls[name];
   }
 
 }

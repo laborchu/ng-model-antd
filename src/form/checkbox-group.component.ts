@@ -29,7 +29,7 @@ import { NgdsFormComp } from './form.component';
                         {{group.title}}
                         </label>
                     </div>
-                    <nz-checkbox-group [(ngModel)]="group.children" (ngModelChange)="onChange()"></nz-checkbox-group>
+                    <nz-checkbox-group [(ngModel)]="group.children" (ngModelChange)="setValue();onChange()"></nz-checkbox-group>
                 </div>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
@@ -86,15 +86,16 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
     updateAllChecked(index: number): void {
         this.indeterminate = false;
         if (this.allChecked[index]) {
-            this.data[index].children.forEach((item:any) => item.checked = true);
+            this.data[index].children.forEach((item: any) => item.checked = true);
         } else {
-            this.data[index].children.forEach((item:any) => item.checked = false);
+            this.data[index].children.forEach((item: any) => item.checked = false);
         }
-        this.onChange(undefined);
+        this.setValue(undefined);
+        this.onChange();
     }
 
-    onChange(value: any) {
-        if(value===undefined){
+    setValue(value: any) {
+        if (value === undefined) {
             this.option.value = [];
             for (let item of this.data) {
                 for (let child of item.children) {
@@ -103,14 +104,14 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
                     }
                 }
             }
-        }else{
-            this.option.value = value||[];
+        } else {
+            this.option.value = value || [];
             for (let item of this.data) {
                 for (let child of item.children) {
-                    if (this.option.value.indexOf(child.value)!=-1) {
+                    if (this.option.value.indexOf(child.value) != -1) {
                         child.checked = true;
-                    }else{
-                        child.checked = false;                    
+                    } else {
+                        child.checked = false;
                     }
                 }
             }
@@ -130,6 +131,9 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
                 }
             }
         }
+    }
+
+    onChange() {
         this.option.onChange && this.option.onChange(this.option);
     }
 

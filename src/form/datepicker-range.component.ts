@@ -50,10 +50,14 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
     ngAfterContentChecked() {
     }
 
-    onChange(value: any) {
+    setValue(value: any) {
         if (value !== undefined) {
             this.option.value = value;
         }
+
+    }
+
+    onChange() {
         if (this.option.validations) {
             let formControl = this.option.formGroup.controls[this.option.property];
             formControl.setErrors({});

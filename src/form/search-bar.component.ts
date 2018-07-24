@@ -31,13 +31,18 @@ import { NgdsFormComp } from './form.component';
     `
 })
 export class NgdsFormSearchBar extends NgdsFormComp implements AfterContentChecked {
+
     constructor() {
         super();
     }
 
     option: NgdsFormSearchOption;
     ngOnInit() {
-       
+
+    }
+
+    setValue(value: any): void {
+        throw new Error("Method not implemented.");
     }
 
     onChange() {
@@ -46,16 +51,16 @@ export class NgdsFormSearchBar extends NgdsFormComp implements AfterContentCheck
     ngAfterContentChecked() {
     }
 
-    search(){
+    search() {
         let data = this.option.formComp.getValue();
         this.option.formComp.onSearch.emit(data);
     }
-    reset(){
+    reset() {
         this.option.formComp.setValue({});
         let data = this.option.formComp.getValue();
-        setTimeout(()=>{
+        setTimeout(() => {
             this.option.formComp.onSearch.emit(data);
-        },100)
+        }, 100)
     }
 
 }

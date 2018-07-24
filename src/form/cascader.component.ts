@@ -26,7 +26,7 @@ import { NgdsFormComp } from './form.component';
             [nzValueProperty]="option.dsValue"
             [nzLabelProperty]="option.dsLabel"
             [(ngModel)]="option.value"
-            (nzSelectionChange)="onChange($event)"
+            (nzSelectionChange)="setValue($event);onChange()"
             (nzLoad)="loadData($event)"
             [formControl]="getFormControl(option.property)">
             
@@ -48,8 +48,11 @@ export class NgdsFormCascader extends NgdsFormComp implements AfterContentChecke
 
   option: NgdsFormCascaderCompOption;
 
-  onChange(value: any) {
+  setValue(value: any) {
     this.option.value = value;
+  }
+
+  onChange() {
     this.option.onChange && this.option.onChange(this.option);
   }
 

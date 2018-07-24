@@ -25,8 +25,8 @@ import { NzRadioGroupComponent } from 'ng-zorro-antd';
       <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
         <nz-radio-group #group
         [formControl]="getFormControl(option.property)"
-        [ngModel]="option.value"
-        (ngModelChange)="onChange($event)">
+        [(ngModel)]="option.value"
+        (ngModelChange)="onChange()">
           <label nz-radio [nzValue]="item.value" *ngFor="let item of data">
             <span>{{item.label}}</span>
           </label>
@@ -72,8 +72,11 @@ export class NgdsFormRadio extends NgdsFormComp implements AfterContentChecked {
     this.option.onChange && this.option.onChange(this.option);
   }
 
-  onChange(value: any) {
+  setValue(value: any) {
     this.option.value = value;
+  }
+
+  onChange() {
     this.option.onChange && this.option.onChange(this.option);
   }
 

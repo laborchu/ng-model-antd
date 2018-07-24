@@ -6,8 +6,8 @@ import {
     ComponentFactoryResolver,
     Input
 } from '@angular/core';
-import {UMeditorComponent} from 'ngx-umeditor';
-import {NgdsFormConfig, NgdsFormUmeditorCompOption} from './form.config';
+import { UMeditorComponent } from 'ngx-umeditor';
+import { NgdsFormConfig, NgdsFormUmeditorCompOption } from './form.config';
 import { NgdsFormComp } from './form.component';
 
 /**
@@ -65,9 +65,9 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
         if (this.option.config) {
             Object.assign(this.setting, this.option.config);
         }
-        setTimeout(()=>{
+        setTimeout(() => {
             this.showEditor = true;
-        },100)
+        }, 100)
     }
 
     editorReady() {
@@ -76,33 +76,37 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
     editorDestroy() {
     }
 
-    onChange(value:any) {
+    setValue(value: any) {
         if (value !== undefined) {
             this.option.value = value;
         }
-        if(this.option.validations){
-            for(let val of this.option.validations){
-                if(val.type=="required"){
+    }
+
+    onChange() {
+        if (this.option.validations) {
+            for (let val of this.option.validations) {
+                if (val.type == "required") {
                     let formControl = this.option.formGroup.controls[this.option.property];
-                    if(!this.option.value){
-                        formControl.setErrors({"required":true})
-                    }else{
-                        if(formControl.errors){
+                    if (!this.option.value) {
+                        formControl.setErrors({ "required": true })
+                    } else {
+                        if (formControl.errors) {
                             delete formControl.errors["required"];
                         }
                     }
-                    if(formControl.errors&&Object.keys(formControl.errors).length==0){
+                    if (formControl.errors && Object.keys(formControl.errors).length == 0) {
                         formControl.setErrors(null);
                     }
                 }
             }
         }
+        this.option.onChange && this.option.onChange(this.option);
     }
 
     ngAfterContentChecked() {
     }
 
-    getFormControl(name:string):any {
-        return this.option.formGroup.controls[ name ];
-      }
+    getFormControl(name: string): any {
+        return this.option.formGroup.controls[name];
+    }
 }

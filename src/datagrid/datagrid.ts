@@ -202,6 +202,7 @@ export class NgdsDataGrid implements AfterContentChecked {
     if (Array.isArray(this.option.dataSource)) {
       this._loading = false;
       this.data = this.option.dataSource;
+      this.initTreeData();
     } else {
       this.option.dataSource.getData(this.searchParams).then((model: NgdsDataGridModel) => {
         this._loading = false;

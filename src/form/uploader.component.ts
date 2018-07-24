@@ -114,7 +114,8 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                             if (data.filePath) {
                                 this.wrapperData(data, file);
                                 this.option.value.push(data);
-                                this.onChange(undefined)
+                                this.setValue(undefined)
+                                this.onChange()
                             } else {
                                 uploader.Instance.upload(file);
                             }
@@ -134,7 +135,8 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                 this.wrapperData(data, file);
                 this.formConfig.uploaderConfig && this.formConfig.uploaderConfig.uploadSuccess && this.formConfig.uploaderConfig.uploadSuccess(data);
                 this.option.value.push(data);
-                this.onChange(undefined)
+                this.setValue(undefined)
+                this.onChange()
             })
             .on('uploadError', (file: File, err: any) => {
                 console.log(err);
@@ -180,14 +182,17 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         if (index > -1) {
             this.option.value.splice(index, 1);
         }
-        this.onChange(undefined)
+        this.setValue(undefined)
+        this.onChange()
     }
 
-    onChange(value: any) {
+    setValue(value: any) {
         if (value !== undefined) {
             this.option.value = value || [];
         }
+    }
 
+    onChange() {
         if (this.option.validations) {
             let formControl = this.option.formGroup.controls[this.option.property];
             formControl.setErrors({});

@@ -57,29 +57,30 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
     ngAfterContentChecked() {
     }
 
-    onChange(value: any) {
+    setValue(value: any) {
         if (value !== undefined) {
             this.option.value = value;
         }
-        
-        if(this.option.validations){
-            for(let val of this.option.validations){
-                if(val.type=="required"){
+    }
+
+    onChange() {
+        if (this.option.validations) {
+            for (let val of this.option.validations) {
+                if (val.type == "required") {
                     let formControl = this.option.formGroup.controls[this.option.property];
-                    if(!this.option.value){
-                        formControl.setErrors({"required":true})
-                    }else{
-                        if(formControl.errors){
+                    if (!this.option.value) {
+                        formControl.setErrors({ "required": true })
+                    } else {
+                        if (formControl.errors) {
                             delete formControl.errors["required"];
                         }
                     }
-                    if(formControl.errors&&Object.keys(formControl.errors).length==0){
+                    if (formControl.errors && Object.keys(formControl.errors).length == 0) {
                         formControl.setErrors(null);
                     }
                 }
             }
         }
-
         this.option.onChange && this.option.onChange(this.option);
     }
 

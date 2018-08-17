@@ -77,7 +77,8 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                     id: "#" + this.getUploaderId(),
                     multiple: this.option.multiple
                 },
-                accept: this.getAccept()
+                accept: this.getAccept(),
+                compress: this.option.compress
             }
         }, 200);
 

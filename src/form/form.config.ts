@@ -56,6 +56,7 @@ export class NgdsFormCompOption {
 	formComp?: NgdsForm;
 	disabled?: boolean;
 	formOption?: NgdsFormOption;
+	attrId?: string;
 }
 
 export class NgdsFormValidationOption {
@@ -107,7 +108,7 @@ export class NgdsFormCascaderCompOption extends NgdsFormCompOption {
 
 export class NgdsFormCheckboxCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
-	data:Array<any>;
+	data: Array<any>;
 	showAllChecked?: boolean;
 	dsLabel?: string;
 	dsValue?: string;
@@ -150,6 +151,7 @@ export class NgdsFormUploaderCompOption extends NgdsFormCompOption {
 	errHandler?: errHandlerFunc;//错误处理
 	width?: number;
 	height?: number;
+	compress?: any;
 }
 
 

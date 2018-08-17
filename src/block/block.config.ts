@@ -22,6 +22,7 @@ export class NgdsBlockInfoOption {
 
 export type pipeFunc = (property: string, data: any) => string;
 export type imgClickFunc = (img: string, index: number) => void;
+export type clickFunc = (property: string, data: any) => void;
 export class NgdsBlockInfoItemOption {
     label: string;
     field: string;
@@ -30,5 +31,6 @@ export class NgdsBlockInfoItemOption {
     type?: 'text' | 'image' | 'date';
     span?: number;
     pipe?: PipeTransform | pipeFunc | PipeTransform[];
-    click?: imgClickFunc;
+    imgClick?: imgClickFunc;
+    click?: clickFunc;
 }

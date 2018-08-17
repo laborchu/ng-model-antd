@@ -23,7 +23,11 @@ import {
     <span class="dg-column" #columnRef>
         <span *ngIf="!hasCustomComp">
             <nz-badge *ngIf="colOption.badgePipe" [nzStatus]="getValueFromPipe(colOption.badgePipe)"></nz-badge>
-            <span *ngIf="!edit" [innerHTML]="getValueFromPipe(colOption.propertyPipe)"></span>
+            <span *ngIf="!edit&&!colOption.click" [innerHTML]="getValueFromPipe(colOption.propertyPipe)" >
+            </span>
+            <span *ngIf="colOption.click">
+                <a (click)="colOption.click(item)">{{getValueFromPipe(colOption.propertyPipe)}}</a>
+            </span> 
 
             <span class="edit-input" *ngIf="edit">
               <nz-input [(ngModel)]="item[colOption.property]" (keyup.enter)="finishEdit()"></nz-input>

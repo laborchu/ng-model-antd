@@ -23,6 +23,7 @@ import { NgdsFormComp } from './form.component';
       <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
         <nz-input [nzSize]="'large'" [nzDisabled]="option.disabled" nzType="{{option.type}}" [nzPlaceHolder]="option.placeHolder || '请输入'" 
         [(ngModel)]="option.value"
+        [nzId]="option.attrId"
         (ngModelChange)="setValue($event);onChange()"
         [formControl]="getFormControl(option.property)"></nz-input>
         <div *ngIf="option.maxLength" class="input-limit">{{option.value?option.value.length:0}}/{{option.maxLength}}</div>

@@ -13,7 +13,7 @@ export abstract class NgdsFormComp {
 
 
   setCompValue(formValue: any, compKey: string, compValue: any): void {
-    formValue[compKey] = compValue;
+    formValue[compKey] = compValue || undefined;
   }
 
   @HostBinding('hidden')

@@ -52,7 +52,7 @@ let hashPageMap: Map<number, number> = new Map();
               <td *ngFor="let col of option.table.columns;let colIndex = index"
                   title="{{col.title? (item[col.property]):''}}">
                   <nz-row-indent [nzIndentSize]="item.level"></nz-row-indent>
-                  <nz-row-expand-icon *ngIf="item.showExpand" [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="item.showExpand&&colIndex==0"></nz-row-expand-icon>
+                  <nz-row-expand-icon *ngIf="item.showExpand&&colIndex==0" [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="item.showExpand&&colIndex==0"></nz-row-expand-icon>
                   <ngds-column [colOption]="col" [item]="item"></ngds-column>
               </td>
               <td *ngIf="option.table.op" class="op-td">

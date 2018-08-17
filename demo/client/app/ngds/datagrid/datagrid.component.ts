@@ -13,6 +13,7 @@ import {
     NgdsForm, NgdsFormComp, NgdsDataGrid, NgdsDataGridColumnOption
 } from '../../../../../src/index';
 import { DatagridPropertyPipe, DatagridPropertyBadgePipe } from '../../shared/pipe/index';
+import { debug } from 'util';
 
 // pageSize: number; //每页个数
 // pageCount: number; //页面总数
@@ -251,7 +252,11 @@ export class DataGridComponent implements OnInit {
                         debugger
                     }
                 },
-                { text: '姓名', property: "name", },
+                {
+                    text: '姓名', property: "name", click: (item: any) => {
+                        debugger
+                    }
+                },
                 { text: '手机号', property: "mobile", },
                 {
                     text: '认证状态',

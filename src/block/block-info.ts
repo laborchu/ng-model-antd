@@ -16,12 +16,15 @@ import { NgdsDataSource, NgdsModel } from '../core/datasource';
         <div nz-row  *ngIf="!_isSpinning">
             <div class="info-item" nz-col [nzSpan]="item.span?item.span:_span" *ngFor="let item of option.items">
                 <span class="info-label">{{item.label}}</span>
-                <span class="info-content" *ngIf="item.type!='image'" [innerHTML]="getText(item)">
+                <span class="info-content" *ngIf="item.type!='image'&&!item.click" [innerHTML]="getText(item)">
+                </span>
+                <span class="info-content" *ngIf="item.type!='image'&&item.click">
+                    <a (click)="item.click(item.field,data)">{{getText(item)}}</a>
                 </span>
                 <span class="info-content" *ngIf="item.type=='image'">
                     <img src="{{img}}" *ngFor="let img of data[item.field];let imgIndex = index;" [style.width.px]="item.width"  [style.height.px]="item.height" 
-                    [ngClass]="{'can-click':item.click}" 
-                    (click)="item.click&&item.click(img,imgIndex)"/>
+                    [ngClass]="{'can-click':item.imgClick}" 
+                    (click)="item.imgClick&&item.imgClick(img,imgIndex)"/>
                 </span>
             </div>
         </div>
@@ -65,12 +68,16 @@ export class NgdsBlockInfo {
 
     }
 
-    initData(){
+    initData() {
         for (let item of this.option.items) {
             if (item.type == "image") {
-                let image:string = this.data[item.field];
-                let imgArray = image.split(",");
-                this.data[item.field] = imgArray;
+                let image: string = this.data[item.field];
+                if (image) {
+                    let imgArray = image.split(",");
+                    this.data[item.field] = imgArray;
+                } else {
+                    this.data[item.field] = [];
+                }
             }
         }
     }

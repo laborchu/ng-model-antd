@@ -1,5 +1,5 @@
 import { Injectable, PipeTransform } from '@angular/core';
-import { NgdsDataSource,NgdsModel } from '../core/datasource';
+import { NgdsDataSource, NgdsModel } from '../core/datasource';
 
 /**
  * Configuration service for the NgbTabset component.
@@ -23,23 +23,24 @@ export interface NgdsDataGridPageModel extends NgdsModel {
 
 export type styleFunc = (data: any) => string;
 export type loadingFunc = (data: any) => boolean;
-export type pipeFunc = (property: string,data:any) => string;
-export type textFunc = (data:any) => string;
-export type editFinishFunc = (item:any) => void;
+export type pipeFunc = (property: string, data: any) => string;
+export type textFunc = (data: any) => string;
+export type editFinishFunc = (item: any) => void;
+export type clickFunc = (item: any) => void;
 export type expandChange = (item: any, extend: any) => void;
 
 export interface NgdsDataGridOption {
-	dataSource: NgdsDataSource|Array<any>;
+	dataSource: NgdsDataSource | Array<any>;
 	table: NgdsDataGridTableOption;
-	initToSearch?:boolean;
-	dataKey?:string;
+	initToSearch?: boolean;
+	dataKey?: string;
 }
 
 export interface NgdsDataGridTableOption {
 	columns: Array<NgdsDataGridColumnOption>;
 	op?: NgdsDataGridOpOption;
-	showCheck?:boolean;
-	expandChange?:expandChange;
+	showCheck?: boolean;
+	expandChange?: expandChange;
 }
 
 export interface NgdsDataGridColumnOption {
@@ -48,13 +49,14 @@ export interface NgdsDataGridColumnOption {
 	propertyPipe?: PipeTransform | pipeFunc | PipeTransform[];
 	badgePipe?: PipeTransform | pipeFunc | PipeTransform[];
 	width?: string;
-	title?:boolean;
+	title?: boolean;
 	overflow?: boolean;
 	showSort?: boolean;
 	propertyClassPipe?: PipeTransform | PipeTransform[];
-	component?:any;
-	canEdit?:any;
-	editFinish?:editFinishFunc;
+	component?: any;
+	canEdit?: any;
+	editFinish?: editFinishFunc;
+	click?: clickFunc;
 }
 
 export interface NgdsDataGridOpOption {
@@ -66,7 +68,7 @@ export interface NgdsDataGridOpOption {
 export interface NgdsDataGridOpGroupBtnOption {
 	text: string;
 	buttons: Array<NgdsDataGridOpBtnOption>;
-    hidden?: (data: any) => boolean;
+	hidden?: (data: any) => boolean;
 }
 
 export interface NgdsDataGridOpBtnOption {

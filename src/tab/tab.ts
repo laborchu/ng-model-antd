@@ -13,7 +13,7 @@ import {
 import { AnimationBuilder, animate, style } from '@angular/animations';
 
 import { NgdsTabConfig, NgdsTabOption } from './tab.config';
-import { debug } from 'util';
+let hashMap: Map<string, number> = new Map();
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -21,7 +21,7 @@ import { debug } from 'util';
 @Component({
     selector: 'ngds-tab',
     exportAs: 'ngdsTab',
-   
+
     template: `
         <div class="ngds-tab">
             <div class="ngds-tab-body">
@@ -47,8 +47,10 @@ export class NgdsTab {
 
     selectElemWidth: number = 0;
     selectIndex: number = 0;
+    hash: number;
 
     ngOnInit() {
+        this.selectIndex = hashMap.get(this.option.id || location.pathname) || 0;
         this.option.tabSource.getData({}).then((data: Array<any>) => {
             this.tabArray = data
         });
@@ -57,23 +59,29 @@ export class NgdsTab {
     ngAfterViewInit(): void {
         this.tabCompArray.changes.subscribe((comps: QueryList<ElementRef>) => {
             setTimeout(() => {
-                this.selectElemWidth = comps.toArray()[0].nativeElement.offsetWidth;
+                this.selectElemWidth = comps.toArray()[this.selectIndex].nativeElement.offsetWidth;
+                this.move(comps.toArray()[this.selectIndex].nativeElement);
             }, 0)
         });
 
     }
 
-    tabSelect(event: any,index:number) {
+    tabSelect(event: any, index: number) {
+        hashMap.set(this.option.id || location.pathname, index);
         this.selectIndex = index;
+        this.move(event.currentTarget);
+        this.ngdsTabSelect.emit(this.tabArray[index]);
+    }
+
+    move(target:any){
         const progressAnimation = this.animBuilder.build([
             animate(`200ms`, style({
-                'left': event.currentTarget.offsetLeft,
-                'width':event.currentTarget.offsetWidth
+                'left': target.offsetLeft,
+                'width': target.offsetWidth
             }))
         ]);
         let animationPlayer = progressAnimation.create(this.tabBar.nativeElement);
         animationPlayer.play();
-        this.ngdsTabSelect.emit(this.tabArray[index]);
     }
 
 }

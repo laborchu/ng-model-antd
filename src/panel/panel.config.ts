@@ -27,6 +27,7 @@ export class NgdsPanelCrumbsOption {
 export interface NgdsPanelBtnOption {
     text: string;
     style?: string;
+    hidden?:boolean;
     action: (data: any) => void;
 }
 

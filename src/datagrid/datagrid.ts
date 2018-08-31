@@ -11,7 +11,7 @@ import {
   NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel
 } from './datagrid.config';
 
-let hashPageMap: Map<number, number> = new Map();
+let hashPageMap: Map<number, any> = new Map();
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -110,9 +110,16 @@ export class NgdsDataGrid implements AfterContentChecked {
   };
 
   ngOnInit() {
+    //缓存数据
     this.hash = this.hashCode(JSON.stringify(this.option.table));
-    this._pageIndex = hashPageMap.get(this.hash) || 1;
-    this.option.initToSearch !== false && this.search();
+    let cachedParams:any = hashPageMap.get(this.hash);
+    if(!cachedParams){
+      cachedParams = {};
+      hashPageMap.set(this.hash,cachedParams);
+    }
+    this._pageIndex = cachedParams.pageIndex || 1;
+
+    this.option.initToSearch !== false && this.search(cachedParams.params);
   }
 
   getBtnStyle = function (btn: NgdsDataGridOpBtnOption, item: any) {
@@ -193,7 +200,10 @@ export class NgdsDataGrid implements AfterContentChecked {
   }
 
   search(params?: any) {
-    hashPageMap.set(this.hash, this._pageIndex);
+    let cachedParams:any = hashPageMap.get(this.hash);
+    cachedParams.pageIndex = this._pageIndex;
+    cachedParams.params = params;
+
     this.searchParams.pageIndex = this._pageIndex;
     if (params) {
       Object.assign(this.searchParams, params);

@@ -23,7 +23,7 @@ import {NgdsPanelConfig, NgdsPanelOption, NgdsPanelBtnOption} from './panel.conf
             </ng-template>
             <ng-template #extra>
                 <a *ngFor="let btn of option.buttons;"
-                        (click)="btn.action()">
+                        (click)="btn.action()" [hidden]="btn.hidden">
                     {{btn.text}}
                 </a>
             </ng-template>

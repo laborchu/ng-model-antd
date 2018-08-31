@@ -27,6 +27,7 @@ export class NgdsFormUploaderConfig {
 }
 
 export class NgdsFormOption {
+	id?:string;
 	labelSpan?: number;
 	compSpan?: number;
 	gutter?: number;
@@ -34,7 +35,8 @@ export class NgdsFormOption {
 	value?: any;
 	showSearch?: boolean;
 	search?: NgdsFormSearchOption;
-	column?: number;//最大列数量	
+	column?: number;//最大列数量
+	remember?:boolean;
 }
 
 

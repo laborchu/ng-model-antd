@@ -29,6 +29,7 @@ export class TabComponent implements OnInit {
     }
 
     tabOption: NgdsTabOption = {
+        id:"sssss",
         tabSource:new AuthStatusDataSource()
     }
 

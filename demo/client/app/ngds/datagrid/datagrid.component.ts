@@ -210,8 +210,10 @@ export class DataGridComponent implements OnInit {
     }
 
     formOption: NgdsFormOption = {
+        id:"xxxxxxx",
         showSearch: true,
         column: 3,
+        remember:true,
         components: [
             [
                 {
@@ -227,7 +229,7 @@ export class DataGridComponent implements OnInit {
     option: NgdsDataGridOption = {
         dataSource: new DemoDataSource(),
         table: {
-            showCheck: false,
+            showCheck: true,
             expandChange: (item: any, extend: any) => {
                 if (!item.children) {
                     if (item.id == 1) {

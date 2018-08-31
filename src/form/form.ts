@@ -14,6 +14,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { NgdsFormConfig, NgdsFormOption, NgdsFormCompOption } from './form.config';
 import { NgdsFormRow } from './row.component';
 import { NgdsFormSearchBar } from './search-bar.component';
+let hashPageMap: Map<number, any> = new Map();
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -38,11 +39,22 @@ export class NgdsForm implements AfterContentChecked {
     @Input() set option(o: NgdsFormOption) {
         this._option = o;
         this.refresh();
+        if (this._option.remember) {
+            this.hash = this.hash || this.hashCode(o.id||location.pathname);
+            let value = hashPageMap.get(this.hash);
+            this.setValue(value);
+        }
     }
     @Output() onSearch: EventEmitter<any> = new EventEmitter();
 
     myForm: FormGroup;
     compMap: any = {};
+    hash: number;
+
+    hashCode(source: string): number {
+        return source.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
+    };
+
     ngOnInit() {
     }
 
@@ -160,6 +172,9 @@ export class NgdsForm implements AfterContentChecked {
                     // this._option.value[compOption.property] = compOption.value;                    
                 }
             }
+        }
+        if (this._option.remember) {
+            hashPageMap.set(this.hash, this._option.value);
         }
         return this._option.value;
     }

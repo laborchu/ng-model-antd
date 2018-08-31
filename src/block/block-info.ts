@@ -54,7 +54,7 @@ export class NgdsBlockInfo {
             }
         }
         this._span = parseInt(24 / this.option.col + "");
-        if (this.option.dataSource.getData) {
+        if (this.option.dataSource&&this.option.dataSource.getData) {
             this.option.dataSource.getData({}).then((model: any) => {
                 this.data = model.data;
                 this._isSpinning = false;

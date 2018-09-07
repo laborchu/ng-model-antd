@@ -29,6 +29,10 @@ import {
                 <a (click)="colOption.click(item)">{{getValueFromPipe(colOption.propertyPipe)}}</a>
             </span> 
 
+            <nz-tooltip [nzTitle]="getInfo(colOption.info)" *ngIf="showInfo(colOption.info)">
+                <i nz-tooltip class="anticon anticon-exclamation-circle"></i>
+            </nz-tooltip>
+
             <span class="edit-input" *ngIf="edit">
               <nz-input [(ngModel)]="item[colOption.property]" (keyup.enter)="finishEdit()"></nz-input>
               <i class="anticon anticon-check editable-cell-icon-check" (click)="finishEdit()"></i>
@@ -78,6 +82,24 @@ export class NgdsColumn {
     finishEdit(): void {
         this.edit = !this.edit;
         this.colOption.editFinish && this.colOption.editFinish(this.item);
+    }
+
+    getInfo(tip:string|pipeFunc):string{
+        if (typeof tip === "function") {
+            return tip(this.colOption.property, this.item);
+        }else{
+            return tip;
+        }
+    }
+
+    showInfo(tip:string|pipeFunc):boolean{
+        let data;
+        if (typeof tip === "function") {
+            data = tip(this.colOption.property, this.item);
+        }else{
+            data = tip;
+        }
+        return data?true:false; 
     }
 
     getValueFromPipe = function (pipe: PipeTransform | pipeFunc | PipeTransform[]) {

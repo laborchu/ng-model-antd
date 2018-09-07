@@ -277,7 +277,9 @@ export class DataGridComponent implements OnInit {
                             return "error";
                         }
                     },
-                    width: "130px"
+                    width: "130px",info:(property: string, data: any): string => {
+                        return "";
+                    }
                 },
                 {
                     text: '企业名称',

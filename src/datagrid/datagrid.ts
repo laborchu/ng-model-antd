@@ -200,14 +200,15 @@ export class NgdsDataGrid implements AfterContentChecked {
   }
 
   search(params?: any) {
-    let cachedParams:any = hashPageMap.get(this.hash);
-    cachedParams.pageIndex = this._pageIndex;
-    cachedParams.params = params;
-
     this.searchParams.pageIndex = this._pageIndex;
     if (params) {
       Object.assign(this.searchParams, params);
     }
+
+    let cachedParams:any = hashPageMap.get(this.hash);
+    cachedParams.pageIndex = this._pageIndex;
+    cachedParams.params = this.searchParams;
+
     this._loading = true;
     if (Array.isArray(this.option.dataSource)) {
       this._loading = false;

@@ -57,6 +57,7 @@ export interface NgdsDataGridColumnOption {
 	canEdit?: any;
 	editFinish?: editFinishFunc;
 	click?: clickFunc;
+	info?:string|pipeFunc;
 }
 
 export interface NgdsDataGridOpOption {

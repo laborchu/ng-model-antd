@@ -43,6 +43,7 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
 
     option: NgdsFormDatePickerCompOption;
     data: Array<any>;
+    oldValue: any;
 
     ngOnInit() {
     }
@@ -55,6 +56,9 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
             this.option.value = value;
         }
 
+        if (this.oldValue == undefined) {
+            this.oldValue = value ? [value[0],value[1]] : null;
+        }
     }
 
     onChange() {
@@ -78,4 +82,26 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
         return this.option.formGroup.controls[name];
     }
 
+    getChangeValue(): any {
+        if (this.oldValue || this.option.value) {
+            if (this.oldValue && this.option.value) {
+                if (this.option.value[0] == this.oldValue[0] &&
+                    this.option.value[1] == this.oldValue[1]) {
+                    return null;
+                } else {
+                    return {
+                        oldValue: this.oldValue,
+                        newValue: this.option.value
+                    }
+                }
+            } else {
+                return {
+                    oldValue: this.oldValue,
+                    newValue: this.option.value
+                }
+            }
+        } else {
+            return null;
+        }
+    }
 }

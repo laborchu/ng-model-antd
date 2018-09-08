@@ -316,8 +316,12 @@ export class FormComponent implements OnInit {
             {
                 text: '保存',
                 action: (item) => {
+                    let data = this.myForm.getValue();
+                    let changeValue = this.myForm.getChangeValue();
+                    console.log(changeValue);
+
                     if (this.myForm.checkVal()) {
-                        let data = this.myForm.getValue();
+
                     }
                     if (this.myForm2.checkVal()) {
                         let data = this.myForm2.getValue();
@@ -353,7 +357,18 @@ export class FormComponent implements OnInit {
 
             // }
 
-            this.myForm.setValue({ "username": "4345345", "user": { "password": "44444" }, "sex": 1, "like": [1], "date": "2018-07-06T15:22:43.006Z", "location": 1, "location2": [1], "startPrice": 44, "endPrice": 44, "rangeDate": ["2018-07-05T16:00:00.000Z", "2018-08-05T16:00:00.000Z"], "address": [2], "auth": [1, 2, 4] })
+            this.myForm.setValue({ "username": "4345345", 
+            "user": { "password": "44444" }, 
+            "sex": 1, 
+            "like": [1], 
+            "date": "2018-07-06T15:22:43.006Z", 
+            "location": 1, 
+            "location2": [1], 
+            "startPrice": 44, 
+            "endPrice": 44, 
+            "rangeDate": ["2018-07-05T16:00:00.000Z", "2018-08-05T16:00:00.000Z"], 
+            "address": [{ label: "江苏省", value: 2 }], 
+            "auth": [1, 2, 4] })
 
             // this.myForm2.setValue({
             //     desc:"sfsdfsdf",

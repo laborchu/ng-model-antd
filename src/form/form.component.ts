@@ -20,6 +20,10 @@ export abstract class NgdsFormComp {
     }
   }
 
+  getChangeValue():any{
+    return null;
+  }
+
   @HostBinding('hidden')
   isHidden: boolean = false;
 

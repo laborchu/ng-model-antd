@@ -48,6 +48,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
 
   option: NgdsFormSelectCompOption;
   data: Array<any>;
+  oldValue: any;
 
   ngOnInit() {
     if (!this.option.dsLabel) {
@@ -64,6 +65,10 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
   setValue(value: any) {
     if (value !== undefined) {
       this.option.value = value;
+    }
+
+    if(this.oldValue==undefined){
+      this.oldValue = value || null;
     }
   }
 
@@ -102,5 +107,39 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
 
   getFormControl(name: string): any {
     return this.option.formGroup.controls[name];
+  }
+
+  getChangeValue(): any {
+    if (this.option.model == "multiple") {
+      if (this.oldValue || this.option.value) {
+        if (this.oldValue && this.option.value) {
+          if (this.oldValue.every((e: any) => this.option.value.includes(e)) && this.oldValue.length == this.option.value.length) {
+            return null;
+          } else {
+            return {
+              oldValue: this.oldValue,
+              newValue: this.option.value
+            }
+          }
+        } else {
+          return {
+            oldValue: this.oldValue,
+            newValue: this.option.value
+          }
+        }
+      } else {
+        return null;
+      }
+    } else {
+      if (this.oldValue === this.option.value) {
+        return null;
+      } else {
+        return {
+          oldValue: this.oldValue,
+          newValue: this.option.value
+        }
+      }
+    }
+
   }
 }

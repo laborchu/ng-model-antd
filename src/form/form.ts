@@ -179,6 +179,33 @@ export class NgdsForm implements AfterContentChecked {
         return this._option.value;
     }
 
+    getChangeValue(){
+        let chageData:any = {};
+        for (let rowComp of this._option.components) {
+            for (let compOption of rowComp) {
+                if (!compOption.hidden) {
+                    let propertyArray: Array<string> = compOption.property.split(".");
+                    let value:any = chageData;
+                    propertyArray.forEach((item: string, index: number) => {
+                        if (index == propertyArray.length - 1) {
+                            let txComp: any = this.compMap[compOption.property].instance;
+                            let chageValue =  txComp.getChangeValue();
+                            if(chageValue!=null){
+                                value[item] = chageValue;
+                            }
+                        } else {
+                            if (!value[item]) {
+                                value[item] = {};
+                            }
+                            value = value[item];
+                        }
+                    })                 
+                }
+            }
+        }
+        return chageData;
+    }
+
     getModelValue(property: string, data: any): any {
         let propertyArray: Array<string> = property.split(".");
         let value = data;

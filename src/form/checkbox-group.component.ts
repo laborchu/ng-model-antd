@@ -49,6 +49,7 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
     data: Array<any>;
     indeterminate = true;
     allChecked: any = {};
+    oldValue: any;
 
     ngOnInit() {
         if (!this.option.dsLabel) {
@@ -131,6 +132,10 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
                 }
             }
         }
+
+        if (this.oldValue == undefined) {
+            this.oldValue = value || null;
+        }
     }
 
     onChange() {
@@ -142,5 +147,27 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
 
     getFormControl(name: string): any {
         return this.option.formGroup.controls[name];
+    }
+
+    getChangeValue(): any {
+        if (this.oldValue || this.option.value) {
+            if (this.oldValue && this.option.value) {
+                if (this.oldValue.every((e: any) => this.option.value.includes(e))) {
+                    return null;
+                } else {
+                    return {
+                        oldValue: this.oldValue,
+                        newValue: this.option.value
+                    }
+                }
+            } else {
+                return {
+                    oldValue: this.oldValue,
+                    newValue: this.option.value
+                }
+            }
+        } else {
+            return null;
+        }
     }
 }

@@ -43,7 +43,7 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
   }
 
   option: NgdsFormInputCompOption;
-  oldValue: string = "";
+  oldValue: string;
 
 
 
@@ -57,7 +57,9 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
       }
     }
     this.option.value = value;
-    this.oldValue = value;
+    if(this.oldValue==undefined){
+      this.oldValue = value || null;
+    }
   }
 
   onChange() {
@@ -74,4 +76,14 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
     return this.option.formGroup.controls[name];
   }
 
+  getChangeValue(): any {
+    if (this.oldValue === this.option.value) {
+      return null;
+    } else {
+      return {
+        oldValue: this.oldValue,
+        newValue: this.option.value
+      }
+    }
+  }
 }

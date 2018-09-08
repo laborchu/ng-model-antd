@@ -49,6 +49,7 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
 
     option: NgdsFormDatePickerCompOption;
     data: Array<any>;
+    oldValue: any;
 
     ngOnInit() {
         this.option.value = this.option.value || null;
@@ -60,6 +61,10 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
     setValue(value: any) {
         if (value !== undefined) {
             this.option.value = value;
+        }
+
+        if (this.oldValue == undefined) {
+            this.oldValue = value || null;
         }
     }
 
@@ -86,6 +91,17 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
 
     getFormControl(name: string): any {
         return this.option.formGroup.controls[name];
+    }
+
+    getChangeValue(): any {
+        if (this.oldValue === this.option.value) {
+            return null;
+        } else {
+            return {
+                oldValue: this.oldValue,
+                newValue: this.option.value
+            }
+        }
     }
 
 }

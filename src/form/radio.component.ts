@@ -49,6 +49,7 @@ export class NgdsFormRadio extends NgdsFormComp implements AfterContentChecked {
 
   option: NgdsFormRadioCompOption;
   data: Array<any>;
+  oldValue: any;
   ngOnInit() {
     if (!this.option.dsLabel) {
       this.option.dsLabel = "label";
@@ -73,11 +74,25 @@ export class NgdsFormRadio extends NgdsFormComp implements AfterContentChecked {
   }
 
   setValue(value: any) {
+    if(this.oldValue==undefined){
+      this.oldValue = value || null;
+    }
     this.option.value = value;
   }
 
   onChange() {
     this.option.onChange && this.option.onChange(this.option);
+  }
+
+  getChangeValue(): any {
+    if (this.oldValue === this.option.value) {
+      return null;
+    } else {
+      return {
+        oldValue: this.oldValue,
+        newValue: this.option.value
+      }
+    }
   }
 
   ngAfterContentChecked() {

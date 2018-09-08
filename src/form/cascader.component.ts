@@ -47,8 +47,12 @@ export class NgdsFormCascader extends NgdsFormComp implements AfterContentChecke
   }
 
   option: NgdsFormCascaderCompOption;
+  oldValue: any;
 
   setValue(value: any) {
+    if (this.oldValue == undefined) {
+      this.oldValue = value || null;
+    }
     this.option.value = value;
   }
 
@@ -104,4 +108,29 @@ export class NgdsFormCascader extends NgdsFormComp implements AfterContentChecke
     return this.option.formGroup.controls[name];
   }
 
+  getChangeValue(): any {
+    if (this.oldValue || this.option.value) {
+      if (this.oldValue && this.option.value) {
+        if (this.oldValue.length && this.option.value.length) {
+          if (this.oldValue[this.oldValue.length - 1].value == this.option.value[this.option.value.length - 1].value) {
+            return null;
+          } else {
+            return {
+              oldValue: this.oldValue,
+              newValue: this.option.value
+            }
+          }
+        } else {
+          return null;
+        }
+      } else {
+        return {
+          oldValue: this.oldValue,
+          newValue: this.option.value
+        }
+      }
+    } else {
+      return null;
+    }
+  }
 }

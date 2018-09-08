@@ -47,10 +47,14 @@ export class NgdsFormInputRange extends NgdsFormComp implements AfterContentChec
   }
 
   option: NgdsFormInputRangeCompOption;
+  oldValue: any;
 
   setValue(value: any) {
     if (value !== undefined) {
       this.option.value = value;
+    }
+    if (this.oldValue == undefined) {
+      this.oldValue = value ? Object.assign({}, value) : null;
     }
   }
 
@@ -76,4 +80,26 @@ export class NgdsFormInputRange extends NgdsFormComp implements AfterContentChec
     return this.option.formGroup.controls[name];
   }
 
+  getChangeValue(): any {
+    if (this.oldValue || this.option.value) {
+      if (this.oldValue && this.option.value) {
+        if (this.option.value.first == this.oldValue.first &&
+          this.option.value.second == this.oldValue.second) {
+          return null;
+        } else {
+          return {
+            oldValue: this.oldValue,
+            newValue: this.option.value
+          }
+        }
+      } else {
+        return {
+          oldValue: this.oldValue,
+          newValue: this.option.value
+        }
+      }
+    } else {
+      return null;
+    }
+  }
 }

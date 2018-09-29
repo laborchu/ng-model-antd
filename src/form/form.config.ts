@@ -129,6 +129,7 @@ export class NgdsFormSelectCompOption extends NgdsFormCompOption {
 	dsValue?: string;
 	model?: string;
 	placeHolder?: string;
+	searchRemote?: boolean;
 }
 
 export class NgdsFormDatePickerCompOption extends NgdsFormCompOption {

@@ -52,6 +52,7 @@ export interface NgdsDataGridColumnOption {
 	title?: boolean;
 	overflow?: boolean;
 	showSort?: boolean;
+	hidden?: boolean;
 	propertyClassPipe?: PipeTransform | PipeTransform[];
 	component?: any;
 	canEdit?: any;

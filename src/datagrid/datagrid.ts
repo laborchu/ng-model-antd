@@ -34,7 +34,7 @@ let hashPageMap: Map<number, any> = new Map();
             <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
             </label>
           </th>
-          <th *ngFor="let col of option.table.columns;" nz-th [nzWidth]="col.width">
+          <th *ngFor="let col of option.table.columns;" nz-th [nzWidth]="col.width" [hidden]="col.hidden">
             <span>{{col.text}}</span>
             <nz-table-sort *ngIf="col.showSort" (nzValueChange)="_sort(col.property,$event)"></nz-table-sort>
           </th>
@@ -50,6 +50,7 @@ let hashPageMap: Map<number, any> = new Map();
                 </label>
               </td>
               <td *ngFor="let col of option.table.columns;let colIndex = index"
+                  [hidden]="col.hidden"
                   title="{{col.title? (item[col.property]):''}}">
                   <nz-row-indent [nzIndentSize]="item.level"></nz-row-indent>
                   <nz-row-expand-icon *ngIf="item.showExpand&&colIndex==0" [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" [nzShowExpand]="item.showExpand&&colIndex==0"></nz-row-expand-icon>
@@ -65,14 +66,15 @@ let hashPageMap: Map<number, any> = new Map();
                           {{getBtnText(btn,item)}}
                     </a>
                   </span>
-                  <nz-dropdown *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index">
+                  <nz-dropdown [hidden]="groupButton.hidden?groupButton.hidden(item):false" 
+                  *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index">
                     <span nz-table-divider></span>
                     <a class="ant-dropdown-link" nz-dropdown>
                       {{getBtnText(groupButton,item)}} <i class="anticon anticon-down"></i>
                     </a>
                     <ul nz-menu>
-                      <li nz-menu-item *ngFor="let gbtn of groupButton.buttons">
-                        <a [hidden]="gbtn.hidden?gbtn.hidden(item):false"
+                      <li [hidden]="gbtn.hidden?gbtn.hidden(item):false" nz-menu-item *ngFor="let gbtn of groupButton.buttons">
+                        <a
                               (click)="gbtn.action(item)">
                               {{getBtnText(gbtn,item)}}
                         </a>

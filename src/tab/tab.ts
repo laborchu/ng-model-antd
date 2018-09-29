@@ -50,7 +50,9 @@ export class NgdsTab {
     hash: number;
 
     ngOnInit() {
-        this.selectIndex = hashMap.get(this.option.id || location.pathname) || 0;
+        if(this.option.remember!==false){
+            this.selectIndex = hashMap.get(this.option.id || location.pathname) || 0;
+        }
         this.option.tabSource.getData({}).then((data: Array<any>) => {
             this.tabArray = data
         });
@@ -67,7 +69,9 @@ export class NgdsTab {
     }
 
     tabSelect(event: any, index: number) {
-        hashMap.set(this.option.id || location.pathname, index);
+        if(this.option.remember!==false){
+            hashMap.set(this.option.id || location.pathname, index);
+        }
         this.selectIndex = index;
         this.move(event.currentTarget);
         this.ngdsTabSelect.emit(this.tabArray[index]);

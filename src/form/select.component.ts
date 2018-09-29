@@ -25,8 +25,11 @@ import { NgdsFormComp } from './form.component';
             <nz-select [formControl]="getFormControl(option.property)" [nzPlaceHolder]="option.placeHolder || '请选择'"
             [(ngModel)]="option.value"
             (ngModelChange)="onChange()"
+            (nzSearchChange)="searchChange($event)"
             [nzSize]="'large'" 
             nzShowSearch
+            nzAllowClear
+            [nzDisabled]="option.disabled"
             [nzMode]="option.model">
               <nz-option *ngFor="let item of data" [nzLabel]="item[option.dsLabel]" [nzValue]="item[option.dsValue]"></nz-option>
             </nz-select>
@@ -57,9 +60,14 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
     if (!this.option.dsValue) {
       this.option.dsValue = "value";
     }
-    this.option.dataSource.getData({}).then((model: any) => {
-      this.data = model.data;
-    })
+    if (Array.isArray(this.option.dataSource)) {
+      this.data = this.option.dataSource;
+    } else {
+      this.option.dataSource.getData({}).then((model: any) => {
+        this.data = model.data;
+      })
+    }
+
   }
 
   setValue(value: any) {
@@ -67,8 +75,26 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
       this.option.value = value;
     }
 
-    if(this.oldValue==undefined){
+    if (this.oldValue == undefined) {
       this.oldValue = value || null;
+    }
+  }
+
+  searchTimeout:any; 
+  searchChange($event:any) {
+    if (this.option.searchRemote) {
+      if (!Array.isArray(this.option.dataSource)) {
+        if(this.searchTimeout){
+          clearTimeout(this.searchTimeout);
+        }
+        this.searchTimeout = setTimeout(()=>{
+          this.searchTimeout = null;
+          this.option.dataSource.getData({ keywords: $event }).then((model: any) => {
+            this.data = model.data;
+          })
+        },500);
+        
+      }
     }
   }
 

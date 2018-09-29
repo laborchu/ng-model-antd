@@ -44,6 +44,7 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
 
   option: NgdsFormInputCompOption;
   oldValue: string;
+  preValue: string;
 
 
 
@@ -51,11 +52,12 @@ export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
     if (value && this.option.maxLength) {
       if (value.length > this.option.maxLength) {
         setTimeout(() => {
-          this.option.value = this.oldValue;
+          this.option.value = this.preValue;
         }, 0);
         return;
       }
     }
+    this.preValue = value;
     this.option.value = value;
     if(this.oldValue==undefined){
       this.oldValue = value || null;

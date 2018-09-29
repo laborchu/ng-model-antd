@@ -24,7 +24,11 @@ import { NgdsModel } from '../core/datasource';
                 <label for="{{option.property}}">{{option.label}}</label>
             </div>
             <div nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-                <nz-rangepicker [(ngModel)]="option.value" (ngModelChange)="onChange()"></nz-rangepicker>
+                <nz-rangepicker [(ngModel)]="option.value" 
+                (ngModelChange)="onChange()" 
+                [nzShowTime]="option.showTime"
+                [nzFormat]="option.showTime?option.format:'YYYY-MM-DD'"
+                [style.width.%]="100"></nz-rangepicker>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                     getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
@@ -65,7 +69,6 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
         if (this.option.validations) {
             let formControl = this.option.formGroup.controls[this.option.property];
             formControl.setErrors({});
-
             for (let val of this.option.validations) {
                 if (val.type == "required") {
                     if (this.option.value.length == 0) {
@@ -73,6 +76,9 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
                         formControl.setErrors({ "required": true })
                     }
                 }
+            }
+            if (formControl.errors && Object.keys(formControl.errors).length == 0) {
+                formControl.setErrors(null);
             }
         }
         this.option.onChange && this.option.onChange(this.option);

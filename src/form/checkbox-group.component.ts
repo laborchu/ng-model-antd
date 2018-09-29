@@ -122,7 +122,6 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
         if (this.option.validations) {
             let formControl = this.option.formGroup.controls[this.option.property];
             formControl.setErrors({});
-
             for (let val of this.option.validations) {
                 if (val.type == "required") {
                     if (this.option.value.length == 0) {
@@ -130,6 +129,9 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
                         formControl.setErrors({ "required": true })
                     }
                 }
+            }
+            if (formControl.errors && Object.keys(formControl.errors).length == 0) {
+                formControl.setErrors(null);
             }
         }
 

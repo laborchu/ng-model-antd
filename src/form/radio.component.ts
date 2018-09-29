@@ -27,7 +27,7 @@ import { NzRadioGroupComponent } from 'ng-zorro-antd';
         [formControl]="getFormControl(option.property)"
         [(ngModel)]="option.value"
         (ngModelChange)="onChange()">
-          <label nz-radio [nzValue]="item.value" *ngFor="let item of data">
+          <label nz-radio [nzDisabled]="option.disabled" [nzValue]="item.value" *ngFor="let item of data">
             <span>{{item.label}}</span>
           </label>
         </nz-radio-group>

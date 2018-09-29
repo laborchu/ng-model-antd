@@ -251,7 +251,7 @@ export class DataGridComponent implements OnInit {
             columns: [
                 {
                     text: '用户名', property: "username", canEdit: true, editFinish: (item: any) => {
-                        debugger
+                        this.option.table.columns[2].hidden = !this.option.table.columns[2].hidden;
                     }
                 },
                 {

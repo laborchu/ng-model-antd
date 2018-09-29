@@ -196,7 +196,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
     onChange() {
         if (this.option.validations) {
             let formControl = this.option.formGroup.controls[this.option.property];
-            formControl.setErrors({});
+            formControl.setErrors(null);
 
             for (let val of this.option.validations) {
                 if (val.type == "required") {

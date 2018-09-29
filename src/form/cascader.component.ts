@@ -92,16 +92,18 @@ export class NgdsFormCascader extends NgdsFormComp implements AfterContentChecke
   }
 
   setCompValue(formValue: any, compKey: string, compValue: any): void {
+    let valueArray: Array<any> = [];
     if (this.option.value && this.option.value.length) {
-      let valueArray: Array<any> = [];
       for (let v of this.option.value) {
-        delete v.children;
-        delete v.loading;
-        delete v.isLeaf;
-        delete v.parent;
+        let obj = Object.assign({},v);
+        delete obj.children;
+        delete obj.loading;
+        delete obj.isLeaf;
+        delete obj.parent;
+        valueArray.push(obj);
       }
     }
-    formValue[this.option.property] = this.option.value;
+    formValue[this.option.property] = valueArray;
   }
 
   getFormControl(name: string): any {

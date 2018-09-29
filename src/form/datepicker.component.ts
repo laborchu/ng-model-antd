@@ -70,9 +70,10 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
 
     onChange() {
         if (this.option.validations) {
+            let formControl = this.option.formGroup.controls[this.option.property];
+            formControl.setErrors({});
             for (let val of this.option.validations) {
                 if (val.type == "required") {
-                    let formControl = this.option.formGroup.controls[this.option.property];
                     if (!this.option.value) {
                         formControl.setErrors({ "required": true })
                     } else {
@@ -80,9 +81,9 @@ export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChec
                             delete formControl.errors["required"];
                         }
                     }
-                    if (formControl.errors && Object.keys(formControl.errors).length == 0) {
-                        formControl.setErrors(null);
-                    }
+                }
+                if (formControl.errors && Object.keys(formControl.errors).length == 0) {
+                    formControl.setErrors(null);
                 }
             }
         }

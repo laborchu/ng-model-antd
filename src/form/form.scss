@@ -123,4 +123,10 @@
         right: 10px;
         color: #aaa;   
     }
+
+    nz-rangepicker{
+        .ant-calendar-picker{
+            width: 100%;
+        }
+    }
 }

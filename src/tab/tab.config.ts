@@ -15,6 +15,7 @@ export class NgdsTabConfig {
 export class NgdsTabOption {
     id?:string;
     tabSource: NgdsDataSource;
-	remember?:boolean;
+    remember?:boolean;
+    dsLabel?:string;
 }
 

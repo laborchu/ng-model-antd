@@ -28,7 +28,7 @@ let hashMap: Map<string, number> = new Map();
                 <div #tabBar [style.width.px]="selectElemWidth" class="ngds-tab-bar"></div>
                 <div class="ngds-tab-item" [ngClass]="{'tab-select':selectIndex==i}" 
                 #tabComp *ngFor="let tab of tabArray; let i = index" (click)="tabSelect($event,i)">
-                {{tab.label}}
+                {{tab[option.dsLabel]}}
                 </div>
             </div>
         </div>
@@ -50,6 +50,10 @@ export class NgdsTab {
     hash: number;
 
     ngOnInit() {
+        if (!this.option.dsLabel) {
+            this.option.dsLabel = "label";
+        }
+
         if(this.option.remember!==false){
             this.selectIndex = hashMap.get(this.option.id || location.pathname) || 0;
         }

@@ -68,7 +68,11 @@ export class NgdsColumn {
     }
 
     canEdit(): boolean {
-        return this.colOption.canEdit && !this.item.disableEdit;
+        if (typeof this.colOption.canEdit === "function") {
+            return this.colOption.canEdit(this.item) && !this.item.disableEdit;
+        } else {
+            return this.colOption.canEdit && !this.item.disableEdit;
+        }
     }
 
     startEdit(): void {
@@ -84,22 +88,22 @@ export class NgdsColumn {
         this.colOption.editFinish && this.colOption.editFinish(this.item);
     }
 
-    getInfo(tip:string|pipeFunc):string{
+    getInfo(tip: string | pipeFunc): string {
         if (typeof tip === "function") {
             return tip(this.colOption.property, this.item);
-        }else{
+        } else {
             return tip;
         }
     }
 
-    showInfo(tip:string|pipeFunc):boolean{
+    showInfo(tip: string | pipeFunc): boolean {
         let data;
         if (typeof tip === "function") {
             data = tip(this.colOption.property, this.item);
-        }else{
+        } else {
             data = tip;
         }
-        return data?true:false; 
+        return data ? true : false;
     }
 
     getValueFromPipe = function (pipe: PipeTransform | pipeFunc | PipeTransform[]) {

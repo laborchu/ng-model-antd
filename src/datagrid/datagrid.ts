@@ -115,7 +115,7 @@ export class NgdsDataGrid implements AfterContentChecked {
     //缓存数据
     this.hash = this.hashCode(JSON.stringify(this.option.table));
     let cachedParams:any = hashPageMap.get(this.hash);
-    if(!cachedParams){
+    if(!cachedParams||this.option.disableCached){
       cachedParams = {};
       hashPageMap.set(this.hash,cachedParams);
     }

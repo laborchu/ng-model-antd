@@ -40,7 +40,7 @@ export class NgdsForm implements AfterContentChecked {
         this._option = o;
         this.refresh();
         if (this._option.remember) {
-            this.hash = this.hash || this.hashCode(o.id||location.pathname);
+            this.hash = this.hash || this.hashCode(o.id || location.pathname);
             let value = hashPageMap.get(this.hash);
             this.setValue(value);
         }
@@ -144,7 +144,17 @@ export class NgdsForm implements AfterContentChecked {
     }
 
     checkVal(): boolean {
-        return this.myForm.valid;
+        if(this.myForm.valid){
+            return true;
+        }
+        for (var key in this.myForm.controls) {
+            if (!this.compMap[key].instance.option.hidden) {
+                if (this.myForm.controls[key].status !== 'VALID') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     getValue(): any {
@@ -179,18 +189,18 @@ export class NgdsForm implements AfterContentChecked {
         return this._option.value;
     }
 
-    getChangeValue(){
-        let chageData:any = {};
+    getChangeValue() {
+        let chageData: any = {};
         for (let rowComp of this._option.components) {
             for (let compOption of rowComp) {
                 if (!compOption.hidden) {
                     let propertyArray: Array<string> = compOption.property.split(".");
-                    let value:any = chageData;
+                    let value: any = chageData;
                     propertyArray.forEach((item: string, index: number) => {
                         if (index == propertyArray.length - 1) {
                             let txComp: any = this.compMap[compOption.property].instance;
-                            let chageValue =  txComp.getChangeValue();
-                            if(chageValue!=null){
+                            let chageValue = txComp.getChangeValue();
+                            if (chageValue != null) {
                                 value[item] = chageValue;
                             }
                         } else {
@@ -199,7 +209,7 @@ export class NgdsForm implements AfterContentChecked {
                             }
                             value = value[item];
                         }
-                    })                 
+                    })
                 }
             }
         }

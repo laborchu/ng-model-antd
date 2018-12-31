@@ -26,6 +26,7 @@ export type loadingFunc = (data: any) => boolean;
 export type pipeFunc = (property: string, data: any) => string;
 export type textFunc = (data: any) => string;
 export type editFinishFunc = (item: any) => void;
+export type canEditFunc = (item: any) => boolean;
 export type clickFunc = (item: any) => void;
 export type expandChange = (item: any, extend: any) => void;
 
@@ -34,6 +35,7 @@ export interface NgdsDataGridOption {
 	table: NgdsDataGridTableOption;
 	initToSearch?: boolean;
 	dataKey?: string;
+	disableCached?:boolean;
 }
 
 export interface NgdsDataGridTableOption {
@@ -55,7 +57,7 @@ export interface NgdsDataGridColumnOption {
 	hidden?: boolean;
 	propertyClassPipe?: PipeTransform | PipeTransform[];
 	component?: any;
-	canEdit?: any;
+	canEdit?: boolean|canEditFunc;
 	editFinish?: editFinishFunc;
 	click?: clickFunc;
 	info?:string|pipeFunc;

@@ -1,0 +1,8 @@
+<div>
+
+    <ngds-panel [option]="panelOption">
+        <ngds-form [option]="formOption" (onSearch)="search($event)" #myForm></ngds-form>
+        <ngds-tab [option]="tabOption" (ngdsTabSelect)="tabSelect($event)"></ngds-tab>
+        <ngds-datagrid #myTable [option]="option" class="panel-dg"></ngds-datagrid>
+    </ngds-panel>
+</div>

@@ -1,0 +1,23 @@
+@import '../variable';
+
+.btn-danger{
+    color: #f04134;
+}
+.dg-column{
+    .edit-icon{
+        i{
+            cursor: pointer;
+        }
+    }
+    .edit-input{
+        input{
+            display: inline;
+            input{
+                width: 75%;
+            }
+        }
+        i{
+            cursor: pointer;
+        }
+    }
+}

@@ -46,7 +46,6 @@ ts-node
 dist
 dev
 docs
-lib
 test
 tmp
 
@@ -59,3 +58,4 @@ src/client/app/shared/config/env.config.js
 src/client/app/shared/config/env.config.js.map
 
 .history
+package-lock.json

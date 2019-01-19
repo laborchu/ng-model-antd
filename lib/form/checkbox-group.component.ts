@@ -20,7 +20,7 @@ import { NgdsFormComp } from './form.component';
     <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
         <nz-form-item nz-row>
             <nz-form-label nz-col [nzSpan]="option.labelSpan">
-                <label for="{{option.property}}">{{option.label}}</label>
+            {{option.label}}
             </nz-form-label>
             <nz-form-control nz-col [nzSpan]="option.compSpan">
                 <div *ngFor="let group of data; let i = index">
@@ -61,27 +61,36 @@ export class NgdsFormCheckboxGroup extends NgdsFormComp implements AfterContentC
         if (!this.option.dsTitle) {
             this.option.dsTitle = "title";
         }
-        this.option.dataSource && this.option.dataSource.getData({}).then((model: any) => {
-            for (let item of model.data) {
-                item.title = item[this.option.dsTitle];
-                for (let child of item.children) {
-                    child.label = child[this.option.dsLabel];
-                    if (this.option.dsLabel != "label") {
-                        delete child[this.option.dsLabel];
-                    }
-                    child.value = child[this.option.dsValue];
-                    if (this.option.dsValue != "value") {
-                        delete child[this.option.dsValue];
-                    }
-                    if (this.option.value != undefined) {
-                        if (this.option.value.indexOf(child.value) != -1) {
-                            child.checked = true;
-                        }
+        if (Array.isArray(this.option.dataSource)) {
+            this.processData(this.option.dataSource);
+        }else{
+            this.option.dataSource && this.option.dataSource.getData({}).then((model: any) => {
+                this.processData(model.data);
+            })
+        }
+        
+    }
+
+    processData(dataArray:any){
+        for (let item of dataArray) {
+            item.title = item[this.option.dsTitle];
+            for (let child of item.children) {
+                child.label = child[this.option.dsLabel];
+                if (this.option.dsLabel != "label") {
+                    delete child[this.option.dsLabel];
+                }
+                child.value = child[this.option.dsValue];
+                if (this.option.dsValue != "value") {
+                    delete child[this.option.dsValue];
+                }
+                if (this.option.value != undefined) {
+                    if (this.option.value.indexOf(child[this.option.dsValue]) != -1) {
+                        child.checked = true;
                     }
                 }
             }
-            this.data = model.data;
-        })
+        }
+        this.data = dataArray;
     }
 
     updateAllChecked(index: number): void {

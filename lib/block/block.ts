@@ -29,8 +29,7 @@ import { NgdsBlockConfig, NgdsBlockOption } from './block.config';
     `
 })
 export class NgdsBlock {
-    constructor(config: NgdsBlockConfig,
-        private animBuilder: AnimationBuilder) {
+    constructor() {
     }
 
     @Input() option: NgdsBlockOption;

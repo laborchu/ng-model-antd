@@ -78,7 +78,7 @@ export class NgdsFormCascader extends NgdsFormComp implements AfterContentChecke
         node.children = this.option.dataSource;
         resolve();
       } else {
-        this.option.dataSource.getData({ "index": index, "parentId": node ? node[this.option.dsValue] : 0 }).then((value: any) => {
+        this.option.dataSource.getData({ "index": index, "parentId": index!=-1 ? node[this.option.dsValue] : 0 }).then((value: any) => {
           node.children = value.data;
           resolve();
         })

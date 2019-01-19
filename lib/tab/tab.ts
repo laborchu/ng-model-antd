@@ -7,7 +7,8 @@ import {
     ElementRef,
     Output,
     EventEmitter,
-    Input
+    Input,
+    Inject
 } from '@angular/core';
 
 import { AnimationBuilder, animate, style } from '@angular/animations';
@@ -35,8 +36,7 @@ let hashMap: Map<string, number> = new Map();
     `
 })
 export class NgdsTab {
-    constructor(config: NgdsTabConfig,
-        private animBuilder: AnimationBuilder) {
+    constructor(@Inject(AnimationBuilder) private animBuilder: AnimationBuilder) {
     }
 
     @Input() option: NgdsTabOption;

@@ -4,7 +4,8 @@ import {
   Input,
   EventEmitter,
   Output,
-  PipeTransform
+  PipeTransform,
+  Inject
 } from '@angular/core';
 import {
   NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFunc,
@@ -26,27 +27,28 @@ let hashPageMap: Map<number, any> = new Map();
             [nzTotal]="page?.totalCount" 
             [(nzPageIndex)]="_pageIndex" 
             [nzLoading]="_loading" 
+            [nzFrontPagination]="false"
             [nzShowPagination]="(page&&page.pageSize>1)?true:false"
             (nzPageIndexChange)="search()">
-      <thead nz-thead>
+      <thead>
         <tr>
-          <th nz-th nzShowCheckbox
+          <th nzShowCheckbox
           [nzIndeterminate]="_indeterminate"
           (nzCheckedChange)="_checkAll($event)"
           [(nzChecked)]="_allChecked" 
           *ngIf="option.table.showCheck">
           </th>
-          <th *ngFor="let col of option.table.columns;" nz-th [nzWidth]="col.width" [nzShowSort]="col.showSort" (nzSortChange)="_sort(col.property,$event)" [hidden]="col.hidden">
-            <span>{{col.text}}</span>
+          <th *ngFor="let col of option.table.columns;" [nzWidth]="col.width" [nzShowSort]="col.showSort" (nzSortChange)="_sort(col.property,$event)" [hidden]="col.hidden">
+            {{col.text}}
           </th>
-          <th *ngIf="option.table.op" nz-th [nzWidth]="option.table.op.width">操作</th>
+          <th *ngIf="option.table.op" [nzWidth]="option.table.op.width">操作</th>
         </tr>
       </thead>
-      <tbody nz-tbody>
+      <tbody>
         <ng-template ngFor let-data [ngForOf]="nzTable.data">
           <ng-template ngFor let-item [ngForOf]="expandDataCache[data[option.dataKey]]">
-            <tr nz-tbody-tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)">
-              <td nz-td nzShowCheckbox 
+            <tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)">
+              <td nzShowCheckbox 
               (nzCheckedChange)="_refreshStatus($event)"
               [(nzChecked)]="originDataCache[item[option.dataKey]].checked" 
               [nzDisabled]="item.disabled" 
@@ -56,7 +58,7 @@ let hashPageMap: Map<number, any> = new Map();
                   [hidden]="col.hidden"
                   [nzShowExpand]="item.showExpand&&colIndex==0"
                   [(nzExpand)]="item.expand" 
-                  [nzIndentSize]="colIndex==0?item.level*20:0"
+                  [nzIndentSize]="(item.showExpand&&colIndex==0)?item.level*20:null"
                   (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" 
                   title="{{col.title? (item[col.property]):''}}">
                   <ngds-column [colOption]="col" [item]="item"></ngds-column>
@@ -97,7 +99,7 @@ let hashPageMap: Map<number, any> = new Map();
   `
 })
 export class NgdsDataGrid implements AfterContentChecked {
-  constructor(config: NgdsDataGridConfig) {
+  constructor() {
   }
 
   @Input() option: NgdsDataGridOption;

@@ -29,7 +29,7 @@ import { NgdsFormComp } from './form.component';
             nzShowSearch
             nzAllowClear
             [nzDisabled]="option.disabled"
-            [nzMode]="option.model">
+            [nzMode]="option.model || 'default' ">
               <nz-option *ngFor="let item of data" [nzLabel]="item[option.dsLabel]" [nzValue]="item[option.dsValue]"></nz-option>
             </nz-select>
 

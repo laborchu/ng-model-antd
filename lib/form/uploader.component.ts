@@ -4,7 +4,8 @@ import {
     ViewContainerRef,
     ViewChild,
     ComponentFactoryResolver,
-    Input
+    Input,
+    Inject
 } from '@angular/core';
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { UMeditorComponent } from 'ngx-umeditor';
@@ -19,10 +20,10 @@ import { NgdsFormComp } from './form.component';
     selector: 'ngds-form-uploader',
     template: `
     <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="option.labelSpan">
-                <label for="{{option.property}}">{{option.label}}</label>
-            </div>
+        <nz-form-item nz-row>
+            <nz-form-label nz-col [nzSpan]="option.labelSpan">
+            {{option.label}}
+            </nz-form-label>
             <nz-form-control class="uploader" nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
                 <div class="upload-item" *ngFor="let item of option.value" (click)="tapItem(item)" [style.width]="option.width+'px'" [style.height]="option.height+'px'">
                     <img *ngIf="isImg(item)" src="{{item.filePath}}"/>
@@ -48,12 +49,12 @@ import { NgdsFormComp } from './form.component';
                 </div>
 
             </nz-form-control>
-        </div>
+        </nz-form-item>
     </div>
     `
 })
 export class NgdsFormUploader extends NgdsFormComp implements OnInit {
-    constructor(private formConfig: NgdsFormConfig) {
+    constructor(@Inject(NgdsFormConfig) private formConfig: NgdsFormConfig) {
         super();
     }
 

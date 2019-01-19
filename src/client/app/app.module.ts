@@ -26,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
 import { NgdsModule } from '../../../lib/index';
 
 require('../../../node_modules/ng-zorro-antd/ng-zorro-antd.css');
-// import '../../../lib/ngds.scss';
+import '../../../lib/ngds.scss';
 
 @NgModule({
 	imports: [BrowserModule, BrowserAnimationsModule, HttpModule, AppRoutingModule,

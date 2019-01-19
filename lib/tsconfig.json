@@ -23,8 +23,7 @@
       "../node_modules"
     ],
     "types": [
-      "node",
-      "systemjs"
+      "node"
     ]
   },
   "compileOnSave": false,

@@ -14,7 +14,7 @@
     "skipLibCheck": true
   },
   "files": [
-    "./index.ts"
+    "../lib/index.ts"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,

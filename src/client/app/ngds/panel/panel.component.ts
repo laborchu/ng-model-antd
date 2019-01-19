@@ -84,14 +84,13 @@ export class PanelComponent implements OnInit {
         dataSource: new DemoDataSource(),
         table: {
             columns: [
-                { text: '用户名', property: "username", width: "60px" },
-                { text: '姓名', property: "name", width: "80px" },
-                { text: '手机号', property: "mobile", width: "80px" },
-                { text: '认证状态', property: "authStatus", width: "130px" },
+                { text: '用户名', property: "username"},
+                { text: '姓名', property: "name"},
+                { text: '手机号', property: "mobile"},
+                { text: '认证状态', property: "authStatus" },
                 { text: '企业名称', property: "compName", title: true, overflow: true },
             ],
             op: {
-                width: "130px",
                 buttons: [
                     {
                         text: '修改',

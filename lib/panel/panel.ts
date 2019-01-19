@@ -32,7 +32,7 @@ import {NgdsPanelConfig, NgdsPanelOption, NgdsPanelBtnOption} from './panel.conf
     `
 })
 export class NgdsPanel implements AfterContentChecked {
-    constructor(config: NgdsPanelConfig) {
+    constructor() {
     }
 
     @Input() option: NgdsPanelOption;

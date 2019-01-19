@@ -66,13 +66,13 @@ class DemoDataSource implements NgdsDataSource {
 
                             // ]
                         },
-                        { id: 2, username: "13999", name: "胡立波2", mobile: "13333333331", authStatus: 0, disableEdit: true },
+                        { id: 2, username: "13999", name: "胡立波2", mobile: "98df8a8157de559c927a886d331275d04ed445d5c53d2d78a2c8656aba0f60e0", authStatus: 0, disableEdit: true },
                         { id: 3, username: "13999", name: "胡立波3", mobile: "13333333333", authStatus: 1, disableEdit: true },
                         { id: 4, username: "13999", name: "胡立波4", mobile: "13333333333", authStatus: 1, disableEdit: true },
                         { id: 5, username: "13999", name: "胡立波5", mobile: "13333333333", authStatus: 0, disableEdit: true },
                         { id: 6, username: "13999", name: "胡立波6", mobile: "13333333333", authStatus: 1, disableEdit: true },
                         { id: 7, username: "13999", name: "胡立波7", mobile: "13333333333", authStatus: 1, disableEdit: true },
-                        { id: 8, username: "13999", name: "胡立波8", mobile: "13333333333", authStatus: 1, disableEdit: true },
+                        { id: 8, username: "13999", name: "胡立波8", mobile: "13333333333133333333331333333333313333333333", authStatus: 1, disableEdit: true },
                     ]
                 });
             }, 1000)
@@ -251,14 +251,15 @@ export class DataGridComponent implements OnInit {
                 {
                     text: '用户名', property: "username", canEdit: true, editFinish: (item: any) => {
                         this.option.table.columns[2].hidden = !this.option.table.columns[2].hidden;
-                    }
+                    },
                 },
                 {
                     text: '姓名', property: "name", click: (item: any) => {
                         debugger
-                    }
+                    },
+                    width: "130px",
                 },
-                { text: '手机号', property: "mobile", },
+                { text: '手机号', property: "mobile",width: "130px", },
                 {
                     text: '认证状态',
                     property: "authStatus",

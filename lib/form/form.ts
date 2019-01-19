@@ -8,7 +8,8 @@ import {
     ComponentRef,
     ComponentFactory,
     EventEmitter,
-    Input
+    Input,
+    Inject
 } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { NgdsFormConfig, NgdsFormOption, NgdsFormCompOption } from './form.config';
@@ -30,8 +31,9 @@ let hashPageMap: Map<number, any> = new Map();
     `
 })
 export class NgdsForm implements AfterContentChecked {
-    constructor(private cfr: ComponentFactoryResolver,
-        private fb: FormBuilder) {
+    constructor(
+        @Inject(ComponentFactoryResolver) private cfr: ComponentFactoryResolver,
+    @Inject(FormBuilder) private fb: FormBuilder) {
     }
 
     @ViewChild("formRef", { read: ViewContainerRef }) formRef: ViewContainerRef;

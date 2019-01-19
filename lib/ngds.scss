@@ -5,6 +5,9 @@
         clear: both;
     }
 }
+.ant-table-tbody > tr > td{
+    word-break: break-all;
+}
 @import "./datagrid/datagrid";
 @import "./panel/panel";
 @import "./form/form";

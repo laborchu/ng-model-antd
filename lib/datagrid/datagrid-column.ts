@@ -8,7 +8,8 @@ import {
     ViewChild,
     ComponentFactory,
     ComponentFactoryResolver,
-    PipeTransform
+    PipeTransform,
+    Inject
 } from '@angular/core';
 
 import {
@@ -47,7 +48,7 @@ import {
     `
 })
 export class NgdsColumn {
-    constructor(private cfr: ComponentFactoryResolver, ) {
+    constructor(@Inject(ComponentFactoryResolver) private cfr: ComponentFactoryResolver, ) {
     }
 
     @ViewChild("columnRef", { read: ViewContainerRef }) columnRef: ViewContainerRef;

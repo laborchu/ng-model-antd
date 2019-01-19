@@ -1,6 +1,7 @@
 import {
     Component,
-    Input
+    Input,
+    Inject
 } from '@angular/core';
 import { DatePipe } from "@angular/common";
 import { AnimationBuilder, animate, style } from '@angular/animations';
@@ -34,7 +35,7 @@ import { NgdsDataSource, NgdsModel } from '../core/datasource';
     `
 })
 export class NgdsBlockInfo {
-    constructor(config: NgdsBlockConfig, protected datePipe: DatePipe) {
+    constructor(@Inject(DatePipe) protected datePipe: DatePipe) {
     }
 
 

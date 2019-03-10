@@ -1,14 +1,6 @@
-import {
-  Component,
-  AfterContentChecked,
-  ViewContainerRef,
-  ViewChild,
-  ComponentFactoryResolver,
-  Input
-} from '@angular/core';
-import { NgdsFormConfig, NgdsFormSelectCompOption } from './form.config';
-import { NgdsModel } from '../core/datasource';
+import { AfterContentChecked, Component } from '@angular/core';
 import { NgdsFormComp } from './form.component';
+import { NgdsFormSelectCompOption } from './form.config';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -25,12 +17,15 @@ import { NgdsFormComp } from './form.component';
             <nz-select [formControl]="getFormControl(option.property)" [nzPlaceHolder]="option.placeHolder || '请选择'"
             [(ngModel)]="option.value"
             (ngModelChange)="onChange()"
-            (nzSearchChange)="searchChange($event)"
+            (nzOnSearch)="searchChange($event)"
             nzShowSearch
             nzAllowClear
+            [nzServerSearch]="option.searchRemote"
             [nzDisabled]="option.disabled"
             [nzMode]="option.model || 'default' ">
-              <nz-option *ngFor="let item of data" [nzLabel]="item[option.dsLabel]" [nzValue]="item[option.dsValue]"></nz-option>
+              <ng-container *ngFor="let item of data">
+                <nz-option [nzLabel]="item[option.dsLabel]" [nzValue]="item[option.dsValue]"></nz-option>
+              </ng-container>
             </nz-select>
 
             <div nz-form-explain *ngFor="let val of option.validations">
@@ -79,20 +74,23 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
     }
   }
 
-  searchTimeout:any; 
-  searchChange($event:any) {
+  searchTimeout: any;
+  searchChange($event: any) {
     if (this.option.searchRemote) {
       if (!Array.isArray(this.option.dataSource)) {
-        if(this.searchTimeout){
+        if (this.searchTimeout) {
           clearTimeout(this.searchTimeout);
         }
-        this.searchTimeout = setTimeout(()=>{
-          this.searchTimeout = null;
-          this.option.dataSource.getData({ keywords: $event }).then((model: any) => {
-            this.data = model.data;
-          })
-        },500);
-        
+        if($event){
+          this.searchTimeout = setTimeout(() => {
+            this.searchTimeout = null;
+            this.option.dataSource.getData({ keywords: $event }).then((model: any) => {
+              this.data = model.data;
+            })
+          }, 500);
+        }else{
+          this.data = [];
+        }
       }
     }
   }

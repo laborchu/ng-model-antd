@@ -11,11 +11,13 @@ export class NgdsPanelConfig {
 }
 
 export type crumbsFunc = (data:any) => void;
+export type permFunc = (data: any) => string;
 
 export class NgdsPanelOption {
     
 	crumbs: Array<NgdsPanelCrumbsOption>
     buttons?: Array<NgdsPanelBtnOption>;
+    permMap?: any;
 
 }
 
@@ -29,5 +31,6 @@ export interface NgdsPanelBtnOption {
     style?: string;
     hidden?:boolean;
     action: (data: any) => void;
+    permCode?: string | permFunc;
 }
 

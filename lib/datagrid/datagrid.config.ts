@@ -23,6 +23,7 @@ export interface NgdsDataGridPageModel extends NgdsModel {
 
 export type styleFunc = (data: any) => string;
 export type loadingFunc = (data: any) => boolean;
+export type permFunc = (data: any) => string;
 export type pipeFunc = (property: string, data: any) => string;
 export type textFunc = (data: any) => string;
 export type editFinishFunc = (item: any) => void;
@@ -36,6 +37,7 @@ export interface NgdsDataGridOption {
 	initToSearch?: boolean;
 	dataKey?: string;
 	disableCached?:boolean;
+	permMap?:any;
 }
 
 export interface NgdsDataGridTableOption {
@@ -81,4 +83,5 @@ export interface NgdsDataGridOpBtnOption {
 	loading?: boolean | loadingFunc;
 	action: (data: any) => void;
 	hidden?: (data: any) => boolean;
+	permCode?:string | permFunc;
 }

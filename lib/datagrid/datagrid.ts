@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {
   NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFunc,
-  NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel
+  NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel, permFunc
 } from './datagrid.config';
 
 let hashPageMap: Map<number, any> = new Map();
@@ -65,8 +65,8 @@ let hashPageMap: Map<number, any> = new Map();
               </td>
               <td *ngIf="option.table.op" class="op-td">
                   <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
-                    <span nz-table-divider *ngIf="btnIndex!=0&&(btn.hidden?!btn.hidden(item):true)"></span>
-                    <a [hidden]="btn.hidden?btn.hidden(item):false"
+                    <span nz-table-divider *ngIf="btnIndex!=0&&(btn.hidden?!btn.hidden(item):true)&&hasPerm(btn.permCode,item)"></span>
+                    <a [hidden]="(btn.hidden?btn.hidden(item):false)||!hasPerm(btn.permCode,item)"
                           (click)="btn.action(item,dataIndex)"
                           class="{{getBtnStyle(btn,item)}}">
                           <i nz-icon type="loading" theme="outline" [spin]="true" *ngIf="showBtnLoading(btn,item)"></i>
@@ -81,7 +81,7 @@ let hashPageMap: Map<number, any> = new Map();
                       <i nz-icon type="down" theme="outline"></i>
                     </a>
                     <ul nz-menu>
-                      <li [hidden]="gbtn.hidden?gbtn.hidden(item):false" nz-menu-item *ngFor="let gbtn of groupButton.buttons">
+                      <li [hidden]="(gbtn.hidden?gbtn.hidden(item):false)||!hasPerm(gbtn.permCode,item)" nz-menu-item *ngFor="let gbtn of groupButton.buttons">
                         <a
                               (click)="gbtn.action(item)">
                               {{getBtnText(gbtn,item)}}
@@ -128,8 +128,23 @@ export class NgdsDataGrid implements AfterContentChecked {
       hashPageMap.set(this.hash,cachedParams);
     }
     this._pageIndex = cachedParams.pageIndex || 1;
+    if (!this.option.permMap) {
+      this.option.permMap = {};
+    }
 
     this.option.initToSearch !== false && this.search(cachedParams.params);
+  }
+
+  hasPerm(permCode: string | permFunc, item: any) {
+    if (this.option.permMap == undefined || permCode == undefined) {
+      return true;
+    }
+    if (typeof permCode == 'function') {
+      let code = (<any>permCode)(item);
+      return this.option.permMap[code] ? true : false;
+    } else {
+      return this.option.permMap[<string>permCode] ? true : false;
+    }
   }
 
   getBtnStyle = function (btn: NgdsDataGridOpBtnOption, item: any) {
@@ -313,17 +328,19 @@ export class NgdsDataGrid implements AfterContentChecked {
   };
 
   _refreshStatus() {
-    const allChecked = this.data.every(value => value.disabled || value.checked);
-    const allUnChecked = this.data.every(value => value.disabled || !value.checked);
-    this._allChecked = allChecked;
-    this._indeterminate = (!allChecked) && (!allUnChecked);
-    let checkedArray: Array<any> = [];
-    this.data.forEach((item: any) => {
-      if (item.checked) {
-        checkedArray.push(item);
-      }
-    });
-    this.checkboxChange.emit(checkedArray);
+    setTimeout(()=>{
+      const allChecked = this.data.every(value => value.disabled || value.checked);
+      const allUnChecked = this.data.every(value => value.disabled || !value.checked);
+      this._allChecked = allChecked;
+      this._indeterminate = (!allChecked) && (!allUnChecked);
+      let checkedArray: Array<any> = [];
+      this.data.forEach((item: any) => {
+        if (item.checked) {
+          checkedArray.push(item);
+        }
+      });
+      this.checkboxChange.emit(checkedArray);
+    })
   };
 
   _sort(sortName: string, value: any) {

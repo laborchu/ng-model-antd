@@ -50,10 +50,12 @@ export {
 	NgdsFormDatePicker,
 	NgdsFormDatePickerRange,
 	NgdsFormCascader,
+	NgdsFormTreeSelect,
 
 	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption, NgdsFormInputListCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormCheckboxGroupCompOption, NgdsFormSelectCompOption,
-	NgdsFormDatePickerCompOption, NgdsFormUmeditorCompOption, NgdsFormUploaderCompOption, NgdsFormCascaderCompOption
+	NgdsFormDatePickerCompOption, NgdsFormUmeditorCompOption, NgdsFormUploaderCompOption, NgdsFormCascaderCompOption,
+	NgdsFormTreeSelectCompOption
 } from './form/form.module';
 
 

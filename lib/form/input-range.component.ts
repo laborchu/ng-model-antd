@@ -31,10 +31,12 @@ import { NgdsFormComp } from './form.component';
           [(ngModel)]="option.value.second"
           (ngModelChange)="onChange()"
           [formControl]="getFormControl(option.property2)"></nz-input-number>
-        <div nz-form-explain *ngFor="let val of option.validations">
-            <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
-            getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
-        </div>
+
+          <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
+          <div nz-form-explain *ngFor="let val of option.validations">
+              <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
+              getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
+          </div>
 
       </nz-form-control>
     </nz-form-item>

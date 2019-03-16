@@ -58,14 +58,14 @@ let hashPageMap: Map<number, any> = new Map();
                   [hidden]="col.hidden"
                   [nzShowExpand]="item.showExpand&&colIndex==0"
                   [(nzExpand)]="item.expand" 
-                  [nzIndentSize]="(item.showExpand&&colIndex==0)?item.level*20:null"
+                  [nzIndentSize]="(item.showExpand&&colIndex==0)?item.level*20:-1"
                   (nzExpandChange)="collapse(expandDataCache[data[option.dataKey]],item,$event)" 
                   title="{{col.title? (item[col.property]):''}}">
                   <ngds-column [colOption]="col" [item]="item"></ngds-column>
               </td>
               <td *ngIf="option.table.op" class="op-td">
                   <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
-                    <span nz-table-divider *ngIf="btnIndex!=0&&(btn.hidden?!btn.hidden(item):true)&&hasPerm(btn.permCode,item)"></span>
+                    <nz-divider nzType="vertical" [hidden]="(btn.hidden?btn.hidden(item):false)||!hasPerm(btn.permCode,item)"></nz-divider>
                     <a [hidden]="(btn.hidden?btn.hidden(item):false)||!hasPerm(btn.permCode,item)"
                           (click)="btn.action(item,dataIndex)"
                           class="{{getBtnStyle(btn,item)}}">
@@ -73,22 +73,24 @@ let hashPageMap: Map<number, any> = new Map();
                           {{getBtnText(btn,item)}}
                     </a>
                   </span>
-                  <nz-dropdown [hidden]="groupButton.hidden?groupButton.hidden(item):false" 
-                  *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index">
-                    <span nz-table-divider></span>
-                    <a class="ant-dropdown-link" nz-dropdown>
-                      {{getBtnText(groupButton,item)}} 
-                      <i nz-icon type="down" theme="outline"></i>
-                    </a>
-                    <ul nz-menu>
-                      <li [hidden]="(gbtn.hidden?gbtn.hidden(item):false)||!hasPerm(gbtn.permCode,item)" nz-menu-item *ngFor="let gbtn of groupButton.buttons">
-                        <a
-                              (click)="gbtn.action(item)">
-                              {{getBtnText(gbtn,item)}}
+                  <span *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index" >
+                    <nz-divider nzType="vertical" [hidden]="(groupButton.hidden?groupButton.hidden(item):false)||!hasPerm(groupButton.permCode,item)"></nz-divider>
+                    <nz-dropdown [hidden]="hideGroupButton(groupButton.buttons,item)">
+                        <a class="ant-dropdown-link" nz-dropdown>
+                          {{getBtnText(groupButton,item)}} 
+                          <i nz-icon type="down" theme="outline"></i>
                         </a>
-                      </li>
-                    </ul>
-                  </nz-dropdown>
+                        <ul nz-menu>
+                          <li [hidden]="(gbtn.hidden?gbtn.hidden(item):false)||!hasPerm(gbtn.permCode,item)" nz-menu-item 
+                            *ngFor="let gbtn of groupButton.buttons">
+                            <a
+                                  (click)="gbtn.action(item)">
+                                  {{getBtnText(gbtn,item)}}
+                            </a>
+                          </li>
+                        </ul>
+                      </nz-dropdown>
+                  </span>
               </td>
             </tr>
           </ng-template>
@@ -122,16 +124,15 @@ export class NgdsDataGrid implements AfterContentChecked {
   ngOnInit() {
     //缓存数据
     this.hash = this.hashCode(JSON.stringify(this.option.table));
-    let cachedParams:any = hashPageMap.get(this.hash);
-    if(!cachedParams||this.option.disableCached){
+    let cachedParams: any = hashPageMap.get(this.hash);
+    if (!cachedParams || this.option.disableCached) {
       cachedParams = {};
-      hashPageMap.set(this.hash,cachedParams);
+      hashPageMap.set(this.hash, cachedParams);
     }
     this._pageIndex = cachedParams.pageIndex || 1;
     if (!this.option.permMap) {
       this.option.permMap = {};
     }
-
     this.option.initToSearch !== false && this.search(cachedParams.params);
   }
 
@@ -194,6 +195,17 @@ export class NgdsDataGrid implements AfterContentChecked {
     }
   }
 
+  hideGroupButton(groupButtonArray: Array<NgdsDataGridOpBtnOption>, item: string): boolean {
+    for (let gbtn of groupButtonArray) {
+      let gbtnHidden = (gbtn.hidden ? gbtn.hidden(item) : false)
+      let gbtnHasPerm = this.hasPerm(gbtn.permCode, item);
+      if (!gbtnHidden && gbtnHasPerm) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   getValueFromPipe = function (item: any, col: NgdsDataGridColumnOption, pipe: PipeTransform | pipeFunc | PipeTransform[]) {
     if (pipe) {
       if (typeof pipe === "function") {
@@ -230,7 +242,7 @@ export class NgdsDataGrid implements AfterContentChecked {
       Object.assign(this.searchParams, params);
     }
 
-    let cachedParams:any = hashPageMap.get(this.hash);
+    let cachedParams: any = hashPageMap.get(this.hash);
     cachedParams.pageIndex = this._pageIndex;
     cachedParams.params = this.searchParams;
 
@@ -328,7 +340,7 @@ export class NgdsDataGrid implements AfterContentChecked {
   };
 
   _refreshStatus() {
-    setTimeout(()=>{
+    setTimeout(() => {
       const allChecked = this.data.every(value => value.disabled || value.checked);
       const allUnChecked = this.data.every(value => value.disabled || !value.checked);
       this._allChecked = allChecked;

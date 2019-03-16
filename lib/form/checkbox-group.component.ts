@@ -31,6 +31,7 @@ import { NgdsFormComp } from './form.component';
                     </div>
                     <nz-checkbox-group [(ngModel)]="group.children" (ngModelChange)="setValue();onChange()"></nz-checkbox-group>
                 </div>
+                <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                     getFormControl(option.property).errors[val.type]">{{val.msg}}</span>

@@ -6,7 +6,7 @@ import {
     NgdsFormOption, NgdsFormInput, NgdsFormInputList, NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormCheckboxGroup, NgdsFormSelect,
     NgdsFormDatePicker, NgdsFormDatePickerRange, NgdsFormCascader,
     NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
-    NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp
+    NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp, NgdsFormTreeSelect
 } from '../../../../../lib/index';
 import { CustomValidators } from 'ng2-validation';
 
@@ -124,6 +124,18 @@ class CheckboxGroupDataSource implements NgdsDataSource {
         });
     }
 }
+class TreeSelectDataSource implements NgdsDataSource {
+    getData(params: any): Promise<NgdsModel> {
+        return new Promise<NgdsModel>((resolve, reject) => {
+            resolve({
+                data: [
+                    { label: 'Child Node', value: `${(new Date()).getTime()}-0` },
+                    { label: 'Child Node', value: `${(new Date()).getTime()}-1` }
+                ]
+            });
+        });
+    }
+}
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -150,7 +162,7 @@ export class FormComponent implements OnInit {
         components: [
             [
                 {
-                    label: '用户名', property: "username", comp: NgdsFormInput, type: "text", attrId: "xxxx", maxLength: 20, validations: [
+                    label: '用户名', property: "username",tip:'密码注意保密', comp: NgdsFormInput, type: "text", attrId: "xxxx", maxLength: 20, validations: [
                         { msg: "用户名不能为空", type: "required", fn: Validators.required },
                         { msg: "长度在5-9", type: "rangeLength", fn: CustomValidators.rangeLength([5, 9]) },
                         { msg: "必须为数字", type: "digits", fn: CustomValidators.digits },
@@ -252,6 +264,19 @@ export class FormComponent implements OnInit {
                     dataSource: new CheckboxGroupDataSource(),
                     comp: NgdsFormCheckboxGroup,
                     value: [1, 2, 4]
+
+                }
+            ],
+            [
+                {
+                    label: '分类',
+                    property: "cat",
+                    dsLabel: 'label',
+                    dsValue: 'value',
+                    dataSource: new TreeSelectDataSource(),
+                    comp: NgdsFormTreeSelect,
+                    checkable: true,
+                    asyncData: true,
 
                 }
             ]

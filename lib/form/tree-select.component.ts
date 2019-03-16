@@ -7,16 +7,17 @@ import {
     Injectable,
     Input
 } from '@angular/core';
-import { NgdsFormConfig, NgdsFormDatePickerCompOption } from './form.config';
+import { NgdsFormConfig, NgdsFormDatePickerCompOption, NgdsFormTreeSelectCompOption } from './form.config';
 import { NgdsFormComp } from './form.component';
 import { NgdsModel } from '../core/datasource';
+import { NzFormatEmitEvent } from 'ng-zorro-antd';
 
 
 /**
  * A component that makes it easy to create tabbed interface.
  */
 @Component({
-    selector: 'ngds-form-date',
+    selector: 'ngds-tree-select',
     template: `
     <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
         <nz-form-item nz-row>
@@ -24,13 +25,15 @@ import { NgdsModel } from '../core/datasource';
             {{option.label}}
             </nz-form-label>
             <nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-                <nz-date-picker [formControl]="getFormControl(option.property)" 
-                [(ngModel)]="option.value"
-                [nzShowTime]="option.showTime"
-                [nzFormat]="option.showTime?option.format:'YYYY-MM-DD'"
-                (ngModelChange)="onChange()">
-                </nz-date-picker>
-                
+                <nz-tree-select
+                    [nzPlaceHolder]="option.placeHolder || '请输入'"
+                    [(ngModel)]="option.value"
+                    [nzAsyncData]="option.asyncData"
+                    [nzNodes]="data"
+                    [nzCheckable]="option.checkable"
+                    (nzExpandChange)="loadData($event)">
+                </nz-tree-select>
+
                 <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
@@ -43,20 +46,60 @@ import { NgdsModel } from '../core/datasource';
     `,
 
 })
-export class NgdsFormDatePicker extends NgdsFormComp implements AfterContentChecked {
+export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChecked {
     constructor() {
         super();
     }
 
-    option: NgdsFormDatePickerCompOption;
-    data: Array<any>;
+    option: NgdsFormTreeSelectCompOption;
+    data: Array<any> = [];
     oldValue: any;
 
     ngOnInit() {
         this.option.value = this.option.value || null;
+
+        if (!this.option.dsLabel) {
+            this.option.dsLabel = "title";
+        }
+        if (!this.option.dsValue) {
+            this.option.dsValue = "key";
+        }
+
+        if (Array.isArray(this.option.dataSource)) {
+            this.data = this.processData(this.option.dataSource);
+        } else {
+            this.option.dataSource.getData({parentId:0}).then((value: any) => {
+                this.data = this.processData(value.data);
+            })
+        }
     }
 
     ngAfterContentChecked() {
+    }
+
+    loadData(e: NzFormatEmitEvent): void {
+        if (e.node.getChildren().length === 0 && e.node.isExpanded) {
+            if (Array.isArray(this.option.dataSource)) {
+                e.node.addChildren(this.processData(this.option.dataSource));
+            } else {
+                this.option.dataSource.getData({parentId:e.node.key}).then((value: any) => {
+                    e.node.addChildren(this.processData(value.data));
+                })
+            }
+        }
+    }
+
+    processData(data: Array<any>): Array<any> {
+        if (data && data.length) {
+            for (let item of data) {
+                item.title = item[this.option.dsLabel];
+                item.key = item[this.option.dsValue];
+                if(item.children){
+                    this.processData(item.children);
+                }
+            }
+        }
+        return data;
     }
 
     setValue(value: any) {

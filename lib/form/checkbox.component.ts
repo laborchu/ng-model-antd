@@ -26,6 +26,8 @@ import { NgdsFormComp } from './form.component';
             </nz-form-label>
             <nz-form-control nz-col [nzSpan]="option.compSpan">
                 <nz-checkbox-group [(ngModel)]="data" (ngModelChange)="setValue();onChange()" [nzDisabled]="option.disabled"></nz-checkbox-group>
+                
+                <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                     getFormControl(option.property).errors[val.type]">{{val.msg}}</span>

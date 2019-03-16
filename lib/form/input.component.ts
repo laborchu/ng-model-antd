@@ -27,6 +27,8 @@ import { NgdsFormComp } from './form.component';
         (ngModelChange)="setValue($event);onChange()"
         [formControl]="getFormControl(option.property)">
         <div *ngIf="option.maxLength" class="input-limit">{{option.value?option.value.length:0}}/{{option.maxLength}}</div>
+        
+        <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
         <div nz-form-explain *ngFor="let val of option.validations">
             <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
             getFormControl(option.property).errors[val.type]">{{val.msg}}</span>

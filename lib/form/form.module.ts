@@ -53,6 +53,9 @@ import {
 import {
 	NgdsFormCascader
 } from './cascader.component';
+import {
+	NgdsFormTreeSelect
+} from './tree-select.component';
 
 
 export { NgdsForm } from './form';
@@ -60,7 +63,7 @@ export { NgdsFormComp } from './form.component';
 export {
 	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption,NgdsFormInputRangeCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormSelectCompOption, NgdsFormDatePickerCompOption,
-	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption,NgdsFormCascaderCompOption,NgdsFormCheckboxGroupCompOption
+	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption,NgdsFormCascaderCompOption,NgdsFormCheckboxGroupCompOption,NgdsFormTreeSelectCompOption
 } from './form.config';
 export {
 	NgdsFormInput
@@ -98,9 +101,12 @@ export {
 export {
 	NgdsFormCascader
 } from './cascader.component';
+export {
+	NgdsFormTreeSelect
+} from './tree-select.component';
 
 const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox,NgdsFormCheckboxGroup, NgdsFormSelect, 
-	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar];
+	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar,NgdsFormTreeSelect];
 
 @NgModule({ 
 	declarations: NGB_TABSET_DIRECTIVES, 

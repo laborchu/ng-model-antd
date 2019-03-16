@@ -29,6 +29,8 @@ import { NgdsModel } from '../core/datasource';
                 [nzShowTime]="option.showTime"
                 [nzFormat]="option.showTime?option.format:'YYYY-MM-DD'"
                 [style.width.%]="100"></nz-range-picker>
+                
+                <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
                 <div nz-form-explain *ngFor="let val of option.validations">
                     <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
                     getFormControl(option.property).errors[val.type]">{{val.msg}}</span>

@@ -31,7 +31,7 @@ export class NgdsFormOption {
 	labelSpan?: number;
 	compSpan?: number;
 	gutter?: number;
-	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption | NgdsFormDatePickerCompOption | NgdsFormCheckboxCompOption>>;
+	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption | NgdsFormDatePickerCompOption | NgdsFormCheckboxCompOption | NgdsFormTreeSelectCompOption>>;
 	value?: any;
 	showSearch?: boolean;
 	search?: NgdsFormSearchOption;
@@ -47,6 +47,7 @@ export class NgdsFormCompOption {
 	label: string;
 	property: string;
 	property2?: string;
+	tip?:string;
 	value?: any;
 	span?: number;//组件span
 	labelSpan?: number;//组件标签span
@@ -135,6 +136,14 @@ export class NgdsFormSelectCompOption extends NgdsFormCompOption {
 export class NgdsFormDatePickerCompOption extends NgdsFormCompOption {
 	showTime?: boolean;
 	format?: string;
+}
+
+export class NgdsFormTreeSelectCompOption extends NgdsFormCompOption {
+	dataSource: NgdsDataSource;
+	dsLabel?: string;
+	dsValue?: string;
+	asyncData:boolean;
+	checkable:boolean;
 }
 
 export class NgdsFormUmeditorCompOption extends NgdsFormCompOption {

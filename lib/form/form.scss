@@ -129,4 +129,15 @@
             width: 100%;
         }
     }
+
+    ngds-form-cascader{
+        nz-form-item{
+            line-height: 39px;
+        }
+    }
+
+    .form-item-tip{
+        font-size: 12px;
+        color: #666;
+    }
 }

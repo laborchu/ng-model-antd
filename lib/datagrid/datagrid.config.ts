@@ -24,7 +24,7 @@ export interface NgdsDataGridPageModel extends NgdsModel {
 export type styleFunc = (data: any) => string;
 export type loadingFunc = (data: any) => boolean;
 export type permFunc = (data: any) => string;
-export type pipeFunc = (property: string, data: any) => string;
+export type pipeFunc = (property: string, data: any) => string|boolean;
 export type textFunc = (data: any) => string;
 export type editFinishFunc = (item: any) => void;
 export type canEditFunc = (item: any) => boolean;
@@ -50,7 +50,9 @@ export interface NgdsDataGridTableOption {
 export interface NgdsDataGridColumnOption {
 	text: string;
 	property: string;
+	subProperty?: string;
 	propertyPipe?: PipeTransform | pipeFunc | PipeTransform[];
+	subPropertyPipe?: PipeTransform | pipeFunc | PipeTransform[];
 	badgePipe?: PipeTransform | pipeFunc | PipeTransform[];
 	width?: string;
 	title?: boolean;
@@ -63,6 +65,13 @@ export interface NgdsDataGridColumnOption {
 	editFinish?: editFinishFunc;
 	click?: clickFunc;
 	info?:string|pipeFunc;
+	tags?:Array<NgdsDataGridColumnTagOption>;
+}
+
+export interface NgdsDataGridColumnTagOption {
+	tagColor:string|pipeFunc;
+	tagLabel:string|pipeFunc;
+	show?:string|pipeFunc;
 }
 
 export interface NgdsDataGridOpOption {

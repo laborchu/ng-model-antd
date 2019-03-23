@@ -169,7 +169,7 @@ export class FormComponent implements OnInit {
                     ]
                 },
                 { label: '密码', property: "user.password", comp: NgdsFormInput, type: "password" },
-                { label: '邮件', property: "user.email", comp: NgdsFormInput, type: "email", disabled: true }
+                { label: '邮件', property: "user.email", comp: NgdsFormInput, type: "email", disabled: true,value:'xxxxxxxx' }
             ],
             [
                 {
@@ -203,7 +203,7 @@ export class FormComponent implements OnInit {
                 },
                 {
                     label: '出生日期', property: "date", comp: NgdsFormDatePicker,
-                    showTime: true, format: "YYYY-MM-DD HH:mm:ss",
+                    showTime: true, format: "yyyy-MM-dd HH:mm:ss",
                     validations: [
                         { msg: "出生日期必填", type: "required", fn: Validators.required },
                     ]

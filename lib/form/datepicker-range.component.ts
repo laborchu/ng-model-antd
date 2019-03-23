@@ -27,7 +27,7 @@ import { NgdsModel } from '../core/datasource';
                 <nz-range-picker [(ngModel)]="option.value" 
                 (ngModelChange)="onChange()" 
                 [nzShowTime]="option.showTime"
-                [nzFormat]="option.showTime?option.format:'YYYY-MM-DD'"
+                [nzFormat]="option.showTime?option.format:'yyyy-MM-dd'"
                 [style.width.%]="100"></nz-range-picker>
                 
                 <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
@@ -62,7 +62,7 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
         }
 
         if (this.oldValue == undefined) {
-            this.oldValue = value ? [value[0],value[1]] : null;
+            this.oldValue = value ? [value[0], value[1]] : null;
         }
     }
 
@@ -81,6 +81,12 @@ export class NgdsFormDatePickerRange extends NgdsFormComp implements AfterConten
             if (formControl.errors && Object.keys(formControl.errors).length == 0) {
                 formControl.setErrors(null);
             }
+        }
+        if (!this.option.showTime && this.option.value && this.option.value.length == 2) {
+            let startDate = this.option.value[0];
+            let endDate = this.option.value[1];
+            this.option.value[0] = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+            this.option.value[1] = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
         }
         this.option.onChange && this.option.onChange(this.option);
     }

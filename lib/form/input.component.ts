@@ -21,7 +21,7 @@ import { NgdsFormComp } from './form.component';
       {{option.label}}
       </nz-form-label>
       <nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-        <input nz-input [disabled]="option.disabled" type="{{option.type}}" placeholder="{{option.placeHolder || '请输入'}}" 
+        <input nz-input [attr.disabled]="option.disabled" type="{{option.type}}" placeholder="{{option.placeHolder || '请输入'}}" 
         [(ngModel)]="option.value"
         [attr.id]="option.attrId"
         (ngModelChange)="setValue($event);onChange()"
@@ -29,10 +29,12 @@ import { NgdsFormComp } from './form.component';
         <div *ngIf="option.maxLength" class="input-limit">{{option.value?option.value.length:0}}/{{option.maxLength}}</div>
         
         <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
-        <div nz-form-explain *ngFor="let val of option.validations">
+
+        <div *ngFor="let val of option.validations">
             <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
             getFormControl(option.property).errors[val.type]">{{val.msg}}</span>
         </div>
+        
 
       </nz-form-control>
     </nz-form-item>

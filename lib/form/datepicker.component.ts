@@ -27,7 +27,7 @@ import { NgdsModel } from '../core/datasource';
                 <nz-date-picker [formControl]="getFormControl(option.property)" 
                 [(ngModel)]="option.value"
                 [nzShowTime]="option.showTime"
-                [nzFormat]="option.showTime?option.format:'YYYY-MM-DD'"
+                [nzFormat]="option.showTime?option.format:'yyy-MM-dd'"
                 (ngModelChange)="onChange()">
                 </nz-date-picker>
                 

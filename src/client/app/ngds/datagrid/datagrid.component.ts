@@ -209,10 +209,10 @@ export class DataGridComponent implements OnInit {
     }
 
     formOption: NgdsFormOption = {
-        id:"xxxxxxx",
+        id: "xxxxxxx",
         showSearch: true,
         column: 3,
-        remember:true,
+        remember: true,
         components: [
             [
                 {
@@ -252,14 +252,23 @@ export class DataGridComponent implements OnInit {
                     text: '用户名', property: "username", canEdit: true, editFinish: (item: any) => {
                         this.option.table.columns[2].hidden = !this.option.table.columns[2].hidden;
                     },
+                    subProperty:'name',
                 },
                 {
                     text: '姓名', property: "name", click: (item: any) => {
                         debugger
                     },
                     width: "130px",
+                    tags:[
+                        {
+                            tagColor: 'volcano', tagLabel: '普'
+                        },
+                        {
+                            tagColor: 'volcano', tagLabel: '普'
+                        }
+                    ]
                 },
-                { text: '手机号', property: "mobile",width: "130px", },
+                { text: '手机号', property: "mobile", width: "130px", showSort: true },
                 {
                     text: '认证状态',
                     property: "authStatus",
@@ -277,7 +286,7 @@ export class DataGridComponent implements OnInit {
                             return "error";
                         }
                     },
-                    width: "130px",info:(property: string, data: any): string => {
+                    width: "130px", info: (property: string, data: any): string => {
                         return "";
                     }
                 },

@@ -91,7 +91,7 @@
 
     .input-range {
         .split-input {
-            margin-right: 8px;
+            margin: 8px;
         }
     }
 
@@ -140,4 +140,13 @@
         font-size: 12px;
         color: #666;
     }
+    
+    .ant-form-item{
+        margin-bottom: 0;
+    }
+    .form-validation{
+        min-height: 40px;
+    }
+
+    input:disabled { background: #eee; } 
 }

@@ -14,7 +14,7 @@ import {
 
 import {
     NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFunc,
-    NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel
+    NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel, NgdsDataGridColumnTagOption
 } from './datagrid.config';
 
 @Component({
@@ -23,12 +23,21 @@ import {
     template: `
     <span class="dg-column" #columnRef>
         <span *ngIf="!hasCustomComp">
-            <nz-badge *ngIf="colOption.badgePipe" [nzStatus]="getValueFromPipe(colOption.badgePipe)"></nz-badge>
-            <span *ngIf="!edit&&!colOption.click" [innerHTML]="getValueFromPipe(colOption.propertyPipe)" >
+            <nz-badge *ngIf="colOption.badgePipe" [nzStatus]="getValueFromPipe(colOption.badgePipe,colOption.property)"></nz-badge>
+            <span *ngIf="!edit&&!colOption.click" [innerHTML]="getValueFromPipe(colOption.propertyPipe,colOption.property)" >
             </span>
             <span *ngIf="colOption.click">
-                <a (click)="colOption.click(item)">{{getValueFromPipe(colOption.propertyPipe)}}</a>
+                <a (click)="colOption.click(item)">{{getValueFromPipe(colOption.propertyPipe,colOption.property)}}</a>
             </span> 
+
+            <span class="column-tag" *ngIf="colOption.tags&&colOption.tags.length">
+                <span *ngFor="let tag of colOption.tags">
+                    <nz-tag *ngIf="tag.show?tag.show(colOption.property,item):true" [nzColor]="getTagColor(tag)">{{getTagLabel(tag)}}</nz-tag>
+                </span>
+            </span>
+
+            <span class="sub-property" *ngIf="colOption.subProperty" [innerHTML]="getValueFromPipe(colOption.subPropertyPipe,colOption.subProperty)" >
+            </span>
 
             <nz-tooltip [nzTitle]="getInfo(colOption.info)" *ngIf="showInfo(colOption.info)">
                 <i nz-tooltip nz-icon type="exclamation-circle" theme="outline"></i>
@@ -89,7 +98,7 @@ export class NgdsColumn {
         this.colOption.editFinish && this.colOption.editFinish(this.item);
     }
 
-    getInfo(tip: string | pipeFunc): string {
+    getInfo(tip: string | pipeFunc): string | boolean {
         if (typeof tip === "function") {
             return tip(this.colOption.property, this.item);
         } else {
@@ -107,28 +116,44 @@ export class NgdsColumn {
         return data ? true : false;
     }
 
-    getValueFromPipe = function (pipe: PipeTransform | pipeFunc | PipeTransform[]) {
+    getValueFromPipe(pipe: PipeTransform | pipeFunc | PipeTransform[], property: string) {
         if (pipe) {
             if (typeof pipe === "function") {
-                return pipe(this.colOption.property, this.item);
+                return pipe(property, this.item);
             } else {
                 if (Array.isArray(pipe)) {
                     let value: any;
                     for (let pipeItem of pipe) {
                         if (typeof pipeItem === "function") {
                             let pipeFunc: any = pipeItem;
-                            value = pipeFunc(this.colOption.property, this.item, value);
+                            value = pipeFunc(property, this.item, value);
                         } else {
-                            value = pipeItem.transform(this.colOption.property, this.item, value);
+                            value = pipeItem.transform(property, this.item, value);
                         }
                     }
                     return value;
                 } else {
-                    return pipe.transform(this.colOption.property, this.item);
+                    return pipe.transform(property, this.item);
                 }
             }
         } else {
-            return this.item[this.colOption.property];
+            return this.item[property];
+        }
+    }
+
+    getTagColor(tag: NgdsDataGridColumnTagOption) {
+        if (typeof tag.tagColor === "function") {
+            return tag.tagColor(this.colOption.property, this.item);
+        } else {
+            return tag.tagColor;
+        }
+    }
+
+    getTagLabel(tag: NgdsDataGridColumnTagOption) {
+        if (typeof tag.tagLabel === "function") {
+            return tag.tagLabel(this.colOption.property, this.item);
+        } else {
+            return tag.tagLabel;
         }
     }
 }

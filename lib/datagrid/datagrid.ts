@@ -64,18 +64,18 @@ let hashPageMap: Map<number, any> = new Map();
                   <ngds-column [colOption]="col" [item]="item"></ngds-column>
               </td>
               <td *ngIf="option.table.op" class="op-td">
-                  <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" >
-                    <nz-divider nzType="vertical" [hidden]="(btn.hidden?btn.hidden(item):false)||!hasPerm(btn.permCode,item)"></nz-divider>
-                    <a [hidden]="(btn.hidden?btn.hidden(item):false)||!hasPerm(btn.permCode,item)"
+                  <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" [hidden]="(btn.hidden?btn.hidden(item):false)||!hasPerm(btn.permCode,item)">
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a
                           (click)="btn.action(item,dataIndex)"
                           class="{{getBtnStyle(btn,item)}}">
                           <i nz-icon type="loading" theme="outline" [spin]="true" *ngIf="showBtnLoading(btn,item)"></i>
                           {{getBtnText(btn,item)}}
                     </a>
                   </span>
-                  <span *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index" >
-                    <nz-divider nzType="vertical" [hidden]="(groupButton.hidden?groupButton.hidden(item):false)||!hasPerm(groupButton.permCode,item)"></nz-divider>
-                    <nz-dropdown [hidden]="hideGroupButton(groupButton.buttons,item)">
+                  <span *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index" [hidden]="hideGroupButton(groupButton.buttons,item)">
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <nz-dropdown>
                         <a class="ant-dropdown-link" nz-dropdown>
                           {{getBtnText(groupButton,item)}} 
                           <i nz-icon type="down" theme="outline"></i>
@@ -356,5 +356,16 @@ export class NgdsDataGrid implements AfterContentChecked {
   };
 
   _sort(sortName: string, value: any) {
+    let key = sortName + 'Sort';
+    let params:any = {};
+    if (value == 'descend') {
+      params[key] = 'desc';
+    } else if (value == 'ascend') {
+      params[key] = 'asc';
+    } else {
+      params[key] = undefined;
+    }
+    this.search(params)
+    
   }
 }

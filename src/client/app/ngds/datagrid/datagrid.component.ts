@@ -252,7 +252,9 @@ export class DataGridComponent implements OnInit {
                     text: '用户名', property: "username", canEdit: true, editFinish: (item: any) => {
                         this.option.table.columns[2].hidden = !this.option.table.columns[2].hidden;
                     },
-                    subProperty:'name',
+                    subProperty:'name',subPropertyClick:()=>{
+
+                    }
                 },
                 {
                     text: '姓名', property: "name", click: (item: any) => {
@@ -316,7 +318,11 @@ export class DataGridComponent implements OnInit {
                             return false;
                         },
                         action: function (item) {
-                            alert(item);
+                            return new Promise((resolve)=>{
+                                setTimeout(()=>{
+                                    resolve()
+                                },5000)
+                            })
                         }
                     }
                 ],

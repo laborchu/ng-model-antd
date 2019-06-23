@@ -64,6 +64,7 @@ export interface NgdsDataGridColumnOption {
 	canEdit?: boolean|canEditFunc;
 	editFinish?: editFinishFunc;
 	click?: clickFunc;
+	subPropertyClick?: clickFunc;
 	info?:string|pipeFunc;
 	tags?:Array<NgdsDataGridColumnTagOption>;
 }
@@ -87,10 +88,11 @@ export interface NgdsDataGridOpGroupBtnOption {
 }
 
 export interface NgdsDataGridOpBtnOption {
+	key?: number;
 	text: string | textFunc;
 	style?: string | styleFunc;
-	loading?: boolean | loadingFunc;
-	action: (data: any) => void;
+	loading?: boolean;
+	action: (data: any) => void | Promise<any>;
 	hidden?: (data: any) => boolean;
 	permCode?:string | permFunc;
 }

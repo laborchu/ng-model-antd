@@ -75,6 +75,11 @@ export class PanelComponent implements OnInit {
             {
                 text: '同步公告图片',
                 action: (item) => {
+                    return new Promise((resolve)=>{
+                        setTimeout(()=>{
+                            resolve()
+                        },5000)
+                    })
                 }
             }
         ]

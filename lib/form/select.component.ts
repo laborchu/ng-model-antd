@@ -45,7 +45,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
   }
 
   option: NgdsFormSelectCompOption;
-  data: Array<any>;
+  data: Array<any> = [];
   oldValue: any;
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
       this.data = this.option.dataSource;
     } else {
       this.option.dataSource.getData({}).then((model: any) => {
-        this.data = model.data;
+        this.data = model.data || [];
       })
     }
 
@@ -73,6 +73,14 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
     if (this.oldValue == undefined) {
       this.oldValue = value || null;
     }
+
+    if (this.option.searchRemote) {
+      let params: any = {};
+      params[this.option.dsValue] = value;
+      this.option.dataSource.getData(params).then((model: any) => {
+        this.data = model.data || [];
+      })
+    }
   }
 
   searchTimeout: any;
@@ -82,14 +90,14 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
         if (this.searchTimeout) {
           clearTimeout(this.searchTimeout);
         }
-        if($event){
+        if ($event) {
           this.searchTimeout = setTimeout(() => {
             this.searchTimeout = null;
             this.option.dataSource.getData({ keywords: $event }).then((model: any) => {
-              this.data = model.data;
+              this.data = model.data || [];
             })
           }, 500);
-        }else{
+        } else {
           this.data = [];
         }
       }

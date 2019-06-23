@@ -1,7 +1,6 @@
 .ngds-form {
     .uploader {
-        border: 1px dashed #ddd;
-        padding: 10px;
+        margin-bottom: 10px;
 
         .upload-item {
             width: 80px;
@@ -9,6 +8,7 @@
             margin-right: 10px;
             position: relative;
             float: left;
+            cursor: pointer;
 
             img {
                 width: 100%;
@@ -69,6 +69,12 @@
                 background-color: white;
                 border: 1px dashed #444;
                 color: #999;
+
+                .wh-tip{
+                    font-size: 12px;
+                    position: relative;
+                    top: -20px;
+                }
             }
             div:nth-child(2) {
                 top: -68px !important;

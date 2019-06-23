@@ -38,7 +38,7 @@ let hashPageMap: Map<number, any> = new Map();
           [(nzChecked)]="_allChecked" 
           *ngIf="option.table.showCheck">
           </th>
-          <th *ngFor="let col of option.table.columns;" [nzWidth]="col.width" [nzShowSort]="col.showSort" (nzSortChange)="_sort(col.property,$event)" [hidden]="col.hidden">
+          <th *ngFor="let col of option.table.columns;" [nzWidth]="col.width" [nzShowSort]="col.showSort" (nzSortChange)="_sort(col.property,$event)">
             {{col.text}}
           </th>
           <th *ngIf="option.table.op" [nzWidth]="option.table.op.width">操作</th>
@@ -55,7 +55,6 @@ let hashPageMap: Map<number, any> = new Map();
               *ngIf="option.table.showCheck">
               </td>
               <td *ngFor="let col of option.table.columns;let colIndex = index"
-                  [hidden]="col.hidden"
                   [nzShowExpand]="item.showExpand&&colIndex==0"
                   [(nzExpand)]="item.expand" 
                   [nzIndentSize]="(item.showExpand&&colIndex==0)?item.level*20:-1"
@@ -66,10 +65,10 @@ let hashPageMap: Map<number, any> = new Map();
               <td *ngIf="option.table.op" class="op-td">
                   <span *ngFor="let btn of option.table.op.buttons;let btnIndex = index" [hidden]="(btn.hidden?btn.hidden(item):false)||!hasPerm(btn.permCode,item)">
                     <nz-divider nzType="vertical"></nz-divider>
-                    <a
-                          (click)="btn.action(item,dataIndex)"
+                    <a  [ngClass]="{'btn-disable':item[btn.key]}" 
+                          (click)="btnClick(btn,item,dataIndex)"
                           class="{{getBtnStyle(btn,item)}}">
-                          <i nz-icon type="loading" theme="outline" [spin]="true" *ngIf="showBtnLoading(btn,item)"></i>
+                          <i nz-icon type="loading" theme="outline" [spin]="true" *ngIf="item[btn.key]"></i>
                           {{getBtnText(btn,item)}}
                     </a>
                   </span>
@@ -134,6 +133,22 @@ export class NgdsDataGrid implements AfterContentChecked {
       this.option.permMap = {};
     }
     this.option.initToSearch !== false && this.search(cachedParams.params);
+
+    if (this.option.table.op && this.option.table.op.buttons) {
+      for (let btn of this.option.table.op.buttons) {
+        btn.key = this.hashCode(JSON.stringify(btn))
+      }
+    }
+
+    this.hiddenCol();
+  }
+
+  hiddenCol() {
+    for (let i = this.option.table.columns.length - 1; i >= 0; i--) {
+      if (this.option.table.columns[i].hidden) {
+        this.option.table.columns.splice(i, 1);
+      }
+    }
   }
 
   hasPerm(permCode: string | permFunc, item: any) {
@@ -160,19 +175,31 @@ export class NgdsDataGrid implements AfterContentChecked {
     }
   }
 
-  showBtnLoading = function (btn: NgdsDataGridOpBtnOption, item: any): boolean {
-    if (btn.loading) {
-      if (typeof btn.loading === "function") {
-        return btn.loading(item);
-      } else {
-        return btn.loading;
+  // showBtnLoading = function (btn: NgdsDataGridOpBtnOption, item: any): boolean {
+  //   if (btn.loading) {
+  //     if (typeof btn.loading === "function") {
+  //       return btn.loading(item);
+  //     } else {
+  //       return btn.loading;
+  //     }
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  btnClick(btn: NgdsDataGridOpBtnOption, item: any, index: number) {
+    if (!item[btn.key]) {
+      let result = btn.action(item);
+      if (result && result instanceof Promise) {
+        item[btn.key] = true;
+        result.then(() => {
+          item[btn.key] = false;
+        }).catch(() => {
+          item[btn.key] = false;
+        })
       }
-    } else {
-      return false;
     }
   }
-
-
 
   getBtnText = function (col: NgdsDataGridOpBtnOption, item: any) {
     if (typeof col.text === "function") {
@@ -357,7 +384,7 @@ export class NgdsDataGrid implements AfterContentChecked {
 
   _sort(sortName: string, value: any) {
     let key = sortName + 'Sort';
-    let params:any = {};
+    let params: any = {};
     if (value == 'descend') {
       params[key] = 'desc';
     } else if (value == 'ascend') {
@@ -366,6 +393,6 @@ export class NgdsDataGrid implements AfterContentChecked {
       params[key] = undefined;
     }
     this.search(params)
-    
+
   }
 }

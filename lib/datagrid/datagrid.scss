@@ -1,36 +1,55 @@
-@import '../variable';
+@import "../variable";
 
-.btn-danger{
+.btn-danger {
     color: #f04134;
 }
-.dg-column{
-    .edit-icon{
-        i{
+
+.dg-column {
+    .edit-icon {
+        i {
             cursor: pointer;
         }
     }
-    .edit-input{
-        input{
+
+    .edit-input {
+        input {
             display: inline;
-            input{
+
+            input {
                 width: 75%;
             }
         }
-        i{
+
+        i {
             cursor: pointer;
         }
     }
-    .sub-property{
+
+    .sub-property {
         display: block;
-        color: rgba(0,0,0,.45);
+        color: rgba(0, 0, 0, 0.45);
         font-size: 12px;
         margin-top: 5px;
     }
-    .column-tag{
+
+    .sub-property-click{
+        display: block;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .column-tag {
         display: block;
         margin-top: 5px;
     }
-    nz-tooltip{
+
+    nz-tooltip {
         margin-left: 5px;
+    }
+}
+.op-td{
+    .btn-disable {
+        opacity: 0.6;
+        cursor: not-allowed;
     }
 }

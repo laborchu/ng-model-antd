@@ -36,8 +36,11 @@ import {
                 </span>
             </span>
 
-            <span class="sub-property" *ngIf="colOption.subProperty" [innerHTML]="getValueFromPipe(colOption.subPropertyPipe,colOption.subProperty)" >
+            <span *ngIf="colOption.subProperty && !colOption.subPropertyClick" class="sub-property" [innerHTML]="getValueFromPipe(colOption.subPropertyPipe,colOption.subProperty)" >
             </span>
+            <span *ngIf="colOption.subProperty && colOption.subPropertyClick">
+                <a class="sub-property-click" (click)="colOption.subPropertyClick(item)">{{getValueFromPipe(colOption.subPropertyPipe,colOption.subProperty)}}</a>
+            </span> 
 
             <nz-tooltip [nzTitle]="getInfo(colOption.info)" *ngIf="showInfo(colOption.info)">
                 <i nz-tooltip nz-icon type="exclamation-circle" theme="outline"></i>

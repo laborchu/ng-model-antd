@@ -7,6 +7,8 @@ import { NgdsForm } from './form';
 export type wrapperUploadDataFunc = (data: any) => void;
 export type uploadSuccessFunc = (data: any) => void;
 export type uploadBeforeSendFunc = (block: any, data: any, headers: any) => void;
+export type tapImageFunc = (item: any, itemList: Array<any>, index: number) => void;
+export type tapVideoFunc = (item: any) => void;
 
 /**
  * Configuration service for the NgbTabset component.
@@ -16,6 +18,7 @@ export type uploadBeforeSendFunc = (block: any, data: any, headers: any) => void
 @Injectable()
 export class NgdsFormConfig {
 	uploaderConfig: NgdsFormUploaderConfig;
+
 }
 
 export class NgdsFormUploaderConfig {
@@ -24,10 +27,12 @@ export class NgdsFormUploaderConfig {
 	wrapperUploadData?: wrapperUploadDataFunc;
 	uploadBeforeSend?: uploadBeforeSendFunc;//错误处理
 	uploadSuccess?: uploadSuccessFunc;//上传完成
+	tapImage?: tapImageFunc;//点击图片
+	tapVideo?: tapVideoFunc;//点击视频
 }
 
 export class NgdsFormOption {
-	id?:string;
+	id?: string;
 	labelSpan?: number;
 	compSpan?: number;
 	gutter?: number;
@@ -36,7 +41,7 @@ export class NgdsFormOption {
 	showSearch?: boolean;
 	search?: NgdsFormSearchOption;
 	column?: number;//最大列数量
-	remember?:boolean;
+	remember?: boolean;
 }
 
 
@@ -47,7 +52,7 @@ export class NgdsFormCompOption {
 	label: string;
 	property: string;
 	property2?: string;
-	tip?:string;
+	tip?: string;
 	value?: any;
 	span?: number;//组件span
 	labelSpan?: number;//组件标签span
@@ -142,8 +147,8 @@ export class NgdsFormTreeSelectCompOption extends NgdsFormCompOption {
 	dataSource: NgdsDataSource;
 	dsLabel?: string;
 	dsValue?: string;
-	asyncData:boolean;
-	checkable:boolean;
+	asyncData: boolean;
+	checkable: boolean;
 }
 
 export class NgdsFormUmeditorCompOption extends NgdsFormCompOption {
@@ -163,7 +168,9 @@ export class NgdsFormUploaderCompOption extends NgdsFormCompOption {
 	errHandler?: errHandlerFunc;//错误处理
 	width?: number;
 	height?: number;
+	whTip?: string;
 	compress?: any;
+	fileSingleSizeLimit?: number;
 }
 
 

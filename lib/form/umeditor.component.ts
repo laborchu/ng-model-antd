@@ -4,7 +4,9 @@ import {
     ViewContainerRef,
     ViewChild,
     ComponentFactoryResolver,
-    Input
+    Input,
+    NgZone,
+    Inject
 } from '@angular/core';
 import { UMeditorComponent } from 'ngx-umeditor';
 import { NgdsFormConfig, NgdsFormUmeditorCompOption } from './form.config';
@@ -27,8 +29,7 @@ import { NgdsFormComp } from './form.component';
                         [path]="option.path"
                         [loadingTip]="option.loadingTip?option.loadingTip:'加载中...'"
                         (onReady)="editorReady()"
-                        (onDestroy)="editorDestroy()"
-                        (onContentChange)="onChange()"></umeditor>
+                        (onDestroy)="editorDestroy()"></umeditor>
 
                     <div nz-form-explain *ngFor="let val of option.validations">
                         <span class="error-msg" *ngIf="getFormControl(option.property).errors&&
@@ -41,7 +42,8 @@ import { NgdsFormComp } from './form.component';
     `
 })
 export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecked {
-    constructor() {
+    constructor(
+        @Inject(NgZone) private zone: NgZone, ) {
         super();
     }
 
@@ -71,6 +73,10 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
     }
 
     editorReady() {
+        this.editor.addListener(<any>'contentChange', (event: string,data:any) => {
+            let content = this.editor.Instance.getContent();
+            this.zone.run(() => this.onChange(content));
+        });
     }
 
     editorDestroy() {
@@ -82,7 +88,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
         }
     }
 
-    onChange() {
+    onChange(value?: string) {
         if (this.option.validations) {
             for (let val of this.option.validations) {
                 if (val.type == "required") {
@@ -100,7 +106,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
                 }
             }
         }
-        this.option.onChange && this.option.onChange(this.option);
+        this.option.onChange && this.option.onChange(this.option, value);
     }
 
     ngAfterContentChecked() {

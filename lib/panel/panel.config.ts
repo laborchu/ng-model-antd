@@ -30,7 +30,8 @@ export interface NgdsPanelBtnOption {
     text: string;
     style?: string;
     hidden?:boolean;
-    action: (data: any) => void;
+    action: (data: any) => void | Promise<any>;
     permCode?: string | permFunc;
+    loading?:boolean;
 }
 

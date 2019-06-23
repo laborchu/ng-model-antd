@@ -10,7 +10,7 @@ import {
 import { NgdsFormConfig, NgdsFormDatePickerCompOption, NgdsFormTreeSelectCompOption } from './form.config';
 import { NgdsFormComp } from './form.component';
 import { NgdsModel } from '../core/datasource';
-import { NzFormatEmitEvent } from 'ng-zorro-antd';
+import { NzFormatEmitEvent, NzTreeSelectComponent } from 'ng-zorro-antd';
 
 
 /**
@@ -26,11 +26,14 @@ import { NzFormatEmitEvent } from 'ng-zorro-antd';
             </nz-form-label>
             <nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
                 <nz-tree-select
+                    #treeSelect
                     [nzPlaceHolder]="option.placeHolder || '请输入'"
                     [(ngModel)]="option.value"
                     [nzAsyncData]="option.asyncData"
                     [nzNodes]="data"
                     [nzCheckable]="option.checkable"
+                    [nzDropdownStyle]="{ 'max-height': '300px' }"
+                    (ngModelChange)="onChange()"
                     (nzExpandChange)="loadData($event)">
                 </nz-tree-select>
 
@@ -54,6 +57,7 @@ export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChec
     option: NgdsFormTreeSelectCompOption;
     data: Array<any> = [];
     oldValue: any;
+    @ViewChild("treeSelect") treeSelect: NzTreeSelectComponent;
 
     ngOnInit() {
         this.option.value = this.option.value || null;
@@ -68,7 +72,7 @@ export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChec
         if (Array.isArray(this.option.dataSource)) {
             this.data = this.processData(this.option.dataSource);
         } else {
-            this.option.dataSource.getData({parentId:0}).then((value: any) => {
+            this.option.dataSource.getData({ parentId: 0 }).then((value: any) => {
                 this.data = this.processData(value.data);
             })
         }
@@ -82,7 +86,7 @@ export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChec
             if (Array.isArray(this.option.dataSource)) {
                 e.node.addChildren(this.processData(this.option.dataSource));
             } else {
-                this.option.dataSource.getData({parentId:e.node.key}).then((value: any) => {
+                this.option.dataSource.getData({ parentId: e.node.key }).then((value: any) => {
                     e.node.addChildren(this.processData(value.data));
                 })
             }
@@ -94,7 +98,7 @@ export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChec
             for (let item of data) {
                 item.title = item[this.option.dsLabel];
                 item.key = item[this.option.dsValue];
-                if(item.children){
+                if (item.children) {
                     this.processData(item.children);
                 }
             }
@@ -131,7 +135,7 @@ export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChec
                 }
             }
         }
-        this.option.onChange && this.option.onChange(this.option);
+        this.option.onChange && this.option.onChange(this.option, this.treeSelect.selectedNodes);
     }
 
     getFormControl(name: string): any {

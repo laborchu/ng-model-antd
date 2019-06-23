@@ -25,7 +25,7 @@ import { NgdsFormComp } from './form.component';
             {{option.label}}
             </nz-form-label>
             <nz-form-control class="uploader" nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-                <div class="upload-item" *ngFor="let item of option.value" (click)="tapItem(item)" [style.width]="option.width+'px'" [style.height]="option.height+'px'">
+                <div class="upload-item" *ngFor="let item of option.value;let itemIndex=index" (click)="tapItem(item,option.value,itemIndex)" [style.width]="option.width+'px'" [style.height]="option.height+'px'">
                     <img *ngIf="isImg(item)" src="{{item.filePath}}"/>
                     <div class="upload-item-video" *ngIf="isVideo(item)">
                         <i class="iconfont icon-play"></i>
@@ -39,7 +39,10 @@ import { NgdsFormComp } from './form.component';
                     <use xlink:href="#icon-shanchu"></use>
                     </svg>
                 </div>
-                <a id="{{getUploaderId()}}" [hidden]="option.limit>0&&option.limit<=option.value.length">+</a>
+                <a id="{{getUploaderId()}}" [hidden]="option.limit>0&&option.limit<=option.value.length">
+                    +
+                    <span class="wh-tip" *ngIf="option.whTip">{{option.whTip}}</span>
+                </a>
                 <webuploader *ngIf="ngxOptions" [options]="ngxOptions" 
                 (onReady)="onReady($event)">
                </webuploader>
@@ -81,7 +84,8 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                     multiple: this.option.multiple
                 },
                 accept: this.getAccept(),
-                compress: this.option.compress
+                compress: this.option.compress,
+                fileSingleSizeLimit: this.option.fileSingleSizeLimit,
             }
         }, 200);
 
@@ -145,7 +149,22 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
             .on('uploadError', (file: File, err: any) => {
                 console.log(err);
                 this.option.errHandler && this.option.errHandler(err);
+            })
+            .on('error', (type: string) => {
+                if (type == "F_EXCEED_SIZE") {
+                    alert(`文件大小不能超过${this.bytesToSize(this.option.fileSingleSizeLimit)}`);
+                }
             });
+    }
+
+    bytesToSize(bytes: any) {
+        if (bytes >= 1073741824) { bytes = (bytes / 1073741824).toFixed(2) + " GB"; }
+        else if (bytes >= 1048576) { bytes = (bytes / 1048576).toFixed(2) + " MB"; }
+        else if (bytes >= 1024) { bytes = (bytes / 1024).toFixed(2) + " KB"; }
+        else if (bytes > 1) { bytes = bytes + " bytes"; }
+        else if (bytes == 1) { bytes = bytes + " byte"; }
+        else { bytes = "0 bytes"; }
+        return bytes;
     }
 
     wrapperData(data: any, file: any) {
@@ -178,7 +197,12 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         }
     }
 
-    tapItem(item: any): void {
+    tapItem(item: any, itemList: Array<any>, index: number): void {
+        if (this.isImg(item)) {
+            this.formConfig.uploaderConfig.tapImage && this.formConfig.uploaderConfig.tapImage(item, itemList, index);
+        } else if (this.isVideo(item)) {
+            this.formConfig.uploaderConfig.tapVideo && this.formConfig.uploaderConfig.tapVideo(item);
+        }
     }
 
     tapDelItem(item: any): void {

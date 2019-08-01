@@ -51,6 +51,7 @@ export {
 	NgdsFormDatePickerRange,
 	NgdsFormCascader,
 	NgdsFormTreeSelect,
+	NgdsFormTextarea,
 
 	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption, NgdsFormInputListCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormCheckboxGroupCompOption, NgdsFormSelectCompOption,

@@ -57,6 +57,9 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
         if (Array.isArray(this.option.dataSource)) {
             this.data = this.option.dataSource;
             this.option.data = this.data;
+            if(this.option.value){
+                this.setValue(this.option.value);
+            }
         } else {
             this.option.dataSource.getData({}).then((model: any) => {
                 for (let item of model.data) {
@@ -79,7 +82,7 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
                 this.option.data = this.data;
             })
         }
-
+        this.onChange();
 
     }
 

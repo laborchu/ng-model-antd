@@ -46,6 +46,7 @@ export class NgdsFormOption {
 
 
 export type onChangeFunc = (option: NgdsFormCompOption, valueObj?: any) => void;
+export type onBlurFunc = (option: NgdsFormCompOption) => void;
 
 export class NgdsFormCompOption {
 	comp: any;
@@ -82,6 +83,7 @@ export class NgdsFormInputCompOption extends NgdsFormCompOption {
 	type: 'text' | 'password';
 	placeHolder?: string;
 	maxLength?: number;
+	blur?: onBlurFunc;
 }
 
 export class NgdsFormInputRangeCompOption extends NgdsFormCompOption {
@@ -92,7 +94,8 @@ export class NgdsFormInputListCompOption extends NgdsFormInputCompOption {
 }
 
 export class NgdsFormTextareaCompOption extends NgdsFormCompOption {
-	height: number;
+	placeHolder?: string;
+	maxLength: number;
 }
 
 

@@ -6,7 +6,7 @@ import {
     NgdsFormOption, NgdsFormInput, NgdsFormInputList, NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormCheckboxGroup, NgdsFormSelect,
     NgdsFormDatePicker, NgdsFormDatePickerRange, NgdsFormCascader,
     NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
-    NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp, NgdsFormTreeSelect
+    NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp, NgdsFormTreeSelect, NgdsFormTextarea, NgdsFormInputCompOption
 } from '../../../../../lib/index';
 import { CustomValidators } from 'ng2-validation';
 
@@ -166,7 +166,9 @@ export class FormComponent implements OnInit {
                         { msg: "用户名不能为空", type: "required", fn: Validators.required },
                         { msg: "长度在5-9", type: "rangeLength", fn: CustomValidators.rangeLength([5, 9]) },
                         { msg: "必须为数字", type: "digits", fn: CustomValidators.digits },
-                    ]
+                    ],blur:(option:NgdsFormInputCompOption)=>{
+                        alert(1)
+                    }
                 },
                 { label: '密码', property: "user.password", comp: NgdsFormInput, type: "password" },
                 { label: '邮件', property: "user.email", comp: NgdsFormInput, type: "email", disabled: true,value:'xxxxxxxx' }
@@ -311,7 +313,7 @@ export class FormComponent implements OnInit {
             ],
             [
                 {
-                    label: '爱好描述', property: "likeDesc", comp: NgdsFormInput, type: "textarea"
+                    label: '爱好描述', property: "likeDesc", comp: NgdsFormTextarea
                 }
             ],
             [

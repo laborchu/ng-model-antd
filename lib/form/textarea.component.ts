@@ -6,14 +6,14 @@ import {
   ComponentFactoryResolver,
   Input
 } from '@angular/core';
-import { NgdsFormConfig, NgdsFormInputCompOption } from './form.config';
+import { NgdsFormConfig, NgdsFormInputCompOption, NgdsFormTextareaCompOption } from './form.config';
 import { NgdsFormComp } from './form.component';
 
 /**
  * A component that makes it easy to create tabbed interface.
  */
 @Component({
-  selector: 'ngds-form-input',
+  selector: 'ngds-form-textarea',
   template: `
   <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
     <nz-form-item nz-row>
@@ -21,12 +21,12 @@ import { NgdsFormComp } from './form.component';
       {{option.label}}
       </nz-form-label>
       <nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-        <input nz-input [attr.disabled]="option.disabled" type="{{option.type}}" placeholder="{{option.placeHolder || '请输入'}}" 
+        <textarea nz-input [attr.disabled]="option.disabled" placeholder="{{option.placeHolder || '请输入'}}" 
         [(ngModel)]="option.value"
         [attr.id]="option.attrId"
         (ngModelChange)="setValue($event);onChange()"
-        (blur)="option.blur&&option.blur(option)"
         [formControl]="getFormControl(option.property)">
+        </textarea>
         <div *ngIf="option.maxLength" class="input-limit">{{option.value?option.value.length:0}}/{{option.maxLength}}</div>
         
         <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
@@ -42,12 +42,12 @@ import { NgdsFormComp } from './form.component';
   </div>
   `
 })
-export class NgdsFormInput extends NgdsFormComp implements AfterContentChecked {
+export class NgdsFormTextarea extends NgdsFormComp implements AfterContentChecked {
   constructor() {
     super();
   }
 
-  option: NgdsFormInputCompOption;
+  option: NgdsFormTextareaCompOption;
   oldValue: string;
   preValue: string;
 

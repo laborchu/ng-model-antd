@@ -39,7 +39,7 @@ import { NgdsFormComp } from './form.component';
                     <use xlink:href="#icon-shanchu"></use>
                     </svg>
                 </div>
-                <a id="{{getUploaderId()}}" [hidden]="option.limit>0&&option.limit<=option.value.length">
+                <a id="{{getUploaderId()}}" [style.visibility]="option.limit>0&&option.limit<=option.value.length?'hidden':'unset'">
                     +
                     <span class="wh-tip" *ngIf="option.whTip">{{option.whTip}}</span>
                 </a>

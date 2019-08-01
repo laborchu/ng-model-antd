@@ -56,6 +56,9 @@ import {
 import {
 	NgdsFormTreeSelect
 } from './tree-select.component';
+import {
+	NgdsFormTextarea
+} from './textarea.component';
 
 
 export { NgdsForm } from './form';
@@ -104,9 +107,12 @@ export {
 export {
 	NgdsFormTreeSelect
 } from './tree-select.component';
+export {
+	NgdsFormTextarea
+} from './textarea.component';
 
 const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox,NgdsFormCheckboxGroup, NgdsFormSelect, 
-	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar,NgdsFormTreeSelect];
+	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar,NgdsFormTreeSelect,NgdsFormTextarea];
 
 @NgModule({ 
 	declarations: NGB_TABSET_DIRECTIVES, 

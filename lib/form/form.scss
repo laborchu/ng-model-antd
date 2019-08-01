@@ -144,7 +144,15 @@
 
     .form-item-tip{
         font-size: 12px;
-        color: #666;
+        color: #999;
+        line-height: 0px;
+        margin-bottom: 10px;
+    }
+
+    ngds-form-input{
+        .form-item-tip{
+            margin-top: 5px;
+        }
     }
     
     .ant-form-item{

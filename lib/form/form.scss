@@ -61,6 +61,7 @@
         .webuploader-container {
             width: 80px;
             height: 80px;
+            display: inline-block;
 
             .webuploader-pick {
                 width: 80px;
@@ -77,7 +78,7 @@
                 }
             }
             div:nth-child(2) {
-                top: -68px !important;
+                top: 0px !important;
                 left: 0px !important;
                 width: 80px !important;
                 height: 80px !important;

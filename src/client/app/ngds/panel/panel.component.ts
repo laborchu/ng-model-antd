@@ -82,6 +82,24 @@ export class PanelComponent implements OnInit {
                     })
                 }
             }
+        ],
+        groupButtons:[
+            {
+                text:'导出',
+                buttons:[
+                    {
+                        text: '导出分类',
+                        action: (item) => {
+                            alert('导出分类')
+                        }
+                    },
+                    {
+                        text: '导出商品',
+                        action: (item) => {
+                        }
+                    }
+                ]
+            }
         ]
     }
 

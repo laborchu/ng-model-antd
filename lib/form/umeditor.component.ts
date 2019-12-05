@@ -69,11 +69,21 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
         }
         setTimeout(() => {
             this.showEditor = true;
+            setTimeout(() => {
+                let umEditor: any = this.editor;
+                this.editor.ngOnDestroy = function () {
+                    try {
+                        umEditor.destroy();
+                    } catch (e) {
+                    }
+                };
+            })
         }, 100)
     }
 
     editorReady() {
-        this.editor.addListener(<any>'contentChange', (event: string,data:any) => {
+        
+        this.editor.addListener(<any>'contentChange', (event: string, data: any) => {
             let content = this.editor.Instance.getContent();
             this.zone.run(() => this.onChange(content));
         });
@@ -107,6 +117,10 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
             }
         }
         this.option.onChange && this.option.onChange(this.option, value);
+    }
+
+    setCompValue(formValue: any, compKey: string, compValue: any): void {
+        formValue[this.option.property] = (<any>this.editor).instance.getContent();
     }
 
     ngAfterContentChecked() {

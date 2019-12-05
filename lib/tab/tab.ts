@@ -54,8 +54,11 @@ export class NgdsTab {
             this.option.dsLabel = "label";
         }
 
-        if(this.option.remember!==false){
+        if (this.option.remember !== false) {
             this.selectIndex = hashMap.get(this.option.id || location.pathname) || 0;
+        }
+        if (this.option.selectIndex) {
+            this.selectIndex = this.option.selectIndex;
         }
         this.option.tabSource.getData({}).then((data: Array<any>) => {
             this.tabArray = data
@@ -73,7 +76,7 @@ export class NgdsTab {
     }
 
     tabSelect(event: any, index: number) {
-        if(this.option.remember!==false){
+        if (this.option.remember !== false) {
             hashMap.set(this.option.id || location.pathname, index);
         }
         this.selectIndex = index;
@@ -81,7 +84,7 @@ export class NgdsTab {
         this.ngdsTabSelect.emit(this.tabArray[index]);
     }
 
-    move(target:any){
+    move(target: any) {
         const progressAnimation = this.animBuilder.build([
             animate(`200ms`, style({
                 'left': target.offsetLeft,

@@ -35,7 +35,9 @@ let hashPageMap: Map<number, any> = new Map();
           <th nzShowCheckbox
           [nzIndeterminate]="_indeterminate"
           (nzCheckedChange)="_checkAll($event)"
+          [nzShowRowSelection]="option.table.selections && option.table.selections.length"
           [(nzChecked)]="_allChecked" 
+          [nzSelections]="option.table.selections"
           *ngIf="option.table.showCheck">
           </th>
           <th *ngFor="let col of option.table.columns;" [nzWidth]="col.width" [nzShowSort]="col.showSort" (nzSortChange)="_sort(col.property,$event)">
@@ -137,6 +139,22 @@ export class NgdsDataGrid implements AfterContentChecked {
     if (this.option.table.op && this.option.table.op.buttons) {
       for (let btn of this.option.table.op.buttons) {
         btn.key = this.hashCode(JSON.stringify(btn))
+      }
+    }
+
+    if (this.option.table.selections) {
+      for (let section of this.option.table.selections) {
+        section.onSelect = () => {
+          let checkedArray: Array<any> = [];
+          let keyArray = Object.keys(this.originDataCache);
+          for (let key of keyArray) {
+            let item = this.originDataCache[key];
+            if (item.checked) {
+              checkedArray.push(item);
+            }
+          }
+          section.onClick(checkedArray);
+        }
       }
     }
 
@@ -300,6 +318,7 @@ export class NgdsDataGrid implements AfterContentChecked {
       this.initTreeData();
     }
   }
+
   initTreeData() {
     this.option.dataKey = this.option.dataKey || "id";
     this.expandDataCache = {}
@@ -308,6 +327,7 @@ export class NgdsDataGrid implements AfterContentChecked {
       this.expandDataCache[item[this.option.dataKey]] = this.convertTreeToList(item);
     });
   }
+
   convertTreeToList(root: any) {
     const stack: any = [], array: any = [], hashMap: any = {};
     stack.push({ ...root, level: 0, expand: (root.expand || false) });

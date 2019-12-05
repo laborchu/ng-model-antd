@@ -32,11 +32,11 @@ import { permFunc } from '../datagrid/datagrid.config';
                 {{btn.text}}
             </a>
             <span *ngFor="let groupButton of option.groupButtons;let groupIndex = index" [hidden]="hideGroupButton(groupButton.buttons,item)">
-                <nz-dropdown [nzPlacement]="'bottomRight'">
-                    <a class="ant-dropdown-link" nz-dropdown>
-                        {{groupButton.text}}
-                        <i nz-icon type="down" theme="outline"></i>
-                    </a>
+                <a class="ant-dropdown-link" nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+                    {{groupButton.text}}
+                    <i nz-icon type="down" theme="outline"></i>
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
                     <ul nz-menu>
                         <li [hidden]="(gbtn.hidden?gbtn.hidden(item):false)||!hasPerm(gbtn.permCode,item)" nz-menu-item 
                         *ngFor="let gbtn of groupButton.buttons">
@@ -45,7 +45,7 @@ import { permFunc } from '../datagrid/datagrid.config';
                         </a>
                         </li>
                     </ul>
-                </nz-dropdown>
+                </nz-dropdown-menu>
             </span>
         </ng-template>
     `

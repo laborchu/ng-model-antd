@@ -42,7 +42,7 @@ export class NgdsTab {
     @Input() option: NgdsTabOption;
     tabArray: Array<any>;
     @ViewChildren('tabComp') tabCompArray: QueryList<ElementRef>;
-    @ViewChild('tabBar') tabBar: ElementRef;
+    @ViewChild('tabBar', { static: false }) tabBar: ElementRef;
     @Output() ngdsTabSelect: EventEmitter<any> = new EventEmitter();
 
     selectElemWidth: number = 0;

@@ -8,7 +8,6 @@ import {
     Inject,
     NgZone
 } from '@angular/core';
-import { Response, Headers, RequestOptions } from '@angular/http';
 import { UMeditorComponent } from 'ngx-umeditor';
 import { NgdsFormConfig, NgdsFormUploaderCompOption } from './form.config';
 import { WebUploaderComponent, File, FileStatus, Options } from 'ngx-webuploader';

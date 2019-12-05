@@ -2,7 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_BASE_HREF,registerLocaleData } from '@angular/common';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { createInputTransfer, createNewHosts, removeNgStyles } from '@angularclass/hmr';
 import { NgZorroAntdModule, NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd';
@@ -29,7 +29,7 @@ require('../../../node_modules/ng-zorro-antd/ng-zorro-antd.css');
 import '../../../lib/ngds.scss';
 
 @NgModule({
-	imports: [BrowserModule, BrowserAnimationsModule, HttpModule, AppRoutingModule,
+	imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule,
 		NgdsModule.forRoot(),
 		SharedModule.forRoot()],
 	declarations: [AppComponent, DataGridComponent, DemoColumnComponent, PanelComponent, FormComponent, TabComponent, BlockComponent],

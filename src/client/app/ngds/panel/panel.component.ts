@@ -90,7 +90,23 @@ export class PanelComponent implements OnInit {
                     {
                         text: '导出分类',
                         action: (item) => {
-                            alert('导出分类')
+                            alert('导出分类1')
+                        }
+                    },
+                    {
+                        text: '导出商品',
+                        action: (item) => {
+                        }
+                    }
+                ]
+            },
+            {
+                text:'导出2',
+                buttons:[
+                    {
+                        text: '导出分类',
+                        action: (item) => {
+                            alert('导出分类2')
                         }
                     },
                     {

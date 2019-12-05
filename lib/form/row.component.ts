@@ -26,7 +26,7 @@ export class NgdsFormRow extends NgdsFormComp {
   constructor() {
     super();
   }
-  @ViewChild("rowRef", { read: ViewContainerRef }) rowRef: ViewContainerRef;
+  @ViewChild("rowRef", { read: ViewContainerRef, static: false }) rowRef: ViewContainerRef;
   gutter: number;
   nzType: string;
 

@@ -63,7 +63,7 @@ export class NgdsColumn {
     constructor(@Inject(ComponentFactoryResolver) private cfr: ComponentFactoryResolver, ) {
     }
 
-    @ViewChild("columnRef", { read: ViewContainerRef }) columnRef: ViewContainerRef;
+    @ViewChild("columnRef", { read: ViewContainerRef, static: false }) columnRef: ViewContainerRef;
     @Input() colOption: NgdsDataGridColumnOption;
     @Input() item: any;
     hasCustomComp: boolean = false;

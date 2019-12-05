@@ -47,7 +47,7 @@ export class NgdsFormRadio extends NgdsFormComp implements AfterContentChecked {
   constructor() {
     super();
   }
-  @ViewChild('group') group: NzRadioGroupComponent;
+  @ViewChild('group', { static: false }) group: NzRadioGroupComponent;
 
   option: NgdsFormRadioCompOption;
   data: Array<any>;

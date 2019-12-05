@@ -36,7 +36,7 @@ export class NgdsForm implements AfterContentChecked {
     @Inject(FormBuilder) private fb: FormBuilder) {
     }
 
-    @ViewChild("formRef", { read: ViewContainerRef }) formRef: ViewContainerRef;
+    @ViewChild("formRef", { read: ViewContainerRef, static: false }) formRef: ViewContainerRef;
     _option: NgdsFormOption;
     @Input() set option(o: NgdsFormOption) {
         this._option = o;

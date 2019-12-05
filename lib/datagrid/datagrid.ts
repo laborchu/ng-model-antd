@@ -76,11 +76,11 @@ let hashPageMap: Map<number, any> = new Map();
                   </span>
                   <span *ngFor="let groupButton of option.table.op.groupButtons;let groupIndex = index" [hidden]="hideGroupButton(groupButton.buttons,item)">
                     <nz-divider nzType="vertical"></nz-divider>
-                    <nz-dropdown>
-                        <a class="ant-dropdown-link" nz-dropdown>
-                          {{getBtnText(groupButton,item)}} 
-                          <i nz-icon type="down" theme="outline"></i>
-                        </a>
+                    <a class="ant-dropdown-link" nz-dropdown [nzDropdownMenu]="menu">
+                      {{getBtnText(groupButton,item)}} 
+                      <i nz-icon type="down" theme="outline"></i>
+                    </a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
                           <li [hidden]="(gbtn.hidden?gbtn.hidden(item):false)||!hasPerm(gbtn.permCode,item)" nz-menu-item 
                             *ngFor="let gbtn of groupButton.buttons">
@@ -90,7 +90,7 @@ let hashPageMap: Map<number, any> = new Map();
                             </a>
                           </li>
                         </ul>
-                      </nz-dropdown>
+                      </nz-dropdown-menu>
                   </span>
               </td>
             </tr>

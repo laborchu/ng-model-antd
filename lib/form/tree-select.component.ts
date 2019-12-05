@@ -57,7 +57,7 @@ export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChec
     option: NgdsFormTreeSelectCompOption;
     data: Array<any> = [];
     oldValue: any;
-    @ViewChild("treeSelect") treeSelect: NzTreeSelectComponent;
+    @ViewChild("treeSelect", { static: false }) treeSelect: NzTreeSelectComponent;
 
     ngOnInit() {
         this.option.value = this.option.value || null;

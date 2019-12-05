@@ -47,7 +47,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
         super();
     }
 
-    @ViewChild('editor') editor: UMeditorComponent;
+    @ViewChild('editor', { static: false }) editor: UMeditorComponent;
 
     setting = {
         //默认的编辑区域宽度
@@ -82,7 +82,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
     }
 
     editorReady() {
-        
+
         this.editor.addListener(<any>'contentChange', (event: string, data: any) => {
             let content = this.editor.Instance.getContent();
             this.zone.run(() => this.onChange(content));

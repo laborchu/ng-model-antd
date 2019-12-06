@@ -1,15 +1,6 @@
-import {
-    Component,
-    AfterContentChecked,
-    ViewContainerRef,
-    ViewChild,
-    ComponentFactoryResolver,
-    Injectable,
-    Input
-} from '@angular/core';
-import { NgdsFormConfig, NgdsFormDatePickerCompOption } from './form.config';
+import { AfterContentChecked, Component } from '@angular/core';
 import { NgdsFormComp } from './form.component';
-import { NgdsModel } from '../core/datasource';
+import { NgdsFormDatePickerCompOption } from './form.config';
 
 
 /**

@@ -277,7 +277,7 @@ export class DataGridComponent implements OnInit {
                     width: "130px",
                     tags: [
                         {
-                            tagColor: 'volcano', tagLabel: '普'
+                            tagColor: 'volcano', tagLabel: '普' , tip:'测试'
                         },
                         {
                             tagColor: 'volcano', tagLabel: '普'

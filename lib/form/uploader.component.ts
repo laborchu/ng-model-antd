@@ -1,17 +1,7 @@
-import {
-    Component,
-    OnInit,
-    ViewContainerRef,
-    ViewChild,
-    ComponentFactoryResolver,
-    Input,
-    Inject,
-    NgZone
-} from '@angular/core';
-import { UMeditorComponent } from 'ngx-umeditor';
-import { NgdsFormConfig, NgdsFormUploaderCompOption } from './form.config';
-import { WebUploaderComponent, File, FileStatus, Options } from 'ngx-webuploader';
+import { Component, Inject, OnInit } from '@angular/core';
+import { File, Options, WebUploaderComponent } from 'ngx-webuploader';
 import { NgdsFormComp } from './form.component';
+import { NgdsFormConfig, NgdsFormUploaderCompOption } from './form.config';
 
 /**
  * A component that makes it easy to create tabbed interface.

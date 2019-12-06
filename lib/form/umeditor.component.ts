@@ -1,16 +1,7 @@
-import {
-    Component,
-    AfterContentChecked,
-    ViewContainerRef,
-    ViewChild,
-    ComponentFactoryResolver,
-    Input,
-    NgZone,
-    Inject
-} from '@angular/core';
+import { AfterContentChecked, Component, Inject, NgZone, ViewChild } from '@angular/core';
 import { UMeditorComponent } from 'ngx-umeditor';
-import { NgdsFormConfig, NgdsFormUmeditorCompOption } from './form.config';
 import { NgdsFormComp } from './form.component';
+import { NgdsFormUmeditorCompOption } from './form.config';
 
 /**
  * A component that makes it easy to create tabbed interface.

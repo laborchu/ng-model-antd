@@ -81,6 +81,7 @@ export interface NgdsDataGridColumnTagOption {
 	tagColor: string | pipeFunc;
 	tagLabel: string | pipeFunc;
 	show?: string | pipeFunc;
+	tip?: string;
 }
 
 export interface NgdsDataGridOpOption {

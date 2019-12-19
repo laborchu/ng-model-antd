@@ -51,7 +51,7 @@ let hashPageMap: Map<number, any> = new Map();
           <ng-template ngFor let-item [ngForOf]="expandDataCache[data[option.dataKey]]">
             <tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)">
               <td nzShowCheckbox 
-              (nzCheckedChange)="_refreshStatus($event)"
+              (nzCheckedChange)="_refreshStatus($event,item)"
               [(nzChecked)]="originDataCache[item[option.dataKey]].checked" 
               [nzDisabled]="item.disabled" 
               *ngIf="option.table.showCheck">
@@ -383,10 +383,11 @@ export class NgdsDataGrid implements AfterContentChecked {
     } else {
       this.data.forEach(data => data.checked = false);
     }
-    this._refreshStatus();
+    this._refreshStatus(null,null);
   };
 
-  _refreshStatus() {
+  _refreshStatus(value:any,item:any) {
+    this.option.table.getCheckInfo(value,item);
     setTimeout(() => {
       const allChecked = this.data.every(value => value.disabled || value.checked);
       const allUnChecked = this.data.every(value => value.disabled || !value.checked);

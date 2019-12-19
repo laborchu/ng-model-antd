@@ -243,6 +243,10 @@ export class DataGridComponent implements OnInit {
                     }
                 }
             ],
+            getCheckInfo: (value:Boolean,data:any)=>{
+                console.log(value);
+                console.log(data);
+            },
             expandChange: (item: any, extend: any) => {
                 if (!item.children) {
                     if (item.id == 1) {

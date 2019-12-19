@@ -29,6 +29,7 @@ export type textFunc = (data: any) => string;
 export type editFinishFunc = (item: any) => void;
 export type canEditFunc = (item: any) => boolean;
 export type clickFunc = (item: any) => void;
+export type checkChange = (value: boolean, item: any) => void;
 export type expandChange = (item: any, extend: any) => void;
 export type onSelect = () => void;
 
@@ -45,6 +46,7 @@ export interface NgdsDataGridTableOption {
 	columns: Array<NgdsDataGridColumnOption>;
 	op?: NgdsDataGridOpOption;
 	showCheck?: boolean;
+	getCheckInfo?: checkChange;
 	expandChange?: expandChange;
 	selections?: Array<NgdsDataGridSelectionsOption>;
 }

@@ -1,17 +1,7 @@
-import {
-    Component,
-    OnInit,
-    ViewContainerRef,
-    ViewChild,
-    ComponentFactoryResolver,
-    Input,
-    Inject
-} from '@angular/core';
-import { Response, Headers, RequestOptions } from '@angular/http';
-import { UMeditorComponent } from 'ngx-umeditor';
-import { NgdsFormConfig, NgdsFormUploaderCompOption } from './form.config';
-import { WebUploaderComponent, File, FileStatus, Options } from 'ngx-webuploader';
+import { Component, Inject, OnInit } from '@angular/core';
+import { File, Options, WebUploaderComponent } from 'ngx-webuploader';
 import { NgdsFormComp } from './form.component';
+import { NgdsFormConfig, NgdsFormUploaderCompOption } from './form.config';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -19,7 +9,7 @@ import { NgdsFormComp } from './form.component';
 @Component({
     selector: 'ngds-form-uploader',
     template: `
-    <div nz-col [nzSpan]="option.span" *ngIf="!option.hidden">
+    <div nz-col [nzSpan]="option.span" *ngIf="show" [hidden]="option.hidden">
         <nz-form-item nz-row>
             <nz-form-label nz-col [nzSpan]="option.labelSpan">
             {{option.label}}
@@ -65,6 +55,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
 
     option: NgdsFormUploaderCompOption;
     ngxOptions: Options;
+    show: boolean = false;
 
     ngOnInit() {
         if (this.option.multiple == undefined) {
@@ -76,7 +67,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         if (this.option.limit == undefined) {
             this.option.limit = 5;
         }
-
+        this.show = true;
         setTimeout(() => {
             this.ngxOptions = {
                 pick: {
@@ -112,6 +103,16 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
         return null;
     }
     onReady(uploader: WebUploaderComponent) {
+        uploader.ngOnDestroy = function () {
+            if (this.instance) {
+                try {
+                    this.instance.destroy();
+                    this.instance = null;
+                } catch (e) {
+                }
+            }
+            this.onDestroy.emit();
+        }
         uploader.Instance.options.server = this.formConfig.uploaderConfig.server;
         uploader.Instance
             .on('fileQueued', (file: any) => {

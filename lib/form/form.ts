@@ -1,18 +1,6 @@
-import {
-    Component,
-    AfterContentChecked,
-    ViewContainerRef,
-    ViewChild,
-    Output,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ComponentFactory,
-    EventEmitter,
-    Input,
-    Inject
-} from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { NgdsFormConfig, NgdsFormOption, NgdsFormCompOption } from './form.config';
+import { AfterContentChecked, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, EventEmitter, Inject, Input, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgdsFormOption } from './form.config';
 import { NgdsFormRow } from './row.component';
 import { NgdsFormSearchBar } from './search-bar.component';
 let hashPageMap: Map<number, any> = new Map();
@@ -33,10 +21,10 @@ let hashPageMap: Map<number, any> = new Map();
 export class NgdsForm implements AfterContentChecked {
     constructor(
         @Inject(ComponentFactoryResolver) private cfr: ComponentFactoryResolver,
-    @Inject(FormBuilder) private fb: FormBuilder) {
+        @Inject(FormBuilder) private fb: FormBuilder) {
     }
 
-    @ViewChild("formRef", { read: ViewContainerRef }) formRef: ViewContainerRef;
+    @ViewChild("formRef", { static: true, read: ViewContainerRef }) formRef: ViewContainerRef;
     _option: NgdsFormOption;
     @Input() set option(o: NgdsFormOption) {
         this._option = o;
@@ -146,7 +134,7 @@ export class NgdsForm implements AfterContentChecked {
     }
 
     checkVal(): boolean {
-        if(this.myForm.valid){
+        if (this.myForm.valid) {
             return true;
         }
         for (var key in this.myForm.controls) {

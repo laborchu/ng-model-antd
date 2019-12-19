@@ -31,6 +31,22 @@ import { permFunc } from '../datagrid/datagrid.config';
                 <i nz-icon type="loading" theme="outline" [spin]="true" *ngIf="btn.loading"></i>
                 {{btn.text}}
             </a>
+            <span *ngFor="let groupButton of option.groupButtons;let groupIndex = index" [hidden]="hideGroupButton(groupButton.buttons,item)">
+                <a class="ant-dropdown-link" nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+                    {{groupButton.text}}
+                    <i nz-icon type="down" theme="outline"></i>
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                        <li [hidden]="(gbtn.hidden?gbtn.hidden(item):false)||!hasPerm(gbtn.permCode,item)" nz-menu-item 
+                        *ngFor="let gbtn of groupButton.buttons">
+                        <a (click)="gbtn.action(item)">
+                            {{gbtn.text}}
+                        </a>
+                        </li>
+                    </ul>
+                </nz-dropdown-menu>
+            </span>
         </ng-template>
     `
 })
@@ -76,6 +92,17 @@ export class NgdsPanel implements AfterContentChecked {
                 })
             }
         }
+    }
+
+    hideGroupButton(groupButtonArray: Array<NgdsPanelBtnOption>, item: string): boolean {
+        for (let gbtn of groupButtonArray) {
+            let gbtnHidden = gbtn.hidden;
+            let gbtnHasPerm = this.hasPerm(gbtn.permCode);
+            if (!gbtnHidden && gbtnHasPerm) {
+                return false;
+            }
+        }
+        return true;
     }
 
     ngAfterContentChecked() {

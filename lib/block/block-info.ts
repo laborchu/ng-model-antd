@@ -23,7 +23,7 @@ import { NgdsDataSource, NgdsModel } from '../core/datasource';
                     <a (click)="item.click(item.field,data)">{{getText(item)}}</a>
                 </span>
                 <span class="info-content" *ngIf="item.type=='image'">
-                    <img src="{{img}}" *ngFor="let img of data[item.field];let imgIndex = index;" [style.width.px]="item.width"  [style.height.px]="item.height" 
+                    <img [src]="img" *ngFor="let img of data[item.field];let imgIndex = index;" [style.width.px]="item.width"  [style.height.px]="item.height" 
                     [ngClass]="{'can-click':item.imgClick}" 
                     (click)="item.imgClick&&item.imgClick(img,imgIndex)"/>
                 </span>

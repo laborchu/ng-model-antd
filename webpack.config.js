@@ -46,15 +46,13 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
         alias: {
-            "ng-model-antd": 'ng-model-antd/bundles/ng-model-antd.umd.js',
             "@angular/core": '@angular/core/bundles/core.umd.min.js',
             "@angular/router": '@angular/router/bundles/router.umd.min.js',
             "@angular/form": '@angular/form/bundles/form.umd.min.js',
             "@angular/platform-browser/animations": root("./node_modules/@angular/platform-browser/bundles/platform-browser-animations.umd.min.js"),
             "@angular/platform-browser": '@angular/platform-browser/bundles/platform-browser.umd.min.js',
             "@angular/platform-browser-dynamic": '@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.min.js',
-            "@angular/http": '@angular/http/bundles/http.umd.min.js',
-            "ng-zorro-antd": 'ng-zorro-antd/bundles/ng-zorro-antd.umd.js',
+            // "ng-zorro-antd": 'ng-zorro-antd/bundles/ng-zorro-antd.umd.js',
             "ngx-umeditor": 'ngx-umeditor/bundles/umeditor.umd.js',
             "rxjs/Rx": 'rxjs/bundles/Rx.min.js',
             '*': root('./node_modules/*')

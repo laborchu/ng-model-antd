@@ -17,6 +17,7 @@ export class NgdsPanelOption {
     
 	crumbs: Array<NgdsPanelCrumbsOption>
     buttons?: Array<NgdsPanelBtnOption>;
+	groupButtons?: Array<NgdsPanelGroupBtnOption>;
     permMap?: any;
 
 }
@@ -25,6 +26,13 @@ export class NgdsPanelCrumbsOption {
 	text: string;
 	action?: crumbsFunc;
 }
+
+export interface NgdsPanelGroupBtnOption {
+	text: string;
+	buttons: Array<NgdsPanelBtnOption>;
+	hidden?: (data: any) => boolean;
+}
+
 
 export interface NgdsPanelBtnOption {
     text: string;

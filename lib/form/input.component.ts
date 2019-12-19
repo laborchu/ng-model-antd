@@ -1,13 +1,6 @@
-import {
-  Component,
-  AfterContentChecked,
-  ViewContainerRef,
-  ViewChild,
-  ComponentFactoryResolver,
-  Input
-} from '@angular/core';
-import { NgdsFormConfig, NgdsFormInputCompOption } from './form.config';
+import { AfterContentChecked, Component } from '@angular/core';
 import { NgdsFormComp } from './form.component';
+import { NgdsFormInputCompOption } from './form.config';
 
 /**
  * A component that makes it easy to create tabbed interface.

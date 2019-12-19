@@ -1,21 +1,6 @@
-import {
-    Component,
-    AfterContentChecked,
-    ViewContainerRef,
-    Input,
-    EventEmitter,
-    Output,
-    ViewChild,
-    ComponentFactory,
-    ComponentFactoryResolver,
-    PipeTransform,
-    Inject
-} from '@angular/core';
+import { Component, ComponentFactory, ComponentFactoryResolver, Inject, Input, PipeTransform, ViewChild, ViewContainerRef } from '@angular/core';
+import { NgdsDataGridColumnOption, NgdsDataGridColumnTagOption, pipeFunc } from './datagrid.config';
 
-import {
-    NgdsDataGridConfig, NgdsDataGridOption, NgdsDataGridOpBtnOption, pipeFunc,
-    NgdsDataGridColumnOption, NgdsDataGridModel, NgdsDataGridPageModel, NgdsDataGridColumnTagOption
-} from './datagrid.config';
 
 @Component({
     selector: 'ngds-column',
@@ -31,7 +16,7 @@ import {
             </span> 
 
             <span class="column-tag" *ngIf="colOption.tags&&colOption.tags.length">
-                <span *ngFor="let tag of colOption.tags">
+                <span nz-tooltip nzTooltipTitle="{{tag.tip}}" *ngFor="let tag of colOption.tags">
                     <nz-tag *ngIf="tag.show?tag.show(colOption.property,item):true" [nzColor]="getTagColor(tag)">{{getTagLabel(tag)}}</nz-tag>
                 </span>
             </span>
@@ -63,7 +48,7 @@ export class NgdsColumn {
     constructor(@Inject(ComponentFactoryResolver) private cfr: ComponentFactoryResolver, ) {
     }
 
-    @ViewChild("columnRef", { read: ViewContainerRef }) columnRef: ViewContainerRef;
+    @ViewChild("columnRef", { static: true, read: ViewContainerRef }) columnRef: ViewContainerRef;
     @Input() colOption: NgdsDataGridColumnOption;
     @Input() item: any;
     hasCustomComp: boolean = false;

@@ -217,7 +217,7 @@ export class FormComponent implements OnInit {
                     property: "location",
                     comp: NgdsFormSelect,
                     model:'tags',
-                    // dataSource: new SelectDataSource(),
+                    dataSource: new SelectDataSource(),
                     onChange: (option: NgdsFormCompOption, value: any) => {
                     },
                     validations: [
@@ -304,11 +304,7 @@ export class FormComponent implements OnInit {
                     comp: NgdsFormUploader,
                     width: 200,
                     whTip:'400*300',
-                    fileSingleSizeLimit:1024*6,
-                    value: [{
-                        filePath: "sss",
-                        fileType: "images"
-                    }]
+                    fileSingleSizeLimit:1024*6
                 },
             ],
             [

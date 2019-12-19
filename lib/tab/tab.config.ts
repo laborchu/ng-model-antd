@@ -17,5 +17,6 @@ export class NgdsTabOption {
     tabSource: NgdsDataSource;
     remember?:boolean;
     dsLabel?:string;
+    selectIndex?:number;
 }
 

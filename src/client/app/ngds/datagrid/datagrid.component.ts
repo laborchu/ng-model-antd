@@ -229,6 +229,20 @@ export class DataGridComponent implements OnInit {
         dataSource: new DemoDataSource(),
         table: {
             showCheck: true,
+            selections: [
+                {
+                    text: '上架',
+                    onClick: (data:any) => {
+                        debugger
+                    }
+                },
+                {
+                    text: '下架',
+                    onClick: (data:any) => {
+                        debugger
+                    }
+                }
+            ],
             expandChange: (item: any, extend: any) => {
                 if (!item.children) {
                     if (item.id == 1) {
@@ -252,7 +266,7 @@ export class DataGridComponent implements OnInit {
                     text: '用户名', property: "username", canEdit: true, editFinish: (item: any) => {
                         this.option.table.columns[2].hidden = !this.option.table.columns[2].hidden;
                     },
-                    subProperty:'name',subPropertyClick:()=>{
+                    subProperty: 'name', subPropertyClick: () => {
 
                     }
                 },
@@ -261,9 +275,9 @@ export class DataGridComponent implements OnInit {
                         debugger
                     },
                     width: "130px",
-                    tags:[
+                    tags: [
                         {
-                            tagColor: 'volcano', tagLabel: '普'
+                            tagColor: 'volcano', tagLabel: '普' , tip:'测试'
                         },
                         {
                             tagColor: 'volcano', tagLabel: '普'
@@ -318,10 +332,10 @@ export class DataGridComponent implements OnInit {
                             return false;
                         },
                         action: function (item) {
-                            return new Promise((resolve)=>{
-                                setTimeout(()=>{
+                            return new Promise((resolve) => {
+                                setTimeout(() => {
                                     resolve()
-                                },5000)
+                                }, 5000)
                             })
                         }
                     }

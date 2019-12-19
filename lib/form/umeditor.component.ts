@@ -1,16 +1,7 @@
-import {
-    Component,
-    AfterContentChecked,
-    ViewContainerRef,
-    ViewChild,
-    ComponentFactoryResolver,
-    Input,
-    NgZone,
-    Inject
-} from '@angular/core';
+import { AfterContentChecked, Component, Inject, NgZone, ViewChild } from '@angular/core';
 import { UMeditorComponent } from 'ngx-umeditor';
-import { NgdsFormConfig, NgdsFormUmeditorCompOption } from './form.config';
 import { NgdsFormComp } from './form.component';
+import { NgdsFormUmeditorCompOption } from './form.config';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -47,7 +38,7 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
         super();
     }
 
-    @ViewChild('editor') editor: UMeditorComponent;
+    @ViewChild('editor', { static: false }) editor: UMeditorComponent;
 
     setting = {
         //默认的编辑区域宽度
@@ -69,11 +60,21 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
         }
         setTimeout(() => {
             this.showEditor = true;
+            setTimeout(() => {
+                let umEditor: any = this.editor;
+                this.editor.ngOnDestroy = function () {
+                    try {
+                        umEditor.destroy();
+                    } catch (e) {
+                    }
+                };
+            })
         }, 100)
     }
 
     editorReady() {
-        this.editor.addListener(<any>'contentChange', (event: string,data:any) => {
+
+        this.editor.addListener(<any>'contentChange', (event: string, data: any) => {
             let content = this.editor.Instance.getContent();
             this.zone.run(() => this.onChange(content));
         });
@@ -107,6 +108,10 @@ export class NgdsFormUmeditor extends NgdsFormComp implements AfterContentChecke
             }
         }
         this.option.onChange && this.option.onChange(this.option, value);
+    }
+
+    setCompValue(formValue: any, compKey: string, compValue: any): void {
+        formValue[this.option.property] = (<any>this.editor).instance.getContent();
     }
 
     ngAfterContentChecked() {

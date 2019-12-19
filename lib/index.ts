@@ -88,7 +88,7 @@ const NGB_MODULES = [
 		NgdsFormModule.forRoot(),
 		NgdsTabModule.forRoot(),
 		NgdsBlockModule.forRoot(),
-		NgZorroAntdModule.forRoot(),
+		NgZorroAntdModule,
 		NgdsPipeModule.forRoot()
 	],
 	exports: NGB_MODULES

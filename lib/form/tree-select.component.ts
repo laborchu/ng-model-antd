@@ -1,16 +1,7 @@
-import {
-    Component,
-    AfterContentChecked,
-    ViewContainerRef,
-    ViewChild,
-    ComponentFactoryResolver,
-    Injectable,
-    Input
-} from '@angular/core';
-import { NgdsFormConfig, NgdsFormDatePickerCompOption, NgdsFormTreeSelectCompOption } from './form.config';
-import { NgdsFormComp } from './form.component';
-import { NgdsModel } from '../core/datasource';
+import { AfterContentChecked, Component, ViewChild } from '@angular/core';
 import { NzFormatEmitEvent, NzTreeSelectComponent } from 'ng-zorro-antd';
+import { NgdsFormComp } from './form.component';
+import { NgdsFormTreeSelectCompOption } from './form.config';
 
 
 /**
@@ -57,7 +48,7 @@ export class NgdsFormTreeSelect extends NgdsFormComp implements AfterContentChec
     option: NgdsFormTreeSelectCompOption;
     data: Array<any> = [];
     oldValue: any;
-    @ViewChild("treeSelect") treeSelect: NzTreeSelectComponent;
+    @ViewChild("treeSelect", { static: false }) treeSelect: NzTreeSelectComponent;
 
     ngOnInit() {
         this.option.value = this.option.value || null;

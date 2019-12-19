@@ -1,14 +1,6 @@
-import {
-    Component,
-    AfterContentChecked,
-    ViewContainerRef,
-    ViewChild,
-    ComponentFactoryResolver,
-    Input
-} from '@angular/core';
-import { NgdsFormConfig, NgdsFormCheckboxCompOption } from './form.config';
-import { NgdsModel } from '../core/datasource';
+import { AfterContentChecked, Component } from '@angular/core';
 import { NgdsFormComp } from './form.component';
+import { NgdsFormCheckboxCompOption } from './form.config';
 
 
 /**
@@ -97,6 +89,9 @@ export class NgdsFormCheckbox extends NgdsFormComp implements AfterContentChecke
     }
 
     setValue(value: any) {
+        if(!this.data){
+            return;
+        }
         if (value === undefined) {
             this.option.value = [];
             for (let item of this.data) {

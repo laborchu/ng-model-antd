@@ -24,20 +24,21 @@ export interface NgdsDataGridPageModel extends NgdsModel {
 export type styleFunc = (data: any) => string;
 export type loadingFunc = (data: any) => boolean;
 export type permFunc = (data: any) => string;
-export type pipeFunc = (property: string, data: any) => string|boolean;
+export type pipeFunc = (property: string, data: any) => string | boolean;
 export type textFunc = (data: any) => string;
 export type editFinishFunc = (item: any) => void;
 export type canEditFunc = (item: any) => boolean;
 export type clickFunc = (item: any) => void;
 export type expandChange = (item: any, extend: any) => void;
+export type onSelect = () => void;
 
 export interface NgdsDataGridOption {
 	dataSource: NgdsDataSource | Array<any>;
 	table: NgdsDataGridTableOption;
 	initToSearch?: boolean;
 	dataKey?: string;
-	disableCached?:boolean;
-	permMap?:any;
+	disableCached?: boolean;
+	permMap?: any;
 }
 
 export interface NgdsDataGridTableOption {
@@ -45,6 +46,13 @@ export interface NgdsDataGridTableOption {
 	op?: NgdsDataGridOpOption;
 	showCheck?: boolean;
 	expandChange?: expandChange;
+	selections?: Array<NgdsDataGridSelectionsOption>;
+}
+
+export interface NgdsDataGridSelectionsOption {
+	text: string;
+	onClick: clickFunc;
+	onSelect?: onSelect;
 }
 
 export interface NgdsDataGridColumnOption {
@@ -61,18 +69,19 @@ export interface NgdsDataGridColumnOption {
 	hidden?: boolean;
 	propertyClassPipe?: PipeTransform | PipeTransform[];
 	component?: any;
-	canEdit?: boolean|canEditFunc;
+	canEdit?: boolean | canEditFunc;
 	editFinish?: editFinishFunc;
 	click?: clickFunc;
 	subPropertyClick?: clickFunc;
-	info?:string|pipeFunc;
-	tags?:Array<NgdsDataGridColumnTagOption>;
+	info?: string | pipeFunc;
+	tags?: Array<NgdsDataGridColumnTagOption>;
 }
 
 export interface NgdsDataGridColumnTagOption {
-	tagColor:string|pipeFunc;
-	tagLabel:string|pipeFunc;
-	show?:string|pipeFunc;
+	tagColor: string | pipeFunc;
+	tagLabel: string | pipeFunc;
+	show?: string | pipeFunc;
+	tip?: string;
 }
 
 export interface NgdsDataGridOpOption {
@@ -94,5 +103,5 @@ export interface NgdsDataGridOpBtnOption {
 	loading?: boolean;
 	action: (data: any) => void | Promise<any>;
 	hidden?: (data: any) => boolean;
-	permCode?:string | permFunc;
+	permCode?: string | permFunc;
 }

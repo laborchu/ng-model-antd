@@ -1,15 +1,7 @@
-import {
-  Component,
-  AfterContentChecked,
-  ViewContainerRef,
-  ViewChild,
-  ComponentFactoryResolver,
-  Input
-} from '@angular/core';
-import { NgdsFormConfig, NgdsFormRadioCompOption } from './form.config';
-import { NgdsModel } from '../core/datasource';
-import { NgdsFormComp } from './form.component';
+import { AfterContentChecked, Component, ViewChild } from '@angular/core';
 import { NzRadioGroupComponent } from 'ng-zorro-antd';
+import { NgdsFormComp } from './form.component';
+import { NgdsFormRadioCompOption } from './form.config';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -47,7 +39,7 @@ export class NgdsFormRadio extends NgdsFormComp implements AfterContentChecked {
   constructor() {
     super();
   }
-  @ViewChild('group') group: NzRadioGroupComponent;
+  @ViewChild('group', { static: false }) group: NzRadioGroupComponent;
 
   option: NgdsFormRadioCompOption;
   data: Array<any>;

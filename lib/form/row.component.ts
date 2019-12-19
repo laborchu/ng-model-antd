@@ -1,14 +1,4 @@
-import {
-  Component,
-  AfterContentChecked,
-  ViewContainerRef,
-  ViewChild,
-  ComponentFactoryResolver,
-  ComponentRef,
-  ComponentFactory,
-  Input
-} from '@angular/core';
-import { NgdsFormConfig, NgdsFormCompOption } from './form.config';
+import { Component, ComponentFactory, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgdsFormComp } from './form.component';
 
 /**
@@ -26,7 +16,7 @@ export class NgdsFormRow extends NgdsFormComp {
   constructor() {
     super();
   }
-  @ViewChild("rowRef", { read: ViewContainerRef }) rowRef: ViewContainerRef;
+  @ViewChild("rowRef", { static: true, read: ViewContainerRef }) rowRef: ViewContainerRef;
   gutter: number;
   nzType: string;
 

@@ -383,11 +383,13 @@ export class NgdsDataGrid implements AfterContentChecked {
     } else {
       this.data.forEach(data => data.checked = false);
     }
-    this._refreshStatus(null,null);
+    this._refreshStatus(null, null);
   };
 
-  _refreshStatus(value:any,item:any) {
-    this.option.table.getCheckInfo(value,item);
+  _refreshStatus(value: any, item: any) {
+    if (this.option.table.getCheckInfo) {
+      this.option.table.getCheckInfo(value, item);
+    }
     setTimeout(() => {
       const allChecked = this.data.every(value => value.disabled || value.checked);
       const allUnChecked = this.data.every(value => value.disabled || !value.checked);

@@ -280,7 +280,9 @@ export class DataGridComponent implements OnInit {
                             tagColor: 'volcano', tagLabel: '普' , tip:'测试'
                         },
                         {
-                            tagColor: 'volcano', tagLabel: '普'
+                            tagColor: 'volcano', tagLabel: '普' , tip:(property: string, data: any)=>{
+                                return 'xxxx'
+                            }
                         }
                     ]
                 },

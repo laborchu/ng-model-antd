@@ -36,7 +36,7 @@ export class NgdsFormOption {
 	labelSpan?: number;
 	compSpan?: number;
 	gutter?: number;
-	components: Array<Array<NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption | NgdsFormDatePickerCompOption | NgdsFormCheckboxCompOption | NgdsFormTreeSelectCompOption>>;
+	components: Array<Array<NgdsFormCascaderCompOption | NgdsFormCompOption | NgdsFormInputCompOption | NgdsFormInputListCompOption | NgdsFormSelectCompOption | NgdsFormTextareaCompOption | NgdsFormInputRangeCompOption | NgdsFormRadioCompOption | NgdsFormUploaderCompOption | NgdsFormUmeditorCompOption | NgdsFormCheckboxGroupCompOption | NgdsFormDatePickerCompOption | NgdsFormCheckboxCompOption | NgdsFormTreeSelectCompOption>>;
 	value?: any;
 	showSearch?: boolean;
 	search?: NgdsFormSearchOption;
@@ -115,6 +115,7 @@ export class NgdsFormCascaderCompOption extends NgdsFormCompOption {
 	dsLabel?: string;
 	dsValue?: string;
 	placeHolder?: string;
+	changeOnSelect?:boolean;
 }
 
 export class NgdsFormCheckboxCompOption extends NgdsFormCompOption {

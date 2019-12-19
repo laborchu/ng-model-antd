@@ -15,11 +15,12 @@ import { NgdsFormCascaderCompOption } from './form.config';
       </nz-form-label>
       <div nz-col [nzSpan]="option.compSpan">
         <nz-cascader
+            [nzChangeOnSelect]="option.changeOnSelect"
             [nzPlaceHolder]="option.placeHolder || '请输入'"
             [nzValueProperty]="option.dsValue"
             [nzLabelProperty]="option.dsLabel"
             [(ngModel)]="option.value"
-            (nzSelectionChange)="setValue($event);onChange()"
+            (ngModelChange)="setValue($event);onChange()"
             [nzLoadData]="loadData.bind(this)" 
             [formControl]="getFormControl(option.property)">
             

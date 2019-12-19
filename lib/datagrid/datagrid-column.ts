@@ -16,7 +16,7 @@ import { NgdsDataGridColumnOption, NgdsDataGridColumnTagOption, pipeFunc } from 
             </span> 
 
             <span class="column-tag" *ngIf="colOption.tags&&colOption.tags.length">
-                <span nz-tooltip nzTooltipTitle="{{tag.tip}}" *ngFor="let tag of colOption.tags">
+                <span nz-tooltip nzTooltipTitle="{{getTagTip(tag)}}" *ngFor="let tag of colOption.tags">
                     <nz-tag *ngIf="tag.show?tag.show(colOption.property,item):true" [nzColor]="getTagColor(tag)">{{getTagLabel(tag)}}</nz-tag>
                 </span>
             </span>
@@ -142,6 +142,14 @@ export class NgdsColumn {
             return tag.tagLabel(this.colOption.property, this.item);
         } else {
             return tag.tagLabel;
+        }
+    }
+
+    getTagTip(tag: NgdsDataGridColumnTagOption) {
+        if (typeof tag.tip === "function") {
+            return tag.tip(this.colOption.property, this.item);
+        } else {
+            return tag.tip;
         }
     }
 }

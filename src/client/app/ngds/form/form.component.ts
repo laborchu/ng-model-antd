@@ -254,6 +254,7 @@ export class FormComponent implements OnInit {
                 {
                     label: '地区级联',
                     property: "address",
+                    changeOnSelect:true,
                     dataSource: areaDs,
                     comp: NgdsFormCascader,
                     validations: [

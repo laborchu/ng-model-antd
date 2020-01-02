@@ -259,7 +259,10 @@ export class FormComponent implements OnInit {
                     comp: NgdsFormCascader,
                     validations: [
                         { msg: "地区级联", type: "required", fn: Validators.required }
-                    ]
+                    ],
+                    onChange:(option: NgdsFormCompOption)=>{
+                        debugger
+                    }
 
                 },
                 {

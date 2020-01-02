@@ -15,12 +15,11 @@ import { NgdsFormCascaderCompOption } from './form.config';
       </nz-form-label>
       <div nz-col [nzSpan]="option.compSpan">
         <nz-cascader
-            [nzChangeOnSelect]="option.changeOnSelect"
             [nzPlaceHolder]="option.placeHolder || '请输入'"
             [nzValueProperty]="option.dsValue"
             [nzLabelProperty]="option.dsLabel"
             [(ngModel)]="option.value"
-            (ngModelChange)="setValue($event);onChange()"
+            (nzSelectionChange)="setValue($event);onChange()"
             [nzLoadData]="loadData.bind(this)" 
             [formControl]="getFormControl(option.property)">
             
@@ -73,7 +72,7 @@ export class NgdsFormCascader extends NgdsFormComp implements AfterContentChecke
         node.children = this.option.dataSource;
         resolve();
       } else {
-        this.option.dataSource.getData({ "index": index, "parentId": index!=-1 ? node[this.option.dsValue] : 0 }).then((value: any) => {
+        this.option.dataSource.getData({ "index": index, "parentId": index != -1 ? node[this.option.dsValue] : 0 }).then((value: any) => {
           node.children = value.data;
           resolve();
         })

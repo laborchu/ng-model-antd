@@ -74,7 +74,7 @@ export class NgdsFormSelect extends NgdsFormComp implements AfterContentChecked 
       this.oldValue = value || null;
     }
 
-    if (this.option.searchRemote) {
+    if (this.option.searchRemote && !Array.isArray(this.option.dataSource)) {
       let params: any = {};
       params[this.option.dsValue] = value;
       this.option.dataSource.getData(params).then((model: any) => {

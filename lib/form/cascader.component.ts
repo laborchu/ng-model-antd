@@ -20,6 +20,7 @@ import { NgdsFormCascaderCompOption } from './form.config';
             [nzLabelProperty]="option.dsLabel"
             [(ngModel)]="option.value"
             (nzSelectionChange)="setValue($event);onChange()"
+            [nzDisabled]="option.disabled"
             [nzLoadData]="loadData.bind(this)" 
             [formControl]="getFormControl(option.property)">
             

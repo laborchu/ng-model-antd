@@ -12,7 +12,7 @@ import {
 
 import { AnimationBuilder, animate, style } from '@angular/animations';
 
-import { NgdsBlockConfig, NgdsBlockOption } from './block.config';
+import { NgdsBlockConfig, NgdsBlockOption, NgdsBlockBtnOption } from './block.config';
 
 @Component({
     selector: 'ngds-block',
@@ -23,7 +23,7 @@ import { NgdsBlockConfig, NgdsBlockOption } from './block.config';
     </nz-card>
     <ng-template #extraTemplate>
         <a *ngFor="let btn of option.buttons;" (click)="btn.action()">
-            {{btn.text}}
+        {{getBtnText(btn)}}
         </a>
     </ng-template>
     `
@@ -35,6 +35,14 @@ export class NgdsBlock {
     @Input() option: NgdsBlockOption;
 
     ngOnInit() {
+    }
+
+    getBtnText(btn: NgdsBlockBtnOption) {
+        if (typeof btn.text == 'function') {
+            return btn.text()
+        } else {
+            return btn.text;
+        }
     }
 
     ngAfterViewInit(): void {

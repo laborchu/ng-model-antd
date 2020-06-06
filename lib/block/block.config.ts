@@ -10,7 +10,7 @@ export class NgdsBlockOption {
     buttons?: Array<NgdsBlockBtnOption>;
 }
 export interface NgdsBlockBtnOption {
-    text: string;
+    text: string|buttonTextFunc;
     action: (data: any) => void;
 }
 
@@ -23,6 +23,7 @@ export class NgdsBlockInfoOption {
 export type pipeFunc = (property: string, data: any) => string;
 export type imgClickFunc = (img: string, index: number) => void;
 export type clickFunc = (property: string, data: any) => void;
+export type buttonTextFunc = ()=>string;
 export class NgdsBlockInfoItemOption {
     label: string;
     field: string;

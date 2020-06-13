@@ -162,6 +162,10 @@ export class NgdsFormUmeditorCompOption extends NgdsFormCompOption {
 	setting?: any;
 }
 
+
+export class NgdsFormRateCompOption extends NgdsFormCompOption {
+}
+
 export type errHandlerFunc = (err: any) => void;
 
 export class NgdsFormUploaderCompOption extends NgdsFormCompOption {
@@ -175,6 +179,7 @@ export class NgdsFormUploaderCompOption extends NgdsFormCompOption {
 	whTip?: string;
 	compress?: any;
 	fileSingleSizeLimit?: number;
+	itemSelect:boolean = false;
 }
 
 

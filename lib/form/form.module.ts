@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UMeditorModule } from 'ngx-umeditor';
 import { CustomFormsModule } from 'ng2-validation'
 import { WebUploaderModule, WebUploaderConfig, Options, OptionsPick, OptionsThumb } from 'ngx-webuploader';
@@ -59,14 +59,17 @@ import {
 import {
 	NgdsFormTextarea
 } from './textarea.component';
+import {
+	NgdsFormRate
+} from './rate.component';
 
 
 export { NgdsForm } from './form';
 export { NgdsFormComp } from './form.component';
 export {
-	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption,NgdsFormInputListCompOption,NgdsFormInputRangeCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
+	NgdsFormConfig, NgdsFormOption, NgdsFormInputCompOption, NgdsFormInputListCompOption, NgdsFormInputRangeCompOption, NgdsFormTextareaCompOption, NgdsFormCompOption,
 	NgdsFormRadioCompOption, NgdsFormCheckboxCompOption, NgdsFormSelectCompOption, NgdsFormDatePickerCompOption,
-	NgdsFormUmeditorCompOption,NgdsFormUploaderCompOption,NgdsFormCascaderCompOption,NgdsFormCheckboxGroupCompOption,NgdsFormTreeSelectCompOption
+	NgdsFormUmeditorCompOption, NgdsFormUploaderCompOption, NgdsFormCascaderCompOption, NgdsFormCheckboxGroupCompOption, NgdsFormTreeSelectCompOption, NgdsFormRateCompOption
 } from './form.config';
 export {
 	NgdsFormInput
@@ -110,27 +113,31 @@ export {
 export {
 	NgdsFormTextarea
 } from './textarea.component';
+export {
+	NgdsFormRate
+} from './rate.component';
 
-const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput,NgdsFormInputList,NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox,NgdsFormCheckboxGroup, NgdsFormSelect, 
-	NgdsFormDatePicker,NgdsFormDatePickerRange,NgdsFormCascader,NgdsFormUmeditor,NgdsFormUploader,NgdsFormRow,NgdsFormSearchBar,NgdsFormTreeSelect,NgdsFormTextarea];
+const NGB_TABSET_DIRECTIVES = [NgdsForm, NgdsFormInput, NgdsFormInputList, NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormCheckboxGroup, NgdsFormSelect,
+	NgdsFormDatePicker, NgdsFormDatePickerRange, NgdsFormCascader, NgdsFormUmeditor, NgdsFormUploader, NgdsFormRow, NgdsFormSearchBar, NgdsFormTreeSelect, NgdsFormTextarea,
+	NgdsFormRate];
 
-@NgModule({ 
-	declarations: NGB_TABSET_DIRECTIVES, 
-	exports: NGB_TABSET_DIRECTIVES, 
-	imports: [CommonModule, FormsModule,ReactiveFormsModule, NgZorroAntdModule,
-	UMeditorModule.forRoot(), CustomFormsModule,
-        WebUploaderModule.forRoot(<WebUploaderConfig>{
-            options: <Options>{
-                swf: '/assets/webuploader-0.1.5/Uploader.swf',
-                resize: false,
-                duplicate: true,
-                chunked:true,
-                threads:1,
-                chunkSize:4194304
-            },
-            path: '/assets/webuploader-0.1.5/',
-            dependentLib: '/assets/webuploader-0.1.5/zepto.min.js'
-        })],
+@NgModule({
+	declarations: NGB_TABSET_DIRECTIVES,
+	exports: NGB_TABSET_DIRECTIVES,
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, NgZorroAntdModule,
+		UMeditorModule.forRoot(), CustomFormsModule,
+		WebUploaderModule.forRoot(<WebUploaderConfig>{
+			options: <Options>{
+				swf: '/assets/webuploader-0.1.5/Uploader.swf',
+				resize: false,
+				duplicate: true,
+				chunked: true,
+				threads: 1,
+				chunkSize: 4194304
+			},
+			path: '/assets/webuploader-0.1.5/',
+			dependentLib: '/assets/webuploader-0.1.5/zepto.min.js'
+		})],
 	entryComponents: NGB_TABSET_DIRECTIVES
 })
 export class NgdsFormModule {

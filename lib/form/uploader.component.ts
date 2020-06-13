@@ -56,6 +56,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
     option: NgdsFormUploaderCompOption;
     ngxOptions: Options;
     show: boolean = false;
+    selectIndex: number = -1;
 
     ngOnInit() {
         if (this.option.multiple == undefined) {
@@ -143,7 +144,12 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
             .on('uploadSuccess', (file: File, data: any) => {
                 this.wrapperData(data, file);
                 this.formConfig.uploaderConfig && this.formConfig.uploaderConfig.uploadSuccess && this.formConfig.uploaderConfig.uploadSuccess(data);
-                this.option.value.push(data);
+                if (this.selectIndex >= 0) {
+                    this.option.value.splice(this.selectIndex, 1, data);
+                    this.selectIndex = -1;
+                } else {
+                    this.option.value.push(data);
+                }
                 this.setValue(undefined)
                 this.onChange()
             })
@@ -199,10 +205,16 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
     }
 
     tapItem(item: any, itemList: Array<any>, index: number): void {
-        if (this.isImg(item)) {
-            this.formConfig.uploaderConfig.tapImage && this.formConfig.uploaderConfig.tapImage(item, itemList, index);
-        } else if (this.isVideo(item)) {
-            this.formConfig.uploaderConfig.tapVideo && this.formConfig.uploaderConfig.tapVideo(item);
+        if (this.option.itemSelect) {
+            this.selectIndex = index;
+            let el:any = document.getElementById(this.option.uploaderId).getElementsByClassName("webuploader-element-invisible")[0];
+            el.click();
+        } else {
+            if (this.isImg(item)) {
+                this.formConfig.uploaderConfig.tapImage && this.formConfig.uploaderConfig.tapImage(item, itemList, index);
+            } else if (this.isVideo(item)) {
+                this.formConfig.uploaderConfig.tapVideo && this.formConfig.uploaderConfig.tapVideo(item);
+            }
         }
     }
 

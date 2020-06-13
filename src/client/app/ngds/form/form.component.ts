@@ -6,7 +6,7 @@ import {
     NgdsFormOption, NgdsFormInput, NgdsFormInputList, NgdsFormInputRange, NgdsFormRadio, NgdsFormCheckbox, NgdsFormCheckboxGroup, NgdsFormSelect,
     NgdsFormDatePicker, NgdsFormDatePickerRange, NgdsFormCascader,
     NgdsFormUmeditor, NgdsFormUploader, NgdsFormCompOption,
-    NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp, NgdsFormTreeSelect, NgdsFormTextarea, NgdsFormInputCompOption
+    NgdsPanelOption, NgdsDataSource, NgdsModel, NgdsForm, NgdsFormComp, NgdsFormTreeSelect, NgdsFormTextarea, NgdsFormInputCompOption,NgdsFormRate
 } from '../../../../../lib/index';
 import { CustomValidators } from 'ng2-validation';
 
@@ -284,6 +284,12 @@ export class FormComponent implements OnInit {
                     comp: NgdsFormTreeSelect,
                     checkable: true,
                     asyncData: true,
+                },
+
+                {
+                    label: '评分',
+                    property: "rate",
+                    comp: NgdsFormRate,
 
                 }
             ]
@@ -303,12 +309,13 @@ export class FormComponent implements OnInit {
                     property: "touxiang",
                     accept: "image",
                     multiple: false,
-                    limit: 1,
+                    limit: 3,
                     uploaderId: new Date().getTime() + "",
                     comp: NgdsFormUploader,
                     width: 200,
                     whTip:'400*300',
-                    fileSingleSizeLimit:1024*6
+                    fileSingleSizeLimit:1024*6,
+                    itemSelect:true
                 },
             ],
             [
@@ -397,7 +404,9 @@ export class FormComponent implements OnInit {
             // "endPrice": 44, 
             // "rangeDate": ["2018-07-05T16:00:00.000Z", "2018-08-05T16:00:00.000Z"], 
             // "address": [{ label: "江苏省", value: 2 }], 
-            // "auth": [1, 2, 4] })
+            // "auth": [1, 2, 4] ,
+            // "rate":4
+            // })
 
             // this.myForm2.setValue({
             //     desc:"sfsdfsdf",

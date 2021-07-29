@@ -80,13 +80,16 @@ export class NgdsFormSearchOption extends NgdsFormCompOption {
 }
 
 export class NgdsFormInputCompOption extends NgdsFormCompOption {
-	type: 'text' | 'password';
+	type: 'text' | 'password' | 'number';
 	placeHolder?: string;
 	maxLength?: number;
 	blur?: onBlurFunc;
 }
 
 export class NgdsFormInputRangeCompOption extends NgdsFormCompOption {
+	beforeLabel: string;
+	splitLabel: string;
+	afterLabel: string;
 }
 
 export class NgdsFormInputListCompOption extends NgdsFormInputCompOption {

@@ -9,6 +9,7 @@
             "args": [ "index.ts"],
             "cwd": "${workspaceRoot}/src/server/",
             "sourceMaps": true,
+            "outputCapture": "std",
             "env": {
                 "ENV": "dev"
             }

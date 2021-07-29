@@ -14,16 +14,17 @@ import { NgdsFormInputRangeCompOption } from './form.config';
       {{option.label}}
       </nz-form-label>
       <nz-form-control nz-col [nzSpan]="option.compSpan" [nzValidateStatus]="getFormControl(option.property)">
-
+        <span class="split-input">{{option.beforeLabel || ''}}</span>
         <nz-input-number
           [(ngModel)]="option.value.first"
           (ngModelChange)="onChange()"
           [formControl]="getFormControl(option.property)"></nz-input-number>
-        <span class="split-input">-</span>
+        <span class="split-input">{{option.splitLabel || '-'}}</span>
         <nz-input-number
           [(ngModel)]="option.value.second"
           (ngModelChange)="onChange()"
           [formControl]="getFormControl(option.property2)"></nz-input-number>
+          <span class="split-input">{{option.afterLabel || ''}}</span>
 
           <div class="form-item-tip" *ngIf="option.tip">{{option.tip}}</div>
           <div nz-form-explain *ngFor="let val of option.validations">

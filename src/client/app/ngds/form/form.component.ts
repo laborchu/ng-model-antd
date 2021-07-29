@@ -241,7 +241,9 @@ export class FormComponent implements OnInit {
                     label: '价格区间',
                     property: "startPrice",
                     property2: "endPrice",
-                    comp: NgdsFormInputRange
+                    comp: NgdsFormInputRange,
+                    splitLabel:'日',
+                    afterLabel:'月'
                 }
 
             ],

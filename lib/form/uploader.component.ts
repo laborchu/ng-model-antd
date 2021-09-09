@@ -28,6 +28,7 @@ import { NgdsFormConfig, NgdsFormUploaderCompOption } from './form.config';
                     <svg class="icon" aria-hidden="true" (click)="tapDelItem(item)">
                     <use xlink:href="#icon-shanchu"></use>
                     </svg>
+                    <i nz-icon nzType="plus-circle" nzTheme="outline" (click)="appendItem(itemIndex,$event)"></i>
                 </div>
                 <a id="{{getUploaderId()}}" [style.visibility]="option.limit>0&&option.limit<=option.value.length?'hidden':'unset'">
                     +
@@ -57,6 +58,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
     ngxOptions: Options;
     show: boolean = false;
     selectIndex: number = -1;
+    appendIndex: number = -1;
 
     ngOnInit() {
         if (this.option.multiple == undefined) {
@@ -147,6 +149,9 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                 if (this.selectIndex >= 0) {
                     this.option.value.splice(this.selectIndex, 1, data);
                     this.selectIndex = -1;
+                } else if (this.appendIndex >= 0) {
+                    this.option.value.splice(this.appendIndex + 1, 0, data);
+                    this.appendIndex = -1;
                 } else {
                     this.option.value.push(data);
                 }
@@ -207,7 +212,7 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
     tapItem(item: any, itemList: Array<any>, index: number): void {
         if (this.option.itemSelect) {
             this.selectIndex = index;
-            let el:any = document.getElementById(this.option.uploaderId).getElementsByClassName("webuploader-element-invisible")[0];
+            let el: any = document.getElementById(this.option.uploaderId).getElementsByClassName("webuploader-element-invisible")[0];
             el.click();
         } else {
             if (this.isImg(item)) {
@@ -216,6 +221,13 @@ export class NgdsFormUploader extends NgdsFormComp implements OnInit {
                 this.formConfig.uploaderConfig.tapVideo && this.formConfig.uploaderConfig.tapVideo(item);
             }
         }
+    }
+
+    appendItem(index: number, e: any) {
+        this.appendIndex = index;
+        let el: any = document.getElementById(this.option.uploaderId).getElementsByClassName("webuploader-element-invisible")[0];
+        el.click();
+        e.stopPropagation();
     }
 
     tapDelItem(item: any): void {
